@@ -224,6 +224,30 @@ local provider = {
 		},
 	},
 
+	separator3 = {
+		provider = "",
+		left_sep = {
+			str = "",
+			hl = {
+				fg = "bg",
+				bg = "bg",
+			},
+			always_visible = true,
+		},
+	},
+
+	separator4 = {
+		provider = "",
+		left_sep = {
+			str = "",
+			hl = {
+				fg = "bg",
+				bg = "bg",
+			},
+			always_visible = true,
+		},
+	},
+
 	diagnostic_errors = {
 		provider = "diagnostic_errors",
 		hl = {
@@ -231,10 +255,10 @@ local provider = {
 			bg = "one_bg2",
 		},
 		left_sep = {
-			str = "██",
+			str = "██",
 			hl = {
-				fg = "bg",
-				bg = "bg",
+				fg = "one_bg2",
+				bg = "one_bg2",
 			},
 			always_visible = true,
 		},
@@ -247,6 +271,8 @@ local provider = {
 			fg = "yellow",
 			bg = "one_bg2",
 		},
+		left_sep = "block",
+		right_sep = "block",
 	},
 
 	diagnostic_hints = {
@@ -255,6 +281,8 @@ local provider = {
 			fg = "teal",
 			bg = "one_bg2",
 		},
+		left_sep = "block",
+		right_sep = "block",
 	},
 
 	diagnostic_info = {
@@ -265,10 +293,10 @@ local provider = {
 		},
 		left_sep = "block",
 		right_sep = {
-			str = "██",
+			str = "██",
 			hl = {
-				fg = "bg",
-				bg = "bg",
+				fg = "one_bg2",
+				bg = "one_bg2",
 			},
 			always_visible = true,
 		},
@@ -349,12 +377,12 @@ local left = {
 }
 
 local middle = {
-	provider.separator1,
+	provider.separator3,
 	provider.diagnostic_errors,
 	provider.diagnostic_warnings,
 	provider.diagnostic_info,
 	provider.diagnostic_hints,
-	provider.separator2,
+	provider.separator4,
 }
 
 local right = {
