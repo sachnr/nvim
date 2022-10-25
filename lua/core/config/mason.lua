@@ -1,0 +1,70 @@
+local present, mason = pcall(require, "mason")
+
+if not present then
+	return
+end
+
+require("base46").load_highlight("mason")
+
+local options = {
+	ensure_installed = {
+		-- Language Servers
+		"lua-language-server",
+		"python-lsp-server",
+		"clangd",
+		"jdtls",
+		"html-lsp",
+		"json-lsp",
+		"eslint-lsp",
+		"css-lsp",
+		"bash-language-server",
+		"sqlls",
+
+		-- Formatters
+		"black",
+		"stylua",
+		"clang-format",
+		"prettierd",
+		"vue-language-server",
+		"shfmt",
+
+		-- debuggers
+		"firefox-debug-adapter",
+		"java-debug-adapter",
+		"java-test",
+		"debugpy",
+		"cpptools",
+	},
+
+	-- - "prepend" (default, Mason's bin location is put first in PATH)
+	-- - "append" (Mason's bin location is put at the end of PATH)
+	-- - "skip" (doesn't modify PATH)
+	PATH = "prepend",
+
+	ui = {
+		icons = {
+			package_pending = " ",
+			package_installed = " ",
+			package_uninstalled = " ﮊ",
+		},
+
+		keymaps = {
+			toggle_server_expand = "<CR>",
+			install_server = "i",
+			update_server = "u",
+			check_server_version = "c",
+			update_all_servers = "U",
+			check_outdated_servers = "C",
+			uninstall_server = "X",
+			cancel_installation = "<C-c>",
+		},
+	},
+
+	max_concurrent_installers = 10,
+}
+
+vim.api.nvim_create_user_command("MasonInstallAll", function()
+	vim.cmd("MasonInstall " .. table.concat(options.ensure_installed, " "))
+end, {})
+
+mason.setup(options)
