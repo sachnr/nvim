@@ -118,9 +118,8 @@ use({
 
 use({
 	"lewis6991/gitsigns.nvim",
-	ft = "gitcommit",
 	setup = function()
-		require("core.lazy_load").gitsigns()
+		require("core.lazy_load").on_file_open("gitsigns.nvim")
 	end,
 	config = function()
 		require("core.config.gitsigns")

@@ -191,7 +191,7 @@ local provider = {
 			always_visible = true,
 		},
 		right_sep = {
-			str = "██",
+			str = "██",
 			hl = {
 				fg = "one_bg2",
 				bg = "black",
@@ -366,7 +366,7 @@ local left = {
 	provider.gitDiffRemoved,
 	provider.gitDiffChanged,
 	provider.fileinfo,
-	provider.separator2,
+	provider.separator4,
 	provider.position,
 }
 
