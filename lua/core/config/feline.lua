@@ -262,7 +262,6 @@ local provider = {
 			},
 			always_visible = true,
 		},
-		right_sep = "block",
 	},
 
 	diagnostic_warnings = {
@@ -271,8 +270,6 @@ local provider = {
 			fg = "yellow",
 			bg = "one_bg2",
 		},
-		left_sep = "block",
-		right_sep = "block",
 	},
 
 	diagnostic_hints = {
@@ -281,8 +278,6 @@ local provider = {
 			fg = "teal",
 			bg = "one_bg2",
 		},
-		left_sep = "block",
-		right_sep = "block",
 	},
 
 	diagnostic_info = {
@@ -291,7 +286,6 @@ local provider = {
 			fg = "purple",
 			bg = "one_bg2",
 		},
-		left_sep = "block",
 		right_sep = {
 			str = "██",
 			hl = {
@@ -353,7 +347,7 @@ local provider = {
 	scroll_bar = {
 		provider = {
 			name = "scroll_bar",
-			reverse = true,
+			reverse = false,
 		},
 		hl = {
 			fg = "green",
