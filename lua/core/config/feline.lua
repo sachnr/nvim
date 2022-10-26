@@ -370,16 +370,15 @@ local left = {
 	provider.position,
 }
 
-local middle = {
+local middle = {}
+
+local right = {
 	provider.separator3,
 	provider.diagnostic_errors,
 	provider.diagnostic_warnings,
 	provider.diagnostic_info,
 	provider.diagnostic_hints,
 	provider.separator4,
-}
-
-local right = {
 	provider.lsp_client_names,
 	provider.line_percentage,
 	provider.scroll_bar,
@@ -407,6 +406,7 @@ feline.setup({
 			"^NvimTree$",
 			"^packer$",
 			"^startify$",
+			"^fugitive$",
 			"^fugitive$",
 			"^fugitiveblame$",
 			"^qf$",
