@@ -309,15 +309,8 @@ local provider = {
 			bg = "bg",
 			style = "bold",
 		},
-		left_sep = "block",
-		right_sep = {
-			str = "",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
+		left_sep = "slant_left",
+		right_sep = "slant_right",
 	},
 
 	position = {
@@ -384,7 +377,6 @@ local right = {
 	provider.diagnostic_warnings,
 	provider.diagnostic_info,
 	provider.diagnostic_hints,
-	provider.separator4,
 	provider.lsp_client_names,
 	provider.line_percentage,
 	provider.scroll_bar,

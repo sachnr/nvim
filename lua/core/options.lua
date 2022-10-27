@@ -2,7 +2,7 @@ local opt = vim.opt
 local g = vim.g
 
 -- base46 theme
-g.theme = "rxyhn"
+g.theme = "gruvbox" -- ayu-dark, everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn
 g.mapleader = " "
 
 opt.title = true -- let Vim set the title of the windowlet Vim set the title of the window
@@ -11,8 +11,8 @@ opt.cursorline = true -- highlights the current line
 opt.showmode = false -- message on status line to show current mode
 opt.smartcase = true -- no ignore case when pattern has uppercase
 opt.ignorecase = true -- ignore case for completions
-opt.shortmess:append("sI")
-opt.laststatus = 3
+opt.shortmess:append("sI") -- list of flags, reduce length of messages
+opt.laststatus = 3 --tells when last window has status lines
 opt.mouse = "a" -- allows use of mouse
 opt.fillchars = { eob = " " } -- characters to use for displaying special items
 opt.signcolumn = "yes" -- when and how to display the sign column
@@ -21,9 +21,11 @@ opt.splitright = true -- new window is put right of the current one
 opt.termguicolors = true
 opt.timeoutlen = 400 -- time out time in milliseconds
 opt.updatetime = 250 -- after this many milliseconds flush swap file
-opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+opt.writebackup = false -- make a backup before overwriting a file
 opt.wrap = true -- long lines wrap and continue on the next line
-opt.fileencoding = "utf-8"
+opt.fileencoding = "utf-8" -- encoding
+opt.undofile = true -- save undo information in a file
+opt.undodir = vim.fn.stdpath("data") .. "/undofile" -- where to store undo files
 
 -- Indenting
 opt.expandtab = true -- converts tabs to spaces
