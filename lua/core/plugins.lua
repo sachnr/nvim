@@ -329,11 +329,12 @@ use({
 	disable = false,
 })
 
--- --transparency
--- use { "xiyaowong/nvim-transparent",
---   config = function()
---     require("transparent").setup {
---       enable = true, -- boolean: enable transparent
---     }
---   end,
--- }
+--transparency
+use({
+	"xiyaowong/nvim-transparent",
+	config = function()
+		require("transparent").setup({
+			enable = true, -- boolean: enable transparent
+		})
+	end,
+})

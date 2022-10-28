@@ -8,7 +8,8 @@ M.dap = function()
 
 	require("base46").load_highlight("dapui")
 
-	local mason = vim.fn.stdpath("data") .. "/mason/packages"
+	local plugin_folder = vim.fn.stdpath("data")
+	local mason = plugin_folder .. "/mason/packages"
 
 	-- JavaScript, typescript
 	dap.adapters.firefox = {
@@ -105,6 +106,23 @@ M.dap = function()
 	-- dap.adapters.nlua = function(callback, config)
 	--   callback { type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 }
 	-- end
+
+	--golang
+	dap.adapters.go = {
+		type = "executable",
+		command = "node",
+		args = { mason .. "/go-debug-adapter/extension/dist/debugAdapter.js" },
+	}
+	dap.configurations.go = {
+		{
+			type = "go",
+			name = "Debug",
+			request = "launch",
+			showLog = false,
+			program = "${file}",
+			dlvToolPath = mason .. "/delve/dlv", -- Adjust to where delve is installed
+		},
+	}
 end
 
 M.dapvt = function()

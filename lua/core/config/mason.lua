@@ -15,17 +15,20 @@ local options = {
 		"jdtls",
 		"html-lsp",
 		"json-lsp",
-		"eslint-lsp",
+		"efm",
+		"eslint",
+		"eslint_d",
+		"vue-language-server",
 		"css-lsp",
 		"bash-language-server",
 		"sqlls",
+		"gopls",
 
 		-- Formatters
 		"black",
 		"stylua",
 		"clang-format",
 		"prettierd",
-		"vue-language-server",
 		"shfmt",
 
 		-- debuggers
@@ -34,6 +37,8 @@ local options = {
 		"java-test",
 		"debugpy",
 		"cpptools",
+		"delve",
+		"vscode-go",
 	},
 
 	-- - "prepend" (default, Mason's bin location is put first in PATH)

@@ -309,8 +309,22 @@ local provider = {
 			bg = "bg",
 			style = "bold",
 		},
-		left_sep = "slant_left",
-		right_sep = "slant_right",
+		left_sep = {
+			str = "██",
+			hl = {
+				fg = "bg",
+				bg = "bg",
+			},
+			always_visible = true,
+		},
+		right_sep = {
+			str = "██",
+			hl = {
+				fg = "bg",
+				bg = "bg",
+			},
+			always_visible = true,
+		},
 	},
 
 	position = {
