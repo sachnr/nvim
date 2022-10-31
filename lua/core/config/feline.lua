@@ -248,67 +248,8 @@ local provider = {
 		},
 	},
 
-	diagnostic_errors = {
-		provider = "diagnostic_errors",
-		hl = {
-			fg = "red",
-			bg = "one_bg2",
-		},
-		left_sep = {
-			str = "██",
-			hl = {
-				fg = "one_bg2",
-				bg = "one_bg2",
-			},
-			always_visible = true,
-		},
-		right_sep = "block",
-	},
-
-	diagnostic_warnings = {
-		provider = "diagnostic_warnings",
-		hl = {
-			fg = "yellow",
-			bg = "one_bg2",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-
-	diagnostic_hints = {
-		provider = "diagnostic_hints",
-		hl = {
-			fg = "teal",
-			bg = "one_bg2",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-
-	diagnostic_info = {
-		provider = "diagnostic_info",
-		hl = {
-			fg = "purple",
-			bg = "one_bg2",
-		},
-		left_sep = "block",
-		right_sep = {
-			str = "██",
-			hl = {
-				fg = "one_bg2",
-				bg = "one_bg2",
-			},
-			always_visible = true,
-		},
-	},
-
-	lsp_client_names = {
-		provider = "lsp_client_names",
-		hl = {
-			fg = "light_grey",
-			bg = "bg",
-			style = "bold",
-		},
+	diagnostic = {
+		provider = "",
 		left_sep = {
 			str = "██",
 			hl = {
@@ -318,10 +259,82 @@ local provider = {
 			always_visible = true,
 		},
 		right_sep = {
+			str = " ",
+			hl = {
+				fg = "light_grey",
+				bg = "bg",
+			},
+			always_visible = true,
+		},
+	},
+
+	diagnostic_errors = {
+		provider = "diagnostic_errors",
+		hl = {
+			fg = "red",
+			bg = "bg",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+
+	diagnostic_warnings = {
+		provider = "diagnostic_warnings",
+		hl = {
+			fg = "yellow",
+			bg = "bg",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+
+	diagnostic_hints = {
+		provider = "diagnostic_hints",
+		hl = {
+			fg = "teal",
+			bg = "bg",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+
+	diagnostic_info = {
+		provider = "diagnostic_info",
+		hl = {
+			fg = "purple",
+			bg = "bg",
+		},
+		left_sep = "block",
+		right_sep = {
 			str = "██",
 			hl = {
 				fg = "bg",
 				bg = "bg",
+			},
+			always_visible = true,
+		},
+	},
+
+	lsp_client_names = {
+		provider = "lsp_client_names",
+		hl = {
+			fg = "white",
+			bg = "one_bg2",
+			style = "bold",
+		},
+		left_sep = {
+			str = "██",
+			hl = {
+				fg = "one_bg2",
+				bg = "one_bg2",
+			},
+			always_visible = true,
+		},
+		right_sep = {
+			str = "██",
+			hl = {
+				fg = "one_bg2",
+				bg = "one_bg2",
 			},
 			always_visible = true,
 		},
@@ -387,11 +400,12 @@ local middle = {}
 
 local right = {
 	provider.separator3,
+	provider.lsp_client_names,
+  provider.diagnostic,
 	provider.diagnostic_errors,
 	provider.diagnostic_warnings,
 	provider.diagnostic_info,
 	provider.diagnostic_hints,
-	provider.lsp_client_names,
 	provider.line_percentage,
 	provider.scroll_bar,
 }
