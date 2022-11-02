@@ -62,12 +62,11 @@ local options = {
 	buttons = {
 		type = "group",
 		val = {
-			button("SPC t o", "  Recent File  ", ":Telescope oldfiles<CR>"),
 			button("SPC t p", "  Recent projects ", ":Telescope projects<CR>"),
+			button("SPC t o", "  Recent File  ", ":Telescope oldfiles<CR>"),
 			button("SPC n", "  New Buffer ", ":enew<CR>"),
 			button("SPC t f", "  Find File  ", ":Telescope find_files<CR>"),
 			button("SPC t w", "  Find Word  ", ":Telescope live_grep<CR>"),
-			button("SPC t k", "  Bookmarks  ", ":Telescope marks<CR>"),
 			button("SPC o s", "  Settings", ":e $MYVIMRC | :cd %:p:h <CR>"),
 		},
 		opts = {

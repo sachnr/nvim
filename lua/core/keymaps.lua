@@ -15,7 +15,6 @@ local Mappings = {
 	-- =========================================================
 	n = {
 		["<ESC>"] = { "<cmd> noh <CR>", "no highlight" },
-		[";"] = { ":", "command mode", opts = { nowait = true } },
 		-- switch between windows
 		["<C-h>"] = { "<C-w>h", "window left" },
 		["<C-l>"] = { "<C-w>l", "window right" },
@@ -63,7 +62,7 @@ local Mappings = {
 		-- copy all
 		["<leader>C"] = { "<cmd> %y+ <CR>", "copy whole file" },
 		-- indent blankline
-		["<leader>cc"] = {
+		["gC"] = {
 			function()
 				local ok, start = require("indent_blankline.utils").get_current_context(
 					vim.g.indent_blankline_context_patterns,

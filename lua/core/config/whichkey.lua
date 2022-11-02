@@ -73,14 +73,8 @@ local mappings = {
 		name = "Telescope/Search",
 		p = { "<cmd> :Telescope projects <CR>", "projects" },
 		f = { "<cmd> Telescope find_files <CR>", "find files" },
-		a = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "find all" },
 		w = { "<cmd> Telescope live_grep <CR>", "live grep" },
-		b = { "<cmd> Telescope buffers <CR>", "find buffers" },
-		m = { "<cmd> Telescope help_tags <CR>", "help page" },
 		o = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
-		l = { "<cmd> Telescope keymaps <CR>", "show keys" },
-		t = { "<cmd> Telescope terms <CR>", "pick hidden term" },
-		k = { "<cmd> Telescope marks <CR>", "Bookmarks" },
 	},
 	-- trouble
 	e = {
@@ -163,6 +157,13 @@ local mappings = {
 		T = { "<cmd> lua require'jdtls'.test_class() <cr>", "Test Class" },
 		u = { "<cmd> JdtUpdateConfig <cr>", "Update Config" },
 	},
+	-- comment box
+	c = {
+		name = "Comment Box",
+		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
+		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
+		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
+	},
 }
 
 -- Visual mode Mappings
@@ -182,6 +183,13 @@ local vmappings = {
 		v = { "<cmd> lua require('jdtls').extract_variable(true) <cr>", "Extract Variable" },
 		c = { "<cmd> lua require('jdtls').extract_constant(true) <cr>", "Extract Constant" },
 		m = { "<cmd> lua require('jdtls').extract_method(true) <cr>", "Extract Method" },
+	},
+	-- comment box
+	c = {
+		name = "Comment Box",
+		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
+		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
+		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
 	},
 }
 

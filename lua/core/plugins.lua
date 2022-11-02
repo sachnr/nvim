@@ -338,3 +338,5 @@ use({
 		})
 	end,
 })
+
+use("LudoPinelli/comment-box.nvim")
