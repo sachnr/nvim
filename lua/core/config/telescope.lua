@@ -71,7 +71,19 @@ local options = {
 		},
 	},
 
-	extensions_list = {},
+	extensions = {
+		fzf = {
+			fuzzy = true,
+			override_generic_sorter = true,
+			override_file_sorter = true,
+			case_mode = "smart_case",
+		},
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown(),
+		},
+	},
+
+	extensions_list = { "ui-select", "fzf", "dap" },
 }
 
 telescope.setup(options)

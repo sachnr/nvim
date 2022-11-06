@@ -231,6 +231,10 @@ use({
 	end,
 })
 
+use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+use({ "nvim-telescope/telescope-ui-select.nvim" })
+use({ "nvim-telescope/telescope-dap.nvim" })
+
 use({
 	"windwp/nvim-ts-autotag",
 	ft = { "html", "javascriptreact" },
@@ -340,3 +344,37 @@ use({
 })
 
 use("LudoPinelli/comment-box.nvim")
+
+use({
+	"ziontee113/icon-picker.nvim",
+	event = "VimEnter",
+	config = function()
+		require("icon-picker").setup({
+			disable_legacy_commands = true,
+		})
+	end,
+})
+
+-- browser sync
+use({
+	"ray-x/web-tools.nvim",
+	event = "VimEnter",
+	config = function()
+		require("web-tools").setup({})
+	end,
+})
+
+use({
+	"alexghergh/nvim-tmux-navigation",
+	config = function()
+		require("nvim-tmux-navigation").setup({
+			disable_when_zoomed = false, -- defaults to false
+			keybindings = {
+				left = "<C-h>",
+				down = "<C-j>",
+				up = "<C-k>",
+				right = "<C-l>",
+			},
+		})
+	end,
+})

@@ -127,6 +127,7 @@ local mappings = {
 	d = {
 		name = "Debugger",
 		b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+		B = { "<cmd> lua require'telescope'.extensions.dap.list_breakpoints{}<cr>", "List Breakpoints" },
 		c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
 		i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
 		o = { "<cmd>lua require'dap'.step_over()<cr>", "Step over" },
@@ -164,6 +165,22 @@ local mappings = {
 		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
 		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
 	},
+	-- icon picker
+	i = {
+		name = "Icon Picker",
+		i = { "<cmd>IconPickerNormal<cr>", "Icon Picker Normal" },
+		y = { "<cmd>IconPickerYank<cr>", "Icon Picker Yank" },
+	},
+	-- local server
+	p = {
+		name = "Local webserver",
+		m = { "<cmd> MarkdownPreviewToggle <CR>", "Markdown" },
+		s = { "<cmd> BrowserSync <CR>", "run browser-sync server" },
+		o = { "<cmd> BrowserOpen <CR>", "strat server & preview current file" },
+		p = { "<cmd> BrowserPreview <CR>", "preview current file with browser sync" },
+		r = { "<cmd> BrowserRestart <CR>", "restart browser sync" },
+		S = { "<cmd> Browserstop <CR>", "stop browser sync" },
+	},
 }
 
 -- Visual mode Mappings
@@ -190,6 +207,11 @@ local vmappings = {
 		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
 		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
 		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
+	},
+	-- icon picker
+	i = {
+		name = "Icon Picker",
+		i = { "<cmd>IconPickerInsert<cr>", "Icon Picker Insert" },
 	},
 }
 

@@ -10,6 +10,7 @@ M.uiSetup = function()
 	lspSymbol("Info", "")
 	lspSymbol("Hint", "")
 	lspSymbol("Warn", "")
+	lspSymbol("other", "")
 
 	vim.diagnostic.config({
 		virtual_text = {
@@ -37,6 +38,13 @@ M.uiSetup = function()
 		border = "rounded",
 		focusable = false,
 		relative = "cursor",
+	})
+
+	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+		virtual_text = true,
+		spacing = 7,
+		prefix = " << ",
+		source = "always",
 	})
 end
 
@@ -106,6 +114,7 @@ M.on_attach = function(client, bufnr)
 		{ noremap = true, silent = true, desc = "Buf rename", buffer = bufnr }
 	)
 
+	-- jdtls
 	if client.name == "jdtls" then
 		require("jdtls").setup_dap({ hotcodereplace = "auto" })
 		require("jdtls.dap").setup_dap_main_class_configs()

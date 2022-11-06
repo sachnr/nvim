@@ -52,10 +52,8 @@ local Mappings = {
 			end,
 			"Close Buffer",
 		},
-    ["<leader>Q"] = {"<Cmd> q <CR>", "quit"},
+		["<leader>Q"] = { "<Cmd> q <CR>", "quit" },
 		["<leader>n"] = { "<cmd> enew <CR>", "new buffer" },
-		-- markdown-preview
-		["<leader>p"] = { "<cmd> :MarkdownPreviewToggle <CR>", "preview-markdown" },
 		-- nvimtree
 		["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
 		["<leader>1"] = { "<cmd> NvimTreeFocus <CR>", "focus nvimtree" },

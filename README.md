@@ -1,2 +1,2 @@
 # nvim
-dotfiles for nvim
+basic ide setup

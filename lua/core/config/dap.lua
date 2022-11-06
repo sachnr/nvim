@@ -6,8 +6,6 @@ M.dap = function()
 		return
 	end
 
-	require("base46").load_highlight("dapui")
-
 	local plugin_folder = vim.fn.stdpath("data")
 	local mason = plugin_folder .. "/mason/packages"
 
@@ -137,7 +135,7 @@ M.dapvt = function()
 		highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
 		highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
 		show_stop_reason = true, -- show stop reason when stopped for exceptions
-		commented = false, -- prefix virtual text with comment string
+		commented = true, -- prefix virtual text with comment string
 		only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
 		all_references = false, -- show virtual text on all all references of the variable (not only definitions)
 		filter_references_pattern = "<module", -- filter references (not definitions) pattern when all_references is activated (Lua gmatch pattern, default filters out Python modules)
@@ -155,6 +153,8 @@ M.dapui = function()
 	if not dap_ui_status_ok then
 		return
 	end
+
+	require("base46").load_highlight("dapui")
 
 	dapui.setup({
 		expand_lines = true,

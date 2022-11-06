@@ -2,7 +2,7 @@ local opt = vim.opt
 local g = vim.g
 
 -- base46 theme
-g.theme = "gruvbox" -- ayu-dark, everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn
+g.theme = "rxyhn" -- ayu-dark, everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn
 g.mapleader = " "
 
 opt.title = true -- let Vim set the title of the windowlet Vim set the title of the window
@@ -40,6 +40,11 @@ opt.number = true -- print the line number in front of each line
 opt.numberwidth = 2 -- number of columns used for the line number
 opt.ruler = false -- show cursor line and column in the status line
 opt.relativenumber = true --show relative line number in front of each line
+
+vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
+vim.opt.wrap = false -- display lines as one long line
+vim.opt.scrolloff = 8 -- minimal number of screen lines to keep above and below the cursor
+vim.opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
 
 -- disable some builtin vim plugins
 local default_plugins = {
