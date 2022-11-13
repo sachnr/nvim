@@ -7,54 +7,25 @@ end
 require("base46").load_highlight("whichkey")
 
 local options = {
-
-	icons = {
-		breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-		separator = "  ", -- symbol used between a key and it's label
-		group = "+", -- symbol prepended to a group
-	},
-
-	popup_mappings = {
-		scroll_down = "<c-d>", -- binding to scroll down inside the popup
-		scroll_up = "<c-u>", -- binding to scroll up inside the popup
-	},
-
 	window = {
 		border = "single", -- none, single, double, shadow
-		position = "bottom", -- bottom, top
-		margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-		padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-		winblend = 0,
-	},
-
-	layout = {
-		height = { min = 4, max = 25 }, -- min and max height of the columns
-		width = { min = 20, max = 50 }, -- min and max width of the columns
-		spacing = 3, -- spacing between columns
-		align = "left", -- align columns left, center or right
-	},
-
-	triggers_blacklist = {
-		-- list of mode / prefixes that should never be hooked by WhichKey
-		i = { "j", "k" },
-		v = { "j", "k" },
 	},
 }
 
--- lazygit terminal
-local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({
-	cmd = "lazygit",
-	dir = "git_dir",
-	direction = "float",
-	float_opts = {
-		border = "double",
-	},
-})
-
-function _lazygit_toggle()
-	lazygit:toggle()
-end
+-- -- lazygit terminal
+-- local Terminal = require("toggleterm.terminal").Terminal
+-- local lazygit = Terminal:new({
+-- 	cmd = "lazygit",
+-- 	dir = "git_dir",
+-- 	direction = "float",
+-- 	float_opts = {
+-- 		border = "double",
+-- 	},
+-- })
+--
+-- function _lazygit_toggle()
+-- 	lazygit:toggle()
+-- end
 
 -- Normal mode Mappings
 
@@ -76,29 +47,22 @@ local mappings = {
 		w = { "<cmd> Telescope live_grep <CR>", "live grep" },
 		o = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
 	},
-	-- trouble
-	e = {
-		name = "Erorrs",
-		e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
-		r = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
-	},
 	-- Git
 	g = {
 		name = "Git",
 		o = { "<cmd>Telescope git_status<cr>", "Telescope git status" },
 		b = { "<cmd>Telescope git_branches<cr>", "Telescope git branches" },
 		c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
-		g = { "<cmd>lua _lazygit_toggle()<CR>", "LazyGit UI" },
+		-- g = { "<cmd>lua _lazygit_toggle()<CR>", "LazyGit UI" },
 	},
 	-- lsp
 	l = {
 		name = "LSP",
 		i = { "<cmd>LspInfo<cr>", "Info" },
 		I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-		n = { "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", "buf goto_next" },
-		p = { "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", "buf goto_prev" },
-		o = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Diagnostics open_float" },
 		q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
+		e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
+		E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
 	},
 	w = {
 		name = "whichKey",
@@ -207,11 +171,6 @@ local vmappings = {
 		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
 		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
 		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
-	},
-	-- icon picker
-	i = {
-		name = "Icon Picker",
-		i = { "<cmd>IconPickerInsert<cr>", "Icon Picker Insert" },
 	},
 }
 

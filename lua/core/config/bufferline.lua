@@ -5,13 +5,6 @@ end
 
 require("base46").load_highlight("bufferline")
 
-local highlights = {
-	buffer_selected = {
-		bold = true,
-		italic = true,
-	},
-}
-
 local options = {
 	mode = "buffers", -- set to "tabs" to only show tabpages instead
 	numbers = "none", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
@@ -22,8 +15,8 @@ local options = {
 	left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
 	middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
 	indicator = {
-		-- icon = "▎", -- this should be omitted if indicator style is not 'icon'
-		style = "underline", -- 'icon' | 'underline' | 'none',
+		icon = "▎", -- this should be omitted if indicator style is not 'icon'
+		style = "none", -- 'icon' | 'underline' | 'none',
 	},
 	buffer_close_icon = "",
 	modified_icon = "●",
@@ -61,13 +54,13 @@ local options = {
 	offsets = {
 		{
 			filetype = "NvimTree",
-			-- text = "File Explorer" | function ,
-			-- text_align = "center", -- "left" | "center" | "right"
+			text = "File Explorer",
+			text_align = "center", -- "left" | "center" | "right"
 			separator = true,
 			padding = 1,
 		},
 	},
-	color_icons = false, -- true | false, whether or not to add the filetype icon highlights
+	color_icons = true, -- true | false, whether or not to add the filetype icon highlights
 	show_buffer_icons = true, -- true | false, disable filetype icons for buffers
 	show_buffer_close_icons = true, --true | false,
 	show_buffer_default_icon = true, --true | false, -- whether or not an unrecognised filetype should show a default icon
@@ -93,5 +86,4 @@ local options = {
 
 bufferline.setup({
 	options = options,
-	highlights = highlights,
 })

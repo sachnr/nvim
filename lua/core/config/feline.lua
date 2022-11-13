@@ -259,7 +259,7 @@ local provider = {
 			always_visible = true,
 		},
 		right_sep = {
-			str = " ",
+			str = " ",
 			hl = {
 				fg = "light_grey",
 				bg = "bg",

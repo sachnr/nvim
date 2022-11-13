@@ -81,9 +81,29 @@ local options = {
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown(),
 		},
+		lsp_handlers = {
+			disable = {},
+			location = {
+				telescope = {},
+				no_results_message = "No references found",
+			},
+			symbol = {
+				telescope = {},
+				no_results_message = "No symbols found",
+			},
+			call_hierarchy = {
+				telescope = {},
+				no_results_message = "No calls found",
+			},
+			code_action = {
+				telescope = require("telescope.themes").get_dropdown({}),
+				no_results_message = "No code actions available",
+				prefix = "",
+			},
+		},
 	},
 
-	extensions_list = { "ui-select", "fzf", "dap" },
+	extensions_list = { "ui-select", "fzf", "dap", "lsp_handlers", "glyph" },
 }
 
 telescope.setup(options)

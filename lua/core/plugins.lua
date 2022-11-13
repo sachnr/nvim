@@ -66,13 +66,13 @@ use({
 	end,
 })
 
-use({
-	"akinsho/toggleterm.nvim",
-	config = function()
-		require("base46").load_term_colors()
-		require("toggleterm").setup({})
-	end,
-})
+-- use({
+-- 	"akinsho/toggleterm.nvim",
+-- 	config = function()
+-- 		require("base46").load_term_colors()
+-- 		require("toggleterm").setup({})
+-- 	end,
+-- })
 
 use({
 	"nvim-tree/nvim-web-devicons",
@@ -123,6 +123,7 @@ use({
 	end,
 	config = function()
 		require("core.config.gitsigns")
+		require("scrollbar.handlers.gitsigns").setup()
 	end,
 })
 
@@ -226,11 +227,15 @@ use({
 use({
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
+	requires = {
+		{ "nvim-lua/plenary.nvim" },
+	},
 	config = function()
 		require("core.config.telescope")
 	end,
 })
 
+use({ "ghassan0/telescope-glyph.nvim" })
 use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 use({ "nvim-telescope/telescope-ui-select.nvim" })
 use({ "nvim-telescope/telescope-dap.nvim" })
@@ -250,11 +255,16 @@ use({
 
 use({
 	"folke/which-key.nvim",
-	module = "which-key",
-	keys = { "<leader>", '"', "'", "`" },
 	config = function()
 		require("core.config.whichkey")
 	end,
+})
+
+use({
+	"kevinhwang91/nvim-hlslens",
+	config = function()
+    require("core.config.hlslens")
+  end
 })
 
 use({
@@ -305,14 +315,6 @@ use({
 })
 
 use({
-	"theHamsta/nvim-dap-virtual-text",
-	after = "nvim-dap",
-	config = function()
-		require("core.config.dap").dapvt()
-	end,
-})
-
-use({
 	"rcarriga/nvim-dap-ui",
 	requires = {
 		{ "mfussenegger/nvim-dap" },
@@ -344,16 +346,6 @@ use({
 })
 
 use("LudoPinelli/comment-box.nvim")
-
-use({
-	"ziontee113/icon-picker.nvim",
-	event = "VimEnter",
-	config = function()
-		require("icon-picker").setup({
-			disable_legacy_commands = true,
-		})
-	end,
-})
 
 -- browser sync
 use({

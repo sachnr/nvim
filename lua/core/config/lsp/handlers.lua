@@ -13,9 +13,7 @@ M.uiSetup = function()
 	lspSymbol("other", "")
 
 	vim.diagnostic.config({
-		virtual_text = {
-			prefix = "",
-		},
+		virtual_text = false,
 		signs = true,
 		update_in_insert = false,
 		underline = true,
@@ -40,12 +38,12 @@ M.uiSetup = function()
 		relative = "cursor",
 	})
 
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-		virtual_text = true,
-		spacing = 7,
-		prefix = " << ",
-		source = "always",
-	})
+	-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	-- 	virtual_text = true,
+	-- 	spacing = 7,
+	-- 	prefix = " << ",
+	-- 	source = "always",
+	-- })
 end
 
 M.on_attach = function(client, bufnr)
@@ -53,41 +51,64 @@ M.on_attach = function(client, bufnr)
 	client.server_capabilities.documentRangeFormattingProvider = false
 
 	local keymap = vim.keymap.set
+
+	keymap(
+		"n",
+		"]d",
+		"<cmd>lua vim.diagnostic.goto_next({" .. bufnr .. "})<cr>",
+		{ noremap = true, silent = true, desc = "Lsp buf goto_next" }
+	)
+	keymap(
+		"n",
+		"[d",
+		"<cmd>lua vim.diagnostic.goto_prev({" .. bufnr .. "})<cr>",
+		{ noremap = true, silent = true, desc = "Lsp buf goto_prev" }
+	)
 	keymap(
 		"n",
 		"gD",
 		"<cmd>lua vim.lsp.buf.declaration()<CR>",
-		{ noremap = true, silent = true, desc = "Buf declaration", buffer = bufnr }
+		-- "<cmd>Telescope lsp_declarations<CR>",
+		{ noremap = true, silent = true, desc = "Lsp Buf declaration", buffer = bufnr }
 	)
 	keymap(
 		"n",
 		"gd",
 		"<cmd>lua vim.lsp.buf.definition()<CR>",
-		{ noremap = true, silent = true, desc = "Buf definition", buffer = bufnr }
+		-- "<cmd>Telescope lsp_definitions<CR>",
+		{ noremap = true, silent = true, desc = "Lsp Buf definition", buffer = bufnr }
 	)
 	keymap(
 		"n",
 		"K",
 		"<cmd>lua vim.lsp.buf.hover()<CR>",
-		{ noremap = true, silent = true, desc = "Buf hover", buffer = bufnr }
+		{ noremap = true, silent = true, desc = "Lsp Buf hover", buffer = bufnr }
 	)
 	keymap(
 		"n",
 		"gi",
 		"<cmd>lua vim.lsp.buf.implementation()<CR>",
-		{ noremap = true, silent = true, desc = "Buf implementation", buffer = bufnr }
+		-- "<cmd>Telescope lsp_implementations<CR>",
+		{ noremap = true, silent = true, desc = "Lsp Buf implementation", buffer = bufnr }
 	)
 	keymap(
 		"n",
 		"gr",
 		"<cmd>lua vim.lsp.buf.references()<CR>",
-		{ noremap = true, silent = true, desc = "Buf references", buffer = bufnr }
+		-- "<cmd>Telescope lsp_references<CR>",
+		{ noremap = true, silent = true, desc = "Lsp Buf references", buffer = bufnr }
 	)
 	keymap(
 		"n",
 		"<C-k>",
 		"<cmd>lua vim.lsp.buf.signature_help()<CR>",
-		{ noremap = true, silent = true, desc = "Buf signatureHelp", buffer = bufnr }
+		{ noremap = true, silent = true, desc = "Lsp Buf signatureHelp", buffer = bufnr }
+	)
+	keymap(
+		"n",
+		"<leader>ll",
+		"<cmd>lua vim.diagnostic.open_float()<CR>",
+		{ noremap = true, silent = true, desc = "Diagnostics open_float" }
 	)
 	keymap(
 		"n",
@@ -117,8 +138,8 @@ M.on_attach = function(client, bufnr)
 	-- jdtls
 	if client.name == "jdtls" then
 		require("jdtls").setup_dap({ hotcodereplace = "auto" })
+		require("jdtls").add_commands()
 		require("jdtls.dap").setup_dap_main_class_configs()
-		vim.lsp.codelens.refresh()
 	end
 
 	-- local status_ok, illuminate = pcall(require, "illuminate")
