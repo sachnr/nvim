@@ -50,4 +50,17 @@ M.packer_cmds = {
 
 M.treesitter_cmds = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSEnable", "TSDisable", "TSModuleInfo" }
 
+M.focus_cmds = {
+	"FocusSplitNicely",
+	"FocusSplitLeft",
+	"FocusSplitDown",
+	"FocusSplitUp",
+	"FocusSplitRight",
+	"FocusToggle",
+	"FocusDisable",
+	"FocusEnable",
+	"FocusSplitCycle",
+	"FocusSplitCycle reverse",
+}
+
 return M

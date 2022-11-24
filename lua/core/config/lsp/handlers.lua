@@ -100,7 +100,7 @@ M.on_attach = function(client, bufnr)
 	)
 	keymap(
 		"n",
-		"<C-k>",
+		"<leader>ls",
 		"<cmd>lua vim.lsp.buf.signature_help()<CR>",
 		{ noremap = true, silent = true, desc = "Lsp Buf signatureHelp", buffer = bufnr }
 	)

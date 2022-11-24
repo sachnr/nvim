@@ -117,6 +117,14 @@ use({
 })
 
 use({
+	"nvim-treesitter/nvim-treesitter-context",
+	after = "nvim-treesitter",
+	config = function()
+		require("treesitter-context").setup()
+	end,
+})
+
+use({
 	"lewis6991/gitsigns.nvim",
 	setup = function()
 		require("core.lazy_load").on_file_open("gitsigns.nvim")
@@ -263,8 +271,8 @@ use({
 use({
 	"kevinhwang91/nvim-hlslens",
 	config = function()
-    require("core.config.hlslens")
-  end
+		require("core.config.hlslens")
+	end,
 })
 
 use({
@@ -356,17 +364,26 @@ use({
 	end,
 })
 
+-- use({
+-- 	"alexghergh/nvim-tmux-navigation",
+-- 	config = function()
+-- 		require("nvim-tmux-navigation").setup({
+-- 			disable_when_zoomed = false, -- defaults to false
+-- 			keybindings = {
+-- 				left = "<C-h>",
+-- 				down = "<C-j>",
+-- 				up = "<C-k>",
+-- 				right = "<C-l>",
+-- 			},
+-- 		})
+-- 	end,
+-- })
+
 use({
-	"alexghergh/nvim-tmux-navigation",
+	"beauwilliams/focus.nvim",
+	cmd = require("core.lazy_load").focus_cmds,
+	module = "focus",
 	config = function()
-		require("nvim-tmux-navigation").setup({
-			disable_when_zoomed = false, -- defaults to false
-			keybindings = {
-				left = "<C-h>",
-				down = "<C-j>",
-				up = "<C-k>",
-				right = "<C-l>",
-			},
-		})
+		require("focus").setup({ enable = true, hybridnumber = true, excluded_filetypes = { "toggleterm" } })
 	end,
 })

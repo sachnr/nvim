@@ -2,7 +2,7 @@ local opt = vim.opt
 local g = vim.g
 
 -- base46 theme
-g.theme = "rxyhn" -- ayu-dark, everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn
+g.theme = "gruvbox" -- ayu-dark, everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn
 g.mapleader = " "
 
 opt.title = true -- let Vim set the title of the windowlet Vim set the title of the window
@@ -24,6 +24,7 @@ opt.updatetime = 250 -- after this many milliseconds flush swap file
 opt.writebackup = false -- make a backup before overwriting a file
 opt.wrap = true -- long lines wrap and continue on the next line
 opt.fileencoding = "utf-8" -- encoding
+vim.opt.swapfile = false -- whether to use a swapfile for a buffer
 opt.undofile = true -- save undo information in a file
 opt.undodir = vim.fn.stdpath("data") .. "/undofile" -- where to store undo files
 

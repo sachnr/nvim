@@ -20,6 +20,10 @@ local Mappings = {
 		["<C-l>"] = { "<C-w>l", "window right" },
 		["<C-j>"] = { "<C-w>j", "window down" },
 		["<C-k>"] = { "<C-w>k", "window up" },
+		-- ["<C-h>"] = { "<cmd> FocusSplitLeft <CR>", "window left" },
+		-- ["<C-l>"] = { "<cmd> FocusSplitRight <CR>", "window right" },
+		-- ["<C-j>"] = { "<cmd> FocusSplitDown <CR>", "window down" },
+		-- ["<C-k>"] = { "<cmd> FocusSplitUp <CR>", "window up" },
 		-- Resize with arrows
 		["<C-Up>"] = { ":resize -2<CR>", "Resize Up" },
 		["<C-Down>"] = { ":resize +2<CR>", "Resize down" },

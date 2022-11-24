@@ -14,7 +14,7 @@ local base46_theme = {
 	white = colors.white,
 	darker_black = colors.darker_black,
 	black = colors.black,
-	bg = colors.black2,
+	bg = colors.statusline_bg,
 	one_bg = colors.one_bg,
 	one_bg2 = colors.one_bg2,
 	one_bg3 = colors.one_bg3,
@@ -89,6 +89,10 @@ local vi_mode_colors = {
 
 local provider = {
 	-- 1
+	separator = {
+		provider = "",
+	},
+
 	vim_mode = {
 		provider = function()
 			local current_text = " " .. mode_alias[vim.fn.mode()] .. " "
@@ -111,7 +115,7 @@ local provider = {
 			end,
 			always_visible = true,
 		},
-		right_sep = "slant_right_2",
+		right_sep = "slant_right",
 	},
 
 	gitBranch = {
@@ -122,7 +126,7 @@ local provider = {
 			style = "bold",
 		},
 		left_sep = {
-			str = "██",
+			str = "slant_left",
 			hl = {
 				fg = "bg",
 				bg = "bg",
@@ -158,14 +162,7 @@ local provider = {
 			bg = "bg",
 		},
 		left_sep = "block",
-		right_sep = {
-			str = "██",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
+		right_sep = "slant_right",
 		icon = "~",
 	},
 
@@ -183,89 +180,21 @@ local provider = {
 			style = "bold",
 		},
 		left_sep = {
-			str = "██",
+			str = "█",
 			hl = {
 				fg = "one_bg2",
-				bg = "black",
+				bg = "bg",
 			},
 			always_visible = true,
 		},
 		right_sep = {
-			str = "██",
+			str = "█",
 			hl = {
 				fg = "one_bg2",
-				bg = "black",
+				bg = "bg",
 			},
 		},
 		icon = " ",
-	},
-
-	separator1 = {
-		provider = "",
-		left_sep = {
-			str = "",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
-	},
-
-	separator2 = {
-		provider = "",
-		left_sep = {
-			str = "",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
-	},
-
-	separator3 = {
-		provider = "",
-		left_sep = {
-			str = "",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
-	},
-
-	separator4 = {
-		provider = "",
-		left_sep = {
-			str = "",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
-	},
-
-	diagnostic = {
-		provider = "",
-		left_sep = {
-			str = "██",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
-		right_sep = {
-			str = " ",
-			hl = {
-				fg = "light_grey",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
 	},
 
 	diagnostic_errors = {
@@ -305,14 +234,7 @@ local provider = {
 			bg = "bg",
 		},
 		left_sep = "block",
-		right_sep = {
-			str = "██",
-			hl = {
-				fg = "bg",
-				bg = "bg",
-			},
-			always_visible = true,
-		},
+		right_sep = "block",
 	},
 
 	lsp_client_names = {
@@ -323,18 +245,18 @@ local provider = {
 			style = "bold",
 		},
 		left_sep = {
-			str = "██",
+			str = "█",
 			hl = {
 				fg = "one_bg2",
-				bg = "one_bg2",
+				bg = "bg",
 			},
 			always_visible = true,
 		},
 		right_sep = {
-			str = "██",
+			str = "█",
 			hl = {
 				fg = "one_bg2",
-				bg = "one_bg2",
+				bg = "bg",
 			},
 			always_visible = true,
 		},
@@ -348,66 +270,59 @@ local provider = {
 			style = "bold",
 		},
 		left_sep = "block",
-		right_sep = "block",
+		right_sep = {
+			str = " ",
+			hl = {
+				fg = "white",
+				bg = "bg",
+			},
+			always_visible = true,
+		},
 	},
 
 	line_percentage = {
 		provider = "line_percentage",
 		hl = {
-			fg = "white",
-			bg = "one_bg2",
+			fg = "black",
+			bg = "blue",
 			style = "bold",
 		},
 		left_sep = {
-			str = "██",
+			str = "█",
 			hl = {
-				fg = "one_bg2",
-				bg = "black",
+				fg = "blue",
+				bg = "bg",
 			},
 			always_visible = true,
 		},
 		right_sep = "block",
 		icon = "  ",
 	},
-
-	scroll_bar = {
-		provider = {
-			name = "scroll_bar",
-			reverse = false,
-		},
-		hl = {
-			fg = "green",
-			bg = "one_bg2",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
 }
 
 local left = {
 	provider.vim_mode,
+	provider.separator,
+	provider.fileinfo,
+	provider.separator,
+	provider.position,
 	provider.gitBranch,
 	provider.gitDiffAdded,
 	provider.gitDiffRemoved,
 	provider.gitDiffChanged,
-	provider.fileinfo,
-	provider.separator4,
-	provider.position,
 }
 
 local middle = {}
 
 local right = {
-	provider.separator3,
-	provider.lsp_client_names,
-  provider.diagnostic,
 	provider.diagnostic_errors,
 	provider.diagnostic_warnings,
 	provider.diagnostic_info,
 	provider.diagnostic_hints,
+	provider.separator,
+	provider.lsp_client_names,
+	provider.separator,
 	provider.line_percentage,
-	provider.scroll_bar,
 }
 
 local components = {
