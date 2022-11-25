@@ -86,7 +86,6 @@ local mappings = {
 		s = { ":e $MYVIMRC | :cd %:p:h <CR>", "Settings/vimrc" },
 		n = { "<cmd> set nu! <CR>", "toggle line number" },
 		r = { "<cmd> set rnu! <CR>", "toggle relative number" },
-		d = { "<cmd> cd %:p:h <CR>", "Change to Directory of Current file" },
 	},
 	-- debugger
 	d = {
