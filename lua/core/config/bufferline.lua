@@ -56,16 +56,16 @@ local options = {
 			return true
 		end
 	end,
-	-- offsets = {
-	-- 	{
-	-- 		filetype = "NvimTree",
-	-- 		text = "File Explorer",
-	-- 		text_align = "center", -- "left" | "center" | "right"
-	--      highlight = "BufferlineFill",
-	-- 		separator = true,
-	-- 		padding = 1,
-	-- 	},
-	-- },
+	offsets = {
+		{
+			filetype = "NvimTree",
+			text = "File Explorer",
+			text_align = "center", -- "left" | "center" | "right"
+	     highlight = "BufferlineFill",
+			separator = true,
+			padding = 1,
+		},
+	},
 	color_icons = true, -- true | false, whether or not to add the filetype icon highlights
 	show_buffer_icons = true, -- true | false, disable filetype icons for buffers
 	show_buffer_close_icons = true, --true | false,
@@ -248,7 +248,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or hint_fg,
+		sp = underline_sp,
 	},
 	hint_diagnostic = {
 		fg = comment_diagnostic_fg,
@@ -265,7 +265,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or hint_diagnostic_fg,
+		sp = underline_sp,
 	},
 	info = {
 		fg = comment_fg,
@@ -282,7 +282,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or info_fg,
+		sp = underline_sp,
 	},
 	info_diagnostic = {
 		fg = comment_diagnostic_fg,
@@ -299,7 +299,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or info_diagnostic_fg,
+		sp = underline_sp,
 	},
 	warning = {
 		fg = comment_fg,
@@ -316,7 +316,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or warning_fg,
+		sp = underline_sp,
 	},
 	warning_diagnostic = {
 		fg = comment_diagnostic_fg,
@@ -333,7 +333,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or warning_diagnostic_fg,
+		sp = underline_sp,
 	},
 	error = {
 		fg = comment_fg,
@@ -350,7 +350,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or error_fg,
+		sp = underline_sp,
 	},
 	error_diagnostic = {
 		fg = comment_diagnostic_fg,
@@ -367,7 +367,7 @@ local highlights = {
 		bold = true,
 		italic = true,
 		underline = has_underline_indicator,
-		sp = underline_sp or error_diagnostic_fg,
+		sp = underline_sp,
 	},
 	modified = {
 		fg = string_fg,
@@ -379,7 +379,7 @@ local highlights = {
 	},
 	modified_selected = {
 		fg = error_fg,
-		bg = visible_bg,
+		bg = normal_bg,
 		sp = underline_sp,
 		underline = has_underline_indicator,
 	},

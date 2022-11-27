@@ -12,20 +12,20 @@ local options = {
 	},
 }
 
--- -- lazygit terminal
--- local Terminal = require("toggleterm.terminal").Terminal
--- local lazygit = Terminal:new({
--- 	cmd = "lazygit",
--- 	dir = "git_dir",
--- 	direction = "float",
--- 	float_opts = {
--- 		border = "double",
--- 	},
--- })
---
--- function _lazygit_toggle()
--- 	lazygit:toggle()
--- end
+-- lazygit terminal
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new({
+	cmd = "lazygit",
+	dir = "git_dir",
+	direction = "float",
+	float_opts = {
+		border = "double",
+	},
+})
+
+function _lazygit_toggle()
+	lazygit:toggle()
+end
 
 -- Normal mode Mappings
 
@@ -53,7 +53,7 @@ local mappings = {
 		o = { "<cmd>Telescope git_status<cr>", "Telescope git status" },
 		b = { "<cmd>Telescope git_branches<cr>", "Telescope git branches" },
 		c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
-		-- g = { "<cmd>lua _lazygit_toggle()<CR>", "LazyGit UI" },
+		g = { "<cmd>lua _lazygit_toggle()<CR>", "LazyGit UI" },
 	},
 	-- lsp
 	l = {
@@ -86,6 +86,7 @@ local mappings = {
 		s = { ":e $MYVIMRC | :cd %:p:h <CR>", "Settings/vimrc" },
 		n = { "<cmd> set nu! <CR>", "toggle line number" },
 		r = { "<cmd> set rnu! <CR>", "toggle relative number" },
+		d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
 	},
 	-- debugger
 	d = {

@@ -45,7 +45,7 @@ local Mappings = {
 		-- formatter
 		["<leader>f"] = { "<cmd> :Format <CR>", "formatter" },
 		-- nvterm
-		-- ["<leader>`"] = { "<Cmd> :ToggleTerm <CR>", "toggle horizontal term" },
+		["<leader>`"] = { "<Cmd> :ToggleTerm <CR>", "toggle horizontal term" },
 		-- bufferline
 		["<Bslash>"] = { " <Cmd> BufferLinePick <CR>", "Pick Buffer" },
 		["<TAB>"] = { " <Cmd> BufferLineCycleNext <CR>", "Next Buffer" },
@@ -111,7 +111,7 @@ local Mappings = {
 	-- =========================================================
 	t = {
 		-- toggle terminal (terminal mode)
-		-- ["<leader>`"] = { "<Cmd> :ToggleTerm <CR>", "toggle horizontal term" },
+		["<leader>`"] = { "<Cmd> :ToggleTerm <CR>", "toggle horizontal term" },
 		["<S-n>"] = { "<cmd> NvimTreeFocus <CR>", "focus nvimtree" },
 	},
 }

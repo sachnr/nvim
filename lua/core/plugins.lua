@@ -66,13 +66,13 @@ use({
 	end,
 })
 
--- use({
--- 	"akinsho/toggleterm.nvim",
--- 	config = function()
--- 		require("base46").load_term_colors()
--- 		require("toggleterm").setup({})
--- 	end,
--- })
+use({
+	"akinsho/toggleterm.nvim",
+	config = function()
+		require("base46").load_term_colors()
+		require("toggleterm").setup({})
+	end,
+})
 
 use({
 	"nvim-tree/nvim-web-devicons",
@@ -387,9 +387,11 @@ use({
 
 use({
 	"beauwilliams/focus.nvim",
-	cmd = require("core.lazy_load").focus_cmds,
-	module = "focus",
+	-- cmd = require("core.lazy_load").focus_cmds,
+	-- module = "focus",
 	config = function()
-		require("focus").setup({ enable = true, hybridnumber = true, excluded_filetypes = { "toggleterm" } })
+		require("focus").setup({ excluded_filetypes = { "toggleterm" } })
 	end,
 })
+
+use({ "elkowar/yuck.vim" })
