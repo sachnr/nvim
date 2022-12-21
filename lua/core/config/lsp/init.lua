@@ -14,10 +14,10 @@ local servers = {
 	"bashls",
 	"jsonls",
 	"cssls",
-	"clangd",
+	"ccls",
 	"vuels",
 	"pylsp",
-	"sqlls",
+	"sqls",
 	"gopls",
 }
 

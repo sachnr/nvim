@@ -9,27 +9,27 @@ require("base46").load_highlight("mason")
 local options = {
 	ensure_installed = {
 		-- Language Servers
-		"lua-language-server",
-		"python-lsp-server",
-		"clangd",
+		-- "lua-language-server",
+		-- "python-lsp-server",
+		-- "clangd",
 		"jdtls",
-		"html-lsp",
-		"json-lsp",
-		"efm",
-		"eslint",
-		"eslint_d",
-		"vue-language-server",
-		"css-lsp",
-		"bash-language-server",
-		"sqlls",
-		"gopls",
+		-- "html-lsp",
+		-- "json-lsp",
+		-- "efm",
+		-- "eslint",
+		-- "eslint_d",
+		-- "vue-language-server",
+		-- "css-lsp",
+		-- "bash-language-server",
+		-- "sqlls",
+		-- "gopls",
 
 		-- Formatters
-		"black",
-		"stylua",
-		"clang-format",
-		"prettierd",
-		"shfmt",
+		-- "black",
+		-- "stylua",
+		-- "clang-format",
+		-- "prettierd",
+		-- "shfmt",
 
 		-- debuggers
 		"firefox-debug-adapter",
@@ -44,7 +44,7 @@ local options = {
 	-- - "prepend" (default, Mason's bin location is put first in PATH)
 	-- - "append" (Mason's bin location is put at the end of PATH)
 	-- - "skip" (doesn't modify PATH)
-	PATH = "prepend",
+	PATH = "append",
 
 	ui = {
 		icons = {

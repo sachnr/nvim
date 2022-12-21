@@ -61,9 +61,9 @@ local options = {
 			filetype = "NvimTree",
 			text = "File Explorer",
 			text_align = "center", -- "left" | "center" | "right"
-	     highlight = "BufferlineFill",
+			highlight = "BufferlineFill",
 			separator = true,
-			padding = 1,
+			-- padding = 1,
 		},
 	},
 	color_icons = true, -- true | false, whether or not to add the filetype icon highlights

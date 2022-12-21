@@ -4,5 +4,5 @@ vim.defer_fn(function()
 end, 0)
 
 require("core.options")
-require("core.packer")
+require("core.plugins")
 require("core.keymaps")
