@@ -205,10 +205,7 @@ return require("packer").startup({
 			"mhartington/formatter.nvim",
 			after = "nvim-lspconfig",
 			config = function()
-				require("formatter").setup({
-					logging = true,
-					filetype = require("core.config.formatter").filetypes,
-				})
+				require("core.config.formatter")
 			end,
 		})
 
@@ -392,23 +389,14 @@ return require("packer").startup({
 		-- 	end,
 		-- })
 
-		use({
-			"beauwilliams/focus.nvim",
-			-- cmd = require("core.lazy_load").focus_cmds,
-			-- module = "focus",
-			config = function()
-				require("focus").setup({ excluded_filetypes = { "toggleterm" } })
-			end,
-		})
-
-		-- Smooth scroll.
-		use({
-			"karb94/neoscroll.nvim",
-			event = { "BufRead", "BufNewFile" },
-			config = function()
-				require("neoscroll").setup()
-			end,
-		})
+		-- use({
+		-- 	"beauwilliams/focus.nvim",
+		-- 	-- cmd = require("core.lazy_load").focus_cmds,
+		-- 	-- module = "focus",
+		-- 	config = function()
+		-- 		require("focus").setup({ excluded_filetypes = { "toggleterm" } })
+		-- 	end,
+		-- })
 
 		if packer_bootstrap then
 			require("packer").sync()
