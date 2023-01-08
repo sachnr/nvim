@@ -5,7 +5,7 @@ end
 
 require("base46").load_highlight("lsp")
 
-local handlers = require("core.config.lsp.handlers")
+local handlers = require("config.lsp.handlers")
 local on_attach = handlers.on_attach
 local capablities = handlers.capablities()
 
@@ -19,42 +19,11 @@ local servers = {
 	"pylsp",
 	"sqls",
 	"gopls",
+	"eslint",
+	"yamlls",
 }
 
 handlers.uiSetup()
-
-local eslint = {
-	lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-	lintStdin = true,
-	lintFormats = { "%f:%l:%c: %m" },
-	lintIgnoreExitCode = true,
-	formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-	formatStdin = true,
-}
-
--- javascript, typescript
-lspconfig.efm.setup({
-	on_attach = on_attach,
-	capablities = capablities,
-	settings = {
-		languages = {
-			javascript = { eslint },
-			javascriptreact = { eslint },
-			["javascript.jsx"] = { eslint },
-			typescript = { eslint },
-			["typescript.tsx"] = { eslint },
-			typescriptreact = { eslint },
-		},
-	},
-	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"javascript.jsx",
-		"typescript",
-		"typescript.tsx",
-		"typescriptreact",
-	},
-})
 
 -- lua
 lspconfig.sumneko_lua.setup({

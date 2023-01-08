@@ -14,8 +14,8 @@ local options = {
 
 -- lazygit terminal
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({
-	cmd = "lazygit",
+local gitui = Terminal:new({
+	cmd = "gitui",
 	dir = "git_dir",
 	direction = "float",
 	float_opts = {
@@ -23,8 +23,8 @@ local lazygit = Terminal:new({
 	},
 })
 
-function _lazygit_toggle()
-	lazygit:toggle()
+function _gitui_toggle()
+	gitui:toggle()
 end
 
 -- Normal mode Mappings
@@ -42,6 +42,9 @@ local mappings = {
 	-- Search
 	t = {
 		name = "Telescope/Search",
+		s = { "<cmd> :Telescope current_buffer_fuzzy_find <CR>", "search in current buffer" },
+		t = { "<cmd> :Telescope buffers <CR>", "active buffers" },
+		m = { "<cmd> :Telescope marks <CR>", "Marks" },
 		p = { "<cmd> :Telescope projects <CR>", "projects" },
 		f = { "<cmd> Telescope find_files <CR>", "find files" },
 		w = { "<cmd> Telescope live_grep <CR>", "live grep" },
@@ -53,7 +56,7 @@ local mappings = {
 		o = { "<cmd>Telescope git_status<cr>", "Telescope git status" },
 		b = { "<cmd>Telescope git_branches<cr>", "Telescope git branches" },
 		c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
-		g = { "<cmd>lua _lazygit_toggle()<CR>", "LazyGit UI" },
+		g = { "<cmd>lua _gitui_toggle()<CR>", "LazyGit UI" },
 	},
 	-- lsp
 	l = {
@@ -129,6 +132,12 @@ local mappings = {
 		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
 		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
 		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
+	},
+	-- comment box
+	b = {
+		name = "Bufferline",
+		n = { "<Cmd> :BufferLineMoveNext <CR>", "move the current buffer forwards" },
+		p = { "<Cmd> :BufferLineMovePrev <CR>", "move the current buffer backwards" },
 	},
 	-- icon picker
 	i = {

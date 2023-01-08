@@ -27,10 +27,10 @@ local filetypes = {
 	markdown = require("formatter.filetypes.markdown").prettier,
 	json = require("formatter.filetypes.json").jq,
 	jsonc = require("formatter.filetypes.json").jq,
-	typescriptreact = require("formatter.filetypes.typescriptreact").eslintd,
-	typescript = require("formatter.filetypes.typescript").eslintd,
-	javascript = require("formatter.filetypes.javascript").eslintd,
-	javascriptreact = require("formatter.filetypes.javascriptreact").eslintd,
+	typescriptreact = require("formatter.filetypes.typescriptreact").prettier,
+	typescript = require("formatter.filetypes.typescript").prettier,
+	javascript = require("formatter.filetypes.javascript").prettier,
+	javascriptreact = require("formatter.filetypes.javascriptreact").prettier,
 	java = {
 		function()
 			return {

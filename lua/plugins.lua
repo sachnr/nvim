@@ -49,10 +49,7 @@ return require("packer").startup({
 		use({
 			"sachnr/base46",
 			config = function()
-				local ok, base46 = pcall(require, "base46")
-				if ok then
-					base46.load_theme()
-				end
+				require("base46").setup()
 			end,
 		})
 
@@ -60,7 +57,7 @@ return require("packer").startup({
 			"akinsho/bufferline.nvim",
 			requires = "nvim-tree/nvim-web-devicons",
 			config = function()
-				require("core.config.bufferline")
+				require("config.bufferline")
 			end,
 		})
 
@@ -69,7 +66,7 @@ return require("packer").startup({
 		use({
 			"feline-nvim/feline.nvim",
 			config = function()
-				require("core.config.feline")
+				require("config.feline")
 			end,
 		})
 
@@ -84,7 +81,7 @@ return require("packer").startup({
 		use({
 			"nvim-tree/nvim-web-devicons",
 			config = function()
-				require("core.config.devicons")
+				require("config.devicons")
 			end,
 		})
 
@@ -92,10 +89,10 @@ return require("packer").startup({
 			"lukas-reineke/indent-blankline.nvim",
 			opt = true,
 			setup = function()
-				require("core.lazy_load").on_file_open("indent-blankline.nvim")
+				require("lazy_load").on_file_open("indent-blankline.nvim")
 			end,
 			config = function()
-				require("core.config.indent-blankline")
+				require("config.indent-blankline")
 			end,
 		})
 
@@ -103,10 +100,10 @@ return require("packer").startup({
 			"NvChad/nvim-colorizer.lua",
 			opt = true,
 			setup = function()
-				require("core.lazy_load").on_file_open("nvim-colorizer.lua")
+				require("lazy_load").on_file_open("nvim-colorizer.lua")
 			end,
 			config = function()
-				require("core.config.colorizer")
+				require("config.colorizer")
 			end,
 		})
 
@@ -114,12 +111,12 @@ return require("packer").startup({
 			"nvim-treesitter/nvim-treesitter",
 			module = "nvim-treesitter",
 			setup = function()
-				require("core.lazy_load").on_file_open("nvim-treesitter")
+				require("lazy_load").on_file_open("nvim-treesitter")
 			end,
-			cmd = require("core.lazy_load").treesitter_cmds,
+			cmd = require("lazy_load").treesitter_cmds,
 			run = ":TSUpdate",
 			config = function()
-				require("core.config.treesitter")
+				require("config.treesitter")
 			end,
 		})
 
@@ -134,17 +131,17 @@ return require("packer").startup({
 		use({
 			"lewis6991/gitsigns.nvim",
 			setup = function()
-				require("core.lazy_load").on_file_open("gitsigns.nvim")
+				require("lazy_load").on_file_open("gitsigns.nvim")
 			end,
 			config = function()
-				require("core.config.gitsigns")
+				require("config.gitsigns")
 			end,
 		})
 
 		use({
 			"williamboman/mason.nvim",
 			config = function()
-				require("core.config.mason")
+				require("config.mason")
 			end,
 		})
 
@@ -152,10 +149,10 @@ return require("packer").startup({
 			"neovim/nvim-lspconfig",
 			opt = true,
 			setup = function()
-				require("core.lazy_load").on_file_open("nvim-lspconfig")
+				require("lazy_load").on_file_open("nvim-lspconfig")
 			end,
 			config = function()
-				require("core.config.lsp")
+				require("config.lsp")
 			end,
 		})
 
@@ -165,7 +162,7 @@ return require("packer").startup({
 			"hrsh7th/nvim-cmp",
 			after = "friendly-snippets",
 			config = function()
-				require("core.config.cmp")
+				require("config.cmp")
 			end,
 		})
 
@@ -174,7 +171,7 @@ return require("packer").startup({
 			wants = "friendly-snippets",
 			after = "nvim-cmp",
 			config = function()
-				require("core.config.luasnip")
+				require("config.luasnip")
 			end,
 		})
 
@@ -188,7 +185,7 @@ return require("packer").startup({
 			"windwp/nvim-autopairs",
 			after = "nvim-cmp",
 			config = function()
-				require("core.config.autopair")
+				require("config.autopair")
 			end,
 		})
 
@@ -196,23 +193,31 @@ return require("packer").startup({
 		-- 	"RRethy/vim-illuminate",
 		-- 	after = "nvim-autopairs",
 		-- 	config = function()
-		-- 		require("core.config.illuminate")
+		-- 		require("config.illuminate")
 		-- 	end,
 		-- })
+
+		use({
+			"jose-elias-alvarez/null-ls.nvim",
+			config = function()
+				require("config.null-ls")
+			end,
+			requires = { "nvim-lua/plenary.nvim" },
+		})
 
 		-- formatter
 		use({
 			"mhartington/formatter.nvim",
 			after = "nvim-lspconfig",
 			config = function()
-				require("core.config.formatter")
+				require("config.formatter")
 			end,
 		})
 
 		use({
 			"goolord/alpha-nvim",
 			config = function()
-				require("core.config.alpha")
+				require("config.alpha")
 			end,
 		})
 
@@ -231,7 +236,7 @@ return require("packer").startup({
 			ft = "alpha",
 			cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 			config = function()
-				require("core.config.nvimtree")
+				require("config.nvimtree")
 			end,
 		})
 
@@ -242,7 +247,7 @@ return require("packer").startup({
 				{ "nvim-lua/plenary.nvim" },
 			},
 			config = function()
-				require("core.config.telescope")
+				require("config.telescope")
 			end,
 		})
 
@@ -267,21 +272,21 @@ return require("packer").startup({
 		use({
 			"folke/which-key.nvim",
 			config = function()
-				require("core.config.whichkey")
+				require("config.whichkey")
 			end,
 		})
 
 		use({
 			"kevinhwang91/nvim-hlslens",
 			config = function()
-				require("core.config.hlslens")
+				require("config.hlslens")
 			end,
 		})
 
 		use({
 			"petertriho/nvim-scrollbar",
 			config = function()
-				require("core.config.scrollbar")
+				require("config.scrollbar")
 			end,
 		})
 
@@ -321,7 +326,7 @@ return require("packer").startup({
 		use({
 			"mfussenegger/nvim-dap",
 			config = function()
-				require("core.config.dap").dap()
+				require("config.dap").dap()
 			end,
 		})
 
@@ -332,7 +337,7 @@ return require("packer").startup({
 				{ "theHamsta/nvim-dap-virtual-text" },
 			},
 			config = function()
-				require("core.config.dap").dapui()
+				require("config.dap").dapui()
 			end,
 		})
 
@@ -341,7 +346,7 @@ return require("packer").startup({
 			"mfussenegger/nvim-jdtls",
 			opt = true,
 			setup = function()
-				require("core.lazy_load").on_file_open("nvim-jdtls")
+				require("lazy_load").on_file_open("nvim-jdtls")
 			end,
 			disable = false,
 		})
@@ -391,7 +396,7 @@ return require("packer").startup({
 
 		-- use({
 		-- 	"beauwilliams/focus.nvim",
-		-- 	-- cmd = require("core.lazy_load").focus_cmds,
+		-- 	-- cmd = require("lazy_load").focus_cmds,
 		-- 	-- module = "focus",
 		-- 	config = function()
 		-- 		require("focus").setup({ excluded_filetypes = { "toggleterm" } })

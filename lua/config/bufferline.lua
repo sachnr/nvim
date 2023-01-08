@@ -12,7 +12,7 @@ local colors = base46.get_theme_tb("base_30")
 
 local options = {
 	mode = "buffers", -- set to "tabs" to only show tabpages instead
-	numbers = "none", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
+	numbers = "ordinal", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
 	close_command = function()
 		require("bufdelete").bufdelete(0, true)
 	end, -- can be a string | function, see "Mouse actions"
@@ -79,11 +79,11 @@ local options = {
 	separator_style = "slant", --"slant" | "thick" | "thin" | "padded_slant" { 'any', 'any' },
 	enforce_regular_tabs = false, -- false | true,
 	always_show_bufferline = false, -- true | false,
-	-- hover = {
-	--   enabled = true,
-	--   delay = 200,
-	--   reveal = { "close" },
-	-- },
+	hover = {
+	  enabled = true,
+	  delay = 200,
+	  reveal = { "close" },
+	},
 	-- sort_by = "directory", -- 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
 	-- add custom logic
 	-- return buffer_a.modified > buffer_b.modified
