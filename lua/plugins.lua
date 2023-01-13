@@ -189,14 +189,6 @@ return require("packer").startup({
 			end,
 		})
 
-		-- use({
-		-- 	"RRethy/vim-illuminate",
-		-- 	after = "nvim-autopairs",
-		-- 	config = function()
-		-- 		require("config.illuminate")
-		-- 	end,
-		-- })
-
 		use({
 			"jose-elias-alvarez/null-ls.nvim",
 			config = function()
@@ -318,9 +310,9 @@ return require("packer").startup({
 
 		use({
 			"iamcco/markdown-preview.nvim",
-			run = function()
-				vim.fn["mkdp#util#install"]()
-			end,
+			-- run = function()
+			-- 	vim.fn["mkdp#util#install"]()
+			-- end,
 		})
 
 		use({
@@ -351,23 +343,6 @@ return require("packer").startup({
 			disable = false,
 		})
 
-		--transparency
-		use({
-			"xiyaowong/nvim-transparent",
-			config = function()
-				require("transparent").setup({
-					enable = true, -- boolean: enable transparent
-					extra_groups = {
-						-- table/string: additional groups that should be cleared
-						-- In particular, when you set it to 'all', that means all available groups
-						"NvimTreeNormalNC",
-						"NvimTreeNormal",
-						"NvimTreeWinSeparator",
-					},
-				})
-			end,
-		})
-
 		use("LudoPinelli/comment-box.nvim")
 
 		-- browser sync
@@ -391,15 +366,6 @@ return require("packer").startup({
 		-- 				right = "<C-l>",
 		-- 			},
 		-- 		})
-		-- 	end,
-		-- })
-
-		-- use({
-		-- 	"beauwilliams/focus.nvim",
-		-- 	-- cmd = require("lazy_load").focus_cmds,
-		-- 	-- module = "focus",
-		-- 	config = function()
-		-- 		require("focus").setup({ excluded_filetypes = { "toggleterm" } })
 		-- 	end,
 		-- })
 

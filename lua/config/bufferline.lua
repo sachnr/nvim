@@ -59,11 +59,11 @@ local options = {
 	offsets = {
 		{
 			filetype = "NvimTree",
-			text = "File Explorer",
-			text_align = "center", -- "left" | "center" | "right"
-			highlight = "BufferlineFill",
+			-- text = "File Explorer",
+			-- text_align = "center", -- "left" | "center" | "right"
+			-- highlight = "BufferlineFill",
 			separator = true,
-			-- padding = 1,
+			padding = 1,
 		},
 	},
 	color_icons = true, -- true | false, whether or not to add the filetype icon highlights
@@ -76,14 +76,14 @@ local options = {
 	persist_buffer_sort = false, -- whether or not custom sorted buffers should persist
 	-- can also be a table containing 2 custom separators
 	-- [focused and unfocused]. eg: { '|', '|' }
-	separator_style = "slant", --"slant" | "thick" | "thin" | "padded_slant" { 'any', 'any' },
-	enforce_regular_tabs = false, -- false | true,
+	separator_style = "thick", --"slant" | "thick" | "thin" | "padded_slant" { 'any', 'any' },
+	enforce_regular_tabs = true, -- false | true,
 	always_show_bufferline = false, -- true | false,
-	hover = {
-	  enabled = true,
-	  delay = 200,
-	  reveal = { "close" },
-	},
+	-- hover = {
+	--   enabled = true,
+	--   delay = 200,
+	--   reveal = { "close" },
+	-- },
 	-- sort_by = "directory", -- 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
 	-- add custom logic
 	-- return buffer_a.modified > buffer_b.modified

@@ -58,7 +58,6 @@ local Mappings = {
 			end,
 			"Close Buffer",
 		},
-		["<leader>Q"] = { "<Cmd> q <CR>", "quit" },
 		["<leader>n"] = { "<cmd> enew <CR>", "new buffer" },
 		-- nvimtree
 		["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
@@ -66,7 +65,7 @@ local Mappings = {
 		-- copy all
 		["<leader>C"] = { "<cmd> %y+ <CR>", "copy whole file" },
 		-- indent blankline
-		["gC"] = {
+		["gc"] = {
 			function()
 				local ok, start = require("indent_blankline.utils").get_current_context(
 					vim.g.indent_blankline_context_patterns,
