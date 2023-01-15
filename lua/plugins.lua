@@ -49,7 +49,7 @@ return require("packer").startup({
 		use({
 			"sachnr/base46",
 			config = function()
-				require("base46").setup()
+				require("base46").setup({ transparency = true })
 			end,
 		})
 

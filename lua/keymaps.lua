@@ -8,6 +8,7 @@ local Mappings = {
 		["<C-l>"] = { "<Right>", "move right" },
 		["<C-j>"] = { "<Down>", "move down" },
 		["<C-k>"] = { "<Up>", "move up" },
+		["<C-c>"] = { "<ESC>" },
 	},
 
 	-- =========================================================
@@ -15,8 +16,8 @@ local Mappings = {
 	-- =========================================================
 	n = {
 		["<ESC>"] = { "<cmd> noh <CR>", "no highlight" },
-    ["<C-d>"] = { "<C-d>zz" },
-    ["<C-u>"] = { "<C-u>zz" },
+		["<C-d>"] = { "<C-d>zz" },
+		["<C-u>"] = { "<C-u>zz" },
 		-- switch between windows
 		["<C-h>"] = { "<C-w>h", "window left" },
 		["<C-l>"] = { "<C-w>l", "window right" },
