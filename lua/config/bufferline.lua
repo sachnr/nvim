@@ -39,8 +39,8 @@ local options = {
 	--       -- buffers (tabs only) | table(int) | the numbers of the buffers in the tab
 	--       -- tabnr (tabs only)   | int        | the "handle" of the tab, can be converted to its ordinal number using: `vim.api.nvim_tabpage_get_number(buf.tabnr)`
 	-- end,
-	max_name_length = 18,
-	max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
+	max_name_length = vim.o.columns * 2 / 3,
+	max_prefix_length = vim.o.columns * 2 / 3, -- prefix used when a buffer is de-duplicated
 	truncate_names = true, -- whether or not tab names should be truncated
 	tab_size = 18,
 	diagnostics = "nvim_lsp", -- false | "nvim_lsp" | "coc",

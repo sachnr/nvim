@@ -49,6 +49,7 @@ return require("packer").startup({
 		use({
 			"sachnr/base46",
 			config = function()
+				-- base46 theme
 				require("base46").setup({ transparency = true })
 			end,
 		})
@@ -63,11 +64,20 @@ return require("packer").startup({
 
 		use("famiu/bufdelete.nvim")
 
+		-- use({
+		-- 	"feline-nvim/feline.nvim",
+		-- 	config = function()
+		-- 		require("config.feline")
+		-- 	end,
+		-- })
+
 		use({
-			"feline-nvim/feline.nvim",
+			"nvim-lualine/lualine.nvim",
 			config = function()
-				require("config.feline")
+				require("config.lualine")
+        -- require("lualine").setup()
 			end,
+			requires = { "nvim-tree/nvim-web-devicons", opt = true },
 		})
 
 		use({

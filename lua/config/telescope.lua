@@ -4,9 +4,8 @@ if not present then
 	return
 end
 
-vim.g.theme_switcher_loaded = true
-
 require("base46").load_highlight("telescope")
+require("base46").load_highlight("glassy")
 
 local options = {
 	defaults = {

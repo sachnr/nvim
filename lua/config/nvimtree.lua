@@ -5,6 +5,7 @@ if not present then
 end
 
 require("base46").load_highlight("nvimtree")
+require("base46").load_highlight("glassy")
 
 local options = {
 	disable_netrw = true,
