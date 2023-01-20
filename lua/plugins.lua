@@ -49,18 +49,23 @@ return require("packer").startup({
 		use({
 			"sachnr/base46",
 			config = function()
-				-- base46 theme
-				require("base46").setup({ transparency = true })
+				-- everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn, github_dark, catppuccin, gruvbox_light
+				require("base46").setup({
+					transparency = false,
+          term_colors = true,
+					theme = "gruvbox_light",
+					all = true,
+				})
 			end,
 		})
 
-		use({
-			"akinsho/bufferline.nvim",
-			requires = "nvim-tree/nvim-web-devicons",
-			config = function()
-				require("config.bufferline")
-			end,
-		})
+		-- use({
+		-- 	"akinsho/bufferline.nvim",
+		-- 	requires = "nvim-tree/nvim-web-devicons",
+		-- 	config = function()
+		-- 		require("config.bufferline")
+		-- 	end,
+		-- })
 
 		use("famiu/bufdelete.nvim")
 
@@ -75,7 +80,6 @@ return require("packer").startup({
 			"nvim-lualine/lualine.nvim",
 			config = function()
 				require("config.lualine")
-        -- require("lualine").setup()
 			end,
 			requires = { "nvim-tree/nvim-web-devicons", opt = true },
 		})
@@ -83,7 +87,6 @@ return require("packer").startup({
 		use({
 			"akinsho/toggleterm.nvim",
 			config = function()
-				require("base46").load_term_colors()
 				require("toggleterm").setup({})
 			end,
 		})
@@ -91,7 +94,7 @@ return require("packer").startup({
 		use({
 			"nvim-tree/nvim-web-devicons",
 			config = function()
-				require("config.devicons")
+				require("nvim-web-devicons").setup()
 			end,
 		})
 
@@ -207,6 +210,8 @@ return require("packer").startup({
 			requires = { "nvim-lua/plenary.nvim" },
 		})
 
+		use({ "eraserhd/parinfer-rust", run = 'nix-shell --run "cargo build --release "' })
+
 		-- formatter
 		use({
 			"mhartington/formatter.nvim",
@@ -294,7 +299,7 @@ return require("packer").startup({
 
 		use({
 			"folke/trouble.nvim",
-			requires = "kyazdani42/nvim-web-devicons",
+			requires = "nvim-tree/nvim-web-devicons",
 			config = function()
 				require("trouble").setup({})
 			end,
@@ -320,9 +325,6 @@ return require("packer").startup({
 
 		use({
 			"iamcco/markdown-preview.nvim",
-			-- run = function()
-			-- 	vim.fn["mkdp#util#install"]()
-			-- end,
 		})
 
 		use({
@@ -354,6 +356,7 @@ return require("packer").startup({
 		})
 
 		use("LudoPinelli/comment-box.nvim")
+		use("jbyuki/one-small-step-for-vimkind")
 
 		-- browser sync
 		use({

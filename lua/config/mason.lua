@@ -4,8 +4,6 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("mason")
-
 local options = {
 	ensure_installed = {
 		-- Language Servers

@@ -4,10 +4,8 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("blankline")
-
 local options = {
-	char = "┆",
+	char = "▎",
 	use_treesitter = true,
 	filetype_exclude = {
 		"help",

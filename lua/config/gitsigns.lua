@@ -4,8 +4,6 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("git")
-
 local options = {
 	signs = {
 		add = { hl = "GitSignsAdd", text = "▎", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },

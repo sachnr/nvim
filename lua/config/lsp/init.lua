@@ -3,8 +3,6 @@ if not status_ok then
 	return
 end
 
-require("base46").load_highlight("lsp")
-
 local handlers = require("config.lsp.handlers")
 local on_attach = handlers.on_attach
 local capablities = handlers.capablities()

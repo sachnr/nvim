@@ -1,9 +1,6 @@
 local opt = vim.opt
 local g = vim.g
 
--- base46 theme
-g.theme = "catppuccin" -- ayu_dark, everforest, gruvbox, nord, onedark, tokyonight, gruvbox_material, rxyhn, github_dark
-
 g.mapleader = " "
 
 opt.title = true -- let Vim set the title of the windowlet Vim set the title of the window

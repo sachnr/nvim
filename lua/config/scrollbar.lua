@@ -3,8 +3,6 @@ if not status_ok then
 	return
 end
 
-require("base46").load_highlight("scrollbar")
-
 scrollbar.setup({
 	handle = {
 		hide_if_all_visible = false, -- Hides handle if all lines are visible

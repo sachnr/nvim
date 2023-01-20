@@ -1,3 +1,5 @@
+local buffer = require("buff")
+
 local Mappings = {
 	-- =========================================================
 	-- ===================== Insert mode =======================
@@ -50,9 +52,21 @@ local Mappings = {
 		-- nvterm
 		["<leader>`"] = { "<Cmd> :ToggleTerm <CR>", "toggle horizontal term" },
 		-- bufferline
-		["<Bslash>"] = { " <Cmd> BufferLinePick <CR>", "Pick Buffer" },
-		["<TAB>"] = { " <Cmd> BufferLineCycleNext <CR>", "Next Buffer" },
-		["<S-Tab>"] = { " <Cmd> BufferLineCyclePrev <CR>", "Prev Buffer" },
+		-- ["<Bslash>"] = { " <Cmd> BufferLinePick <CR>", "Pick Buffer" },
+		-- ["<TAB>"] = { " <Cmd> BufferLineCycleNext <CR>", "Next Buffer" },
+		-- ["<S-Tab>"] = { " <Cmd> BufferLineCyclePrev <CR>", "Prev Buffer" },
+		["<TAB>"] = {
+			function()
+				buffer.goto_next_buffer()
+			end,
+			"Next Buffer",
+		},
+		["<S-Tab>"] = {
+			function()
+				buffer.goto_prev_buffer()
+			end,
+			"Prev Buffer",
+		},
 		["<leader>q"] = {
 			function()
 				require("bufdelete").bufdelete(0, true)
@@ -61,7 +75,7 @@ local Mappings = {
 		},
 		["<leader>n"] = { "<cmd> enew <CR>", "new buffer" },
 		-- nvimtree
-		["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
+		["<C-`>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
 		["<leader>1"] = { "<cmd> NvimTreeFocus <CR>", "focus nvimtree" },
 		-- copy all
 		["<leader>C"] = { "<cmd> %y+ <CR>", "copy whole file" },

@@ -4,8 +4,6 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("cmp")
-
 local kind_icons = {
 	Text = "",
 	Method = "m",
@@ -65,7 +63,8 @@ local options = {
 			winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
 		},
 		documentation = {
-			border = border("CmpDocBorder"),
+			border = border("CmpBorder"),
+			winhighlight = "Normal:CmpDoc",
 		},
 	},
 	snippet = {
@@ -91,8 +90,8 @@ local options = {
 	mapping = {
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
-		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		["<C-e>"] = cmp.mapping.close(),
 		["<CR>"] = cmp.mapping.confirm({

@@ -3,46 +3,6 @@ if not line_ok then
 	return
 end
 
-local ok, base46 = pcall(require, "base46")
-if not ok then
-	return
-end
-
-local colors = base46.get_theme_tb("base_30")
-
-local theme = {
-	normal = {
-		a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-		b = { bg = colors.one_bg3, fg = colors.white },
-		c = { bg = colors.one_bg, fg = colors.light_grey },
-	},
-	insert = {
-		a = { bg = colors.dark_purple, fg = colors.black, gui = "bold" },
-		b = { bg = colors.one_bg3, fg = colors.white },
-		c = { bg = colors.one_bg, fg = colors.light_grey },
-	},
-	visual = {
-		a = { bg = colors.cyan, fg = colors.black, gui = "bold" },
-		b = { bg = colors.one_bg3, fg = colors.white },
-		c = { bg = colors.one_bg, fg = colors.light_grey },
-	},
-	replace = {
-		a = { bg = colors.orange, fg = colors.black, gui = "bold" },
-		b = { bg = colors.one_bg3, fg = colors.white },
-		c = { bg = colors.one_bg, fg = colors.light_grey },
-	},
-	command = {
-		a = { bg = colors.green, fg = colors.black, gui = "bold" },
-		b = { bg = colors.one_bg3, fg = colors.white },
-		c = { bg = colors.one_bg, fg = colors.light_grey },
-	},
-	inactive = {
-		a = { bg = colors.one_bg3, fg = colors.light_grey, gui = "bold" },
-		b = { bg = colors.one_bg, fg = colors.light_grey },
-		c = { bg = colors.one_bg, fg = colors.light_grey },
-	},
-}
-
 local function getLspName()
 	local msg = "No Active Lsp"
 	local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
@@ -59,25 +19,14 @@ local function getLspName()
 	return "  " .. msg
 end
 
-local disabled_filetypes = {
-	"^NvimTree$",
-	"^packer$",
-	"^startify$",
-	"^fugitive$",
-	"^fugitive$",
-	"^fugitiveblame$",
-	"^qf$",
-	"^help$",
-}
-
 local options = {
 	icons_enabled = true,
-	theme = theme,
-	component_separators = { left = "", right = "" },
+	theme = "base46",
+	component_separators = { left = "|", right = "|" },
 	section_separators = { left = "", right = "" },
 	disabled_filetypes = {
-		statusline = disabled_filetypes,
-		winbar = disabled_filetypes,
+		statusline = { "packer", "qf", "help", "quickfix", "prompt", "alpha", "dap-repl", "Trouble" },
+		winbar = { "quickfix", "prompt", "NvimTree", "packer", "qf", "help", "alpha", "dap-repl", "Trouble" },
 	},
 	ignore_focus = {},
 	always_divide_middle = true,
@@ -115,8 +64,19 @@ local inactive_sections = {
 	lualine_z = {},
 }
 local tabline = {}
-local winbar = {}
-local inactive_winbar = {}
+local winbar = {
+	lualine_a = {
+		{
+			"buffers",
+			symbols = {
+				modified = " ●", -- Text to show when the buffer is modified
+				alternate_file = "", -- Text to show to identify the alternate file
+				directory = "", -- Text to show when the buffer is a directory
+			},
+		},
+	},
+}
+local inactive_winbar = { lualine_b = { "filename" } }
 local extensions = { "toggleterm", "nvim-tree", "nvim-dap-ui" }
 
 lualine.setup({

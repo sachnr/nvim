@@ -4,9 +4,6 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("nvimtree")
-require("base46").load_highlight("glassy")
-
 local options = {
 	disable_netrw = true,
 	hijack_netrw = true,
@@ -38,12 +35,29 @@ local options = {
 			resize_window = true,
 		},
 	},
+	diagnostics = {
+		enable = true,
+		icons = {
+			hint = "",
+			info = "",
+			warning = "",
+			error = "",
+		},
+	},
 	renderer = {
 		highlight_git = true,
 		highlight_opened_files = "none",
 
 		indent_markers = {
-			enable = false,
+			enable = true,
+			inline_arrows = true,
+			icons = {
+				corner = "╰",
+				edge = "│",
+				item = "│",
+				bottom = "─",
+				none = " ",
+			},
 		},
 
 		icons = {
@@ -69,10 +83,10 @@ local options = {
 				},
 				git = {
 					unstaged = "",
-					staged = "S",
+					staged = "✓",
 					unmerged = "",
 					renamed = "➜",
-					untracked = "U",
+					untracked = "★",
 					deleted = "",
 					ignored = "◌",
 				},

@@ -4,9 +4,6 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("telescope")
-require("base46").load_highlight("glassy")
-
 local options = {
 	defaults = {
 		vimgrep_arguments = {
@@ -24,13 +21,13 @@ local options = {
 		prompt_prefix = "   ",
 		selection_caret = "  ",
 		entry_prefix = "  ",
-		initial_mode = "insert",
+		initial_mode = "normal",
 		selection_strategy = "reset",
 		sorting_strategy = "ascending",
 		layout_strategy = "horizontal",
 		layout_config = {
 			horizontal = {
-				prompt_position = "top",
+				prompt_position = "bottom",
 				preview_width = 0.55,
 				results_width = 0.8,
 			},
@@ -61,7 +58,8 @@ local options = {
 		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
 		mappings = {
 			n = {
-				["<q>"] = require("telescope.actions").close,
+				["q"] = require("telescope.actions").close,
+				["d"] = require("telescope.actions").delete_buffer,
 			},
 			i = {
 				["<C-j>"] = require("telescope.actions").move_selection_next,

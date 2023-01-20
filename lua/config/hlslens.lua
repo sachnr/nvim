@@ -4,8 +4,6 @@ if not present then
 	return
 end
 
-require("base46").load_highlight("hlslens")
-
 local kopts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap(
 	"n",
