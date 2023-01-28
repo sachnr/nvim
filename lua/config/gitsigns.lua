@@ -6,11 +6,12 @@ end
 
 local options = {
 	signs = {
-		add = { hl = "GitSignsAdd", text = "▎", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-		change = { hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-		delete = { hl = "GitSignsDelete", text = "契", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-		topdelete = { hl = "GitSignsDelete", text = "契", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-		changedelete = { hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+		add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
+		change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },
+		delete = { hl = "DiffDelete", text = "_", numhl = "GitSignsDeleteNr" },
+		topdelete = { hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr" },
+		changedelete = { hl = "DiffChangeDelete", text = "~", numhl = "GitSignsChangeNr" },
+		untracked = { hl = "GitSignsAdd", text = "┆", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
 	},
 	signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
 	numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
@@ -66,28 +67,29 @@ local options = {
 				gitsigns.prev_hunk()
 			end)
 			return "<Ignore>"
-		end, { expr = true, desc = "prev hunk"})
+		end, { expr = true, desc = "prev hunk" })
 
 		-- Actions
-		map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", {desc = "Stage Hunk"})
-		map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", {desc = "reset Hunk"})
-		map("n", "<leader>gS", gitsigns.stage_buffer, {desc = "Stage buffer"})
-		map("n", "<leader>gu", gitsigns.undo_stage_hunk, {desc = "Undo Stage Hunk"})
-		map("n", "<leader>gR", gitsigns.reset_buffer, {desc = "reset buffer"})
-		map("n", "<leader>gp", gitsigns.preview_hunk, {desc = "Preview Hunk"})
+		map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage Hunk" })
+		map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "reset Hunk" })
+		map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
+		map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Undo Stage Hunk" })
+		map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "reset buffer" })
+		map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
 		map("n", "<leader>gb", function()
-			gitsigns.blame_line({ full = true }, {desc = "Blame line"})
+			gitsigns.blame_line({ full = true }, { desc = "Blame line" })
 		end)
-		map("n", "<leader>gB", gitsigns.toggle_current_line_blame, {desc = "Toggle current line blame"})
-		map("n", "<leader>gd", gitsigns.diffthis, {desc = "Diff this"})
+		map("n", "<leader>gB", gitsigns.toggle_current_line_blame, { desc = "Toggle current line blame" })
+		map("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
 		map("n", "<leader>gD", function()
 			gitsigns.diffthis("~")
-		end, {desc = "diff this ~"})
-		map("n", "<leader>gd", gitsigns.toggle_deleted, {desc = "Toggle Deleted"})
+		end, { desc = "diff this ~" })
+		map("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle Deleted" })
 
 		-- Text object
-		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", {desc = "Select Hunk"})
+		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
 	end,
 }
 
 gitsigns.setup(options)
+

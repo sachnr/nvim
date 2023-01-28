@@ -3,9 +3,10 @@ if not status_ok then
 	return
 end
 
-local handlers = require("config.lsp.handlers")
-local on_attach = handlers.on_attach
-local capablities = handlers.capablities()
+require("config.lsp.handlers")
+local opts = require("config.lsp.settings")
+local on_attach = opts.on_attach
+local capablities = opts.capablities
 
 local servers = {
 	"html",
@@ -17,11 +18,18 @@ local servers = {
 	"pylsp",
 	"sqls",
 	"gopls",
-	"eslint",
+	"tsserver",
+	-- "eslint",
 	"yamlls",
+	"rnix",
 }
 
-handlers.uiSetup()
+for _, lsp in ipairs(servers) do
+	lspconfig[lsp].setup({
+		on_attach = on_attach,
+		capabilities = capablities,
+	})
+end
 
 -- lua
 lspconfig.sumneko_lua.setup({
@@ -43,10 +51,3 @@ lspconfig.sumneko_lua.setup({
 		},
 	},
 })
-
-for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup({
-		on_attach = on_attach,
-		capabilities = capablities,
-	})
-end

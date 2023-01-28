@@ -60,7 +60,7 @@ local options = {
 	buttons = {
 		type = "group",
 		val = {
-			button("SPC t p", "  Recent projects ", ":Telescope projects<CR>"),
+			button("SPC t p", "  Recent projects ", ":Telescope project<CR>"),
 			button("SPC t o", "  Recent File  ", ":Telescope oldfiles<CR>"),
 			button("SPC n", "  New Buffer ", ":enew<CR>"),
 			button("SPC t f", "  Find File  ", ":Telescope find_files<CR>"),

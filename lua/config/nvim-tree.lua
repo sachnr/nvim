@@ -13,27 +13,17 @@ local options = {
 	hijack_unnamed_buffer_when_opening = false,
 	update_cwd = true,
 	sync_root_with_cwd = true,
-	respect_buf_cwd = true,
 	update_focused_file = {
 		enable = true,
 		update_root = true,
 	},
 	view = {
-		adaptive_size = true,
-		side = "left",
-		width = 25,
-		hide_root_folder = true,
-	},
-	git = {
-		enable = true,
+    hide_root_folder = true,
+		number = true,
+		relativenumber = true,
 	},
 	filesystem_watchers = {
 		enable = true,
-	},
-	actions = {
-		open_file = {
-			resize_window = true,
-		},
 	},
 	diagnostics = {
 		enable = true,
@@ -46,8 +36,6 @@ local options = {
 	},
 	renderer = {
 		highlight_git = true,
-		highlight_opened_files = "none",
-
 		indent_markers = {
 			enable = true,
 			inline_arrows = true,
@@ -59,15 +47,7 @@ local options = {
 				none = " ",
 			},
 		},
-
 		icons = {
-			show = {
-				file = true,
-				folder = true,
-				folder_arrow = true,
-				git = true,
-			},
-
 			glyphs = {
 				default = "",
 				symlink = "",
@@ -94,7 +74,5 @@ local options = {
 		},
 	},
 }
-
-vim.g.nvimtree_side = options.view.side
 
 nvimtree.setup(options)

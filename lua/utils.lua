@@ -1,7 +1,3 @@
--- stolen from johann2357/nvim-smartbufs
-
-local M = {}
-
 local function is_valid_buffer(buf_id)
 	return vim.api.nvim_buf_is_valid(buf_id) and vim.fn.getbufvar(buf_id, "&buflisted") == 1
 end
@@ -34,6 +30,25 @@ local function find_buffer(buf_id, buffer_table)
 			return idx
 		end
 	end
+end
+
+local M = {}
+
+M.merge_tb = function(table1, table2)
+	return vim.tbl_deep_extend("force", table1, table2)
+end
+
+M.border = function(hl_name)
+	return {
+		{ "╭", hl_name },
+		{ "─", hl_name },
+		{ "╮", hl_name },
+		{ "│", hl_name },
+		{ "╯", hl_name },
+		{ "─", hl_name },
+		{ "╰", hl_name },
+		{ "│", hl_name },
+	}
 end
 
 M.goto_buffer = function(buf_idx)

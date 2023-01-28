@@ -1,49 +1,86 @@
-local present, wk = pcall(require, "which-key")
+M = {}
 
-if not present then
-	return
-end
-
-local options = {
-	window = {
-		border = "single", -- none, single, double, shadow
-	},
-}
-
--- lazygit terminal
-local Terminal = require("toggleterm.terminal").Terminal
-local gitui = Terminal:new({
-	cmd = "gitui",
-	dir = "git_dir",
-	direction = "float",
-	float_opts = {
-		border = "double",
-	},
-})
-
-function _gitui_toggle()
-	gitui:toggle()
-end
-
--- Normal mode Mappings
-
+local set = vim.keymap.set
 local opts = {
-	mode = "n", -- NORMAL mode
-	prefix = "<leader>",
-	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
 	silent = true, -- use `silent` when creating keymaps
 	noremap = true, -- use `noremap` when creating keymaps
-	nowait = true, -- use `nowait` when creating keymaps
 }
+local utils = require("utils")
+local merge = require("utils").merge_tb
 
-local mappings = {
+
+M.bufdelete = function()
+	set("n", "<leader>q", function()
+		require("bufdelete").bufdelete(0, true)
+	end, merge(opts, { desc = "close buffer" }))
+end
+
+M.defaults = function()
+	-- navigate within insert mode
+	set("i", "<C-h>", "<left>", merge(opts, { desc = "move left" }))
+	set("i", "<C-l>", "<Right>", merge(opts, { desc = "move right" }))
+	set("i", "<C-j>", "<Down>", merge(opts, { desc = "move down" }))
+	set("i", "<C-k>", "<Up>", merge(opts, { desc = "move up" }))
+	set("i", "<C-c>", "<ESC>", opts)
+	-- remove highlight
+	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
+	-- switch between windows
+	set("n", "<C-h>", "<C-w>h", merge(opts, { desc = "window left" }))
+	set("n", "<C-l>", "<C-w>l", merge(opts, { desc = "window rught" }))
+	set("n", "<C-j>", "<C-w>j", merge(opts, { desc = "window down" }))
+	set("n", "<C-k>", "<C-w>k", merge(opts, { desc = "window up" }))
+	-- save
+	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
+	-- copy all
+	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
+	-- buffer
+	set("n", "<Tab>", function()
+		utils.goto_next_buffer()
+	end, merge(opts, { desc = "next Buffer" }))
+	set("n", "<S-Tab>", function()
+		utils.goto_prev_buffer()
+	end, merge(opts, { desc = "Prev Buffer" }))
+end
+
+M.lsp_attach = function(bufnr)
+	local lsp_opts = merge(opts, { buffer = bufnr })
+	set("n", "<leader>la", vim.lsp.buf.code_action, merge(lsp_opts, { desc = "code_action" }))
+	set("n", "<leader>lr", vim.lsp.buf.references, merge(lsp_opts, { desc = "references" }))
+	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
+	set("n", "<leader>lD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "declaration" }))
+	set("n", "<leader>ld", vim.lsp.buf.definition, merge(lsp_opts, { desc = "definition" }))
+	set("n", "<leader>li", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "implementation" }))
+	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
+end
+
+M.nvim_tree = function()
+	set("n", "<C-n>", "<cmd> NvimTreeToggle <CR>", opts)
+	set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
+end
+
+M.comment = function()
+	set(
+		"n",
+		"<leader>/",
+		"<cmd>lua require('Comment.api').toggle.linewise.current() <CR>",
+		merge(opts, { desc = "toggle comment" })
+	)
+	set(
+		"v",
+		"<leader>/",
+		"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+		merge(opts, { desc = "toggle comment" })
+	)
+end
+
+M.whichKey_n = {
 	-- Search
 	t = {
 		name = "Telescope/Search",
 		s = { "<cmd> :Telescope current_buffer_fuzzy_find <CR>", "search in current buffer" },
 		t = { "<cmd> :Telescope buffers <CR>", "active buffers" },
 		m = { "<cmd> :Telescope marks <CR>", "Marks" },
-		p = { "<cmd> :Telescope projects <CR>", "projects" },
+		p = { "<cmd> :Telescope project <CR>", "project" },
 		f = { "<cmd> Telescope find_files <CR>", "find files" },
 		w = { "<cmd> Telescope live_grep <CR>", "live grep" },
 		o = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
@@ -59,27 +96,11 @@ local mappings = {
 	-- lsp
 	l = {
 		name = "LSP",
-		i = { "<cmd>LspInfo<cr>", "Info" },
-		I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-		q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
+		I = { "<cmd>LspInfo<cr>", "Info" },
+		-- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
+		-- q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
 		e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
 		E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
-	},
-	w = {
-		name = "whichKey",
-		a = {
-			function()
-				vim.cmd("WhichKey")
-			end,
-			"which-key all keymaps",
-		},
-		k = {
-			function()
-				local input = vim.fn.input("WhichKey: ")
-				vim.cmd("WhichKey " .. input)
-			end,
-			"which-key query lookup",
-		},
 	},
 	o = {
 		name = "Dashboard/options",
@@ -102,18 +123,9 @@ local mappings = {
 		l = { "<cmd>lua require'dap'.run_last()<cr>", "Run Last" },
 		u = { "<cmd>lua require'dapui'.toggle()<cr>", "Dap UI Toggle" },
 		t = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
+		s = { "<cmd>lua require('osv').launch({ port = 8086 })<cr>", "Launch Lua Debugger Server" },
+		d = { "<cmd>lua require('osv').run_this()<cr>", "Launch Lua Debugger" },
 	},
-	-- todo list
-	-- a = {
-	--   name = "Todo comments",
-	--   n = { "<cmd>lua require('todo-comments').jump_next() <cr>", "Jumo Next" },
-	--   p = { "<cmd>lua require('todo-comments').jump_prev() <cr>", "Jump Prev" },
-	--   e = {
-	--     "<cmd>lua  require('todo-comments').jump_next({keywords = { 'ERROR', 'WARNING' }}) <cr>",
-	--     "Next Error/Warning",
-	--   },
-	-- },
-	--
 	-- java lsp
 	j = {
 		name = "Java nvim-jdtls extra",
@@ -131,18 +143,6 @@ local mappings = {
 		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
 		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
 	},
-	-- comment box
-	b = {
-		name = "Bufferline",
-		n = { "<Cmd> :BufferLineMoveNext <CR>", "move the current buffer forwards" },
-		p = { "<Cmd> :BufferLineMovePrev <CR>", "move the current buffer backwards" },
-	},
-	-- icon picker
-	i = {
-		name = "Icon Picker",
-		i = { "<cmd>IconPickerNormal<cr>", "Icon Picker Normal" },
-		y = { "<cmd>IconPickerYank<cr>", "Icon Picker Yank" },
-	},
 	-- local server
 	p = {
 		name = "Local webserver",
@@ -155,18 +155,7 @@ local mappings = {
 	},
 }
 
--- Visual mode Mappings
-local vopts = {
-	mode = "v", -- NORMAL mode
-	prefix = "<leader>",
-	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-	silent = true, -- use `silent` when creating keymaps
-	noremap = true, -- use `noremap` when creating keymaps
-	nowait = true, -- use `nowait` when creating keymaps
-}
-
-local vmappings = {
-	-- nvim-jdtls
+M.whichKey_v = {
 	j = {
 		name = "Java nvim-jdtls extra",
 		v = { "<cmd> lua require('jdtls').extract_variable(true) <cr>", "Extract Variable" },
@@ -182,6 +171,4 @@ local vmappings = {
 	},
 }
 
-wk.setup(options)
-wk.register(mappings, opts)
-wk.register(vmappings, vopts)
+return M

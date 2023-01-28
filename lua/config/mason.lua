@@ -36,7 +36,7 @@ local options = {
 		"debugpy",
 		"cpptools",
 		"delve",
-		"vscode-go",
+		-- "vscode-go",
 	},
 
 	-- - "prepend" (default, Mason's bin location is put first in PATH)

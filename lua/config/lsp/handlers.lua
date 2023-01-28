@@ -1,171 +1,59 @@
-local M = {}
+local border = require("utils").border("FloatBorder")
 
-M.uiSetup = function()
-	local function lspSymbol(name, icon)
-		local hl = "DiagnosticSign" .. name
-		vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	signs = {
+		severity_limit = "Warning",
+	},
+	underline = {
+		severity_limit = "Warning",
+	},
+})
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+
+-- jump to first definition
+vim.lsp.handlers["textDocument/definition"] = function(_, result)
+	if not result or vim.tbl_isempty(result) then
+		print("[LSP] Could not find definition")
+		return
 	end
 
-	lspSymbol("Error", "")
-	lspSymbol("Info", "")
-	lspSymbol("Hint", "")
-	lspSymbol("Warn", "")
-	lspSymbol("other", "")
+	local params = vim.lsp.util.make_position_params()
+	if vim.tbl_islist(result) then
+		vim.lsp.util.jump_to_location(result[1], "utf-8")
+	else
+		vim.lsp.util.jump_to_location(result, "utf-8")
+	end
+end
 
-	vim.diagnostic.config({
-		virtual_text = false,
-		signs = true,
-		update_in_insert = false,
-		underline = true,
-		severity_sort = true,
-		float = {
-			focusable = true,
-			style = "minimal",
-			border = "rounded",
-			source = "always",
-			header = "",
-			prefix = "",
+vim.diagnostic.config({
+	virtual_text = {
+		source = "always",
+		prefix = "■",
+		-- Only show virtual text matching the given severity
+		severity = {
+			-- Specify a range of severities
+			min = vim.diagnostic.severity.ERROR,
 		},
-	})
-
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+	},
+	float = {
+		source = "always",
 		border = "rounded",
-	})
+	},
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+})
 
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-		border = "rounded",
-		focusable = false,
-		relative = "cursor",
-	})
-
-	-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	-- 	virtual_text = true,
-	-- 	spacing = 7,
-	-- 	prefix = " << ",
-	-- 	source = "always",
-	-- })
+--lsp signs
+local function lspSymbol(name, icon)
+	local hl = "DiagnosticSign" .. name
+	vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
 end
-
-M.on_attach = function(client, bufnr)
-	client.server_capabilities.documentFormattingProvider = false
-	client.server_capabilities.documentRangeFormattingProvider = false
-
-	local keymap = vim.keymap.set
-
-	keymap(
-		"n",
-		"]d",
-		"<cmd>lua vim.diagnostic.goto_next({" .. bufnr .. "})<cr>",
-		{ noremap = true, silent = true, desc = "Lsp buf goto_next" }
-	)
-	keymap(
-		"n",
-		"[d",
-		"<cmd>lua vim.diagnostic.goto_prev({" .. bufnr .. "})<cr>",
-		{ noremap = true, silent = true, desc = "Lsp buf goto_prev" }
-	)
-	keymap(
-		"n",
-		"gD",
-		"<cmd>lua vim.lsp.buf.declaration()<CR>",
-		-- "<cmd>Telescope lsp_declarations<CR>",
-		{ noremap = true, silent = true, desc = "Lsp Buf declaration", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"gd",
-		"<cmd>lua vim.lsp.buf.definition()<CR>",
-		-- "<cmd>Telescope lsp_definitions<CR>",
-		{ noremap = true, silent = true, desc = "Lsp Buf definition", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"K",
-		"<cmd>lua vim.lsp.buf.hover()<CR>",
-		{ noremap = true, silent = true, desc = "Lsp Buf hover", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"gi",
-		"<cmd>lua vim.lsp.buf.implementation()<CR>",
-		-- "<cmd>Telescope lsp_implementations<CR>",
-		{ noremap = true, silent = true, desc = "Lsp Buf implementation", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"gr",
-		"<cmd>lua vim.lsp.buf.references()<CR>",
-		-- "<cmd>Telescope lsp_references<CR>",
-		{ noremap = true, silent = true, desc = "Lsp Buf references", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"<leader>ls",
-		"<cmd>lua vim.lsp.buf.signature_help()<CR>",
-		{ noremap = true, silent = true, desc = "Lsp Buf signatureHelp", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"<leader>ll",
-		"<cmd>lua vim.diagnostic.open_float()<CR>",
-		{ noremap = true, silent = true, desc = "Diagnostics open_float" }
-	)
-	keymap(
-		"n",
-		"<leader>ld",
-		"<cmd>lua vim.lsp.buf.type_definition<cr>",
-		{ noremap = true, silent = true, desc = "Buf rename", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"<leader>lf",
-		"<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
-		{ noremap = true, silent = true, desc = "Buf format", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"<leader>la",
-		"<cmd>lua vim.lsp.buf.code_action()<cr>",
-		{ noremap = true, silent = true, desc = "Buf code_action", buffer = bufnr }
-	)
-	keymap(
-		"n",
-		"<leader>lr",
-		"<cmd>lua vim.lsp.buf.rename()<cr>",
-		{ noremap = true, silent = true, desc = "Buf rename", buffer = bufnr }
-	)
-
-	-- jdtls
-	if client.name == "jdtls" then
-		require("jdtls").setup_dap({ hotcodereplace = "auto" })
-		require("jdtls").add_commands()
-		require("jdtls.dap").setup_dap_main_class_configs()
-	end
-
-	-- local status_ok, illuminate = pcall(require, "illuminate")
-	-- if not status_ok then
-	-- 	return
-	-- end
-	-- illuminate.on_attach(client)
-end
-
-M.capablities = function()
-	local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-	if status_ok then
-		return cmp_nvim_lsp.default_capabilities()
-	end
-
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
-	capabilities.textDocument.completion.completionItem.resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	}
-
-	return capabilities
-end
-
-return M
+lspSymbol("Error", "")
+lspSymbol("Info", "")
+lspSymbol("Hint", "")
+lspSymbol("Warn", "")
+lspSymbol("other", "")

@@ -36,14 +36,10 @@ local options = {
 		"go",
 		"latex",
 		"scss",
+		"nix",
 	},
 
 	highlight = {
-		enable = true,
-		use_languagetree = true,
-	},
-
-	indent = {
 		enable = true,
 	},
 }

@@ -4,30 +4,23 @@ if not present then
 	return
 end
 
+local extensions_list = { "project", "dap", "luasnip" }
+pcall(function()
+	for _, ext in ipairs(extensions_list) do
+		telescope.load_extension(ext)
+	end
+end)
+
 local options = {
 	defaults = {
-		vimgrep_arguments = {
-			"rg",
-			"--ignore",
-			"--hidden",
-			"--color=never",
-			"--no-heading",
-			"--with-filename",
-			"--line-number",
-			"--column",
-			"--smart-case",
-			"--trim",
-		},
 		prompt_prefix = "   ",
 		selection_caret = "  ",
 		entry_prefix = "  ",
-		initial_mode = "normal",
-		selection_strategy = "reset",
+		multi_icon = " + ",
 		sorting_strategy = "ascending",
-		layout_strategy = "horizontal",
 		layout_config = {
 			horizontal = {
-				prompt_position = "bottom",
+				prompt_position = "top",
 				preview_width = 0.55,
 				results_width = 0.8,
 			},
@@ -38,24 +31,16 @@ local options = {
 			height = 0.80,
 			preview_cutoff = 120,
 		},
-		file_sorter = require("telescope.sorters").get_fuzzy_file,
 		file_ignore_patterns = {
 			"node_modules",
 			".git/",
 		},
-		dynamic_preview_title = true,
-		generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
 		path_display = { "truncate" },
-		winblend = 0,
-		border = true,
-		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-		color_devicons = true,
 		set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-		-- Developer configurations: Not meant for general override
-		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+		history = {
+			path = vim.fn.stdpath("data") .. "/databases/telescope_history.sqlite3",
+			limit = 100,
+		},
 		mappings = {
 			n = {
 				["q"] = require("telescope.actions").close,
@@ -70,15 +55,21 @@ local options = {
 	},
 
 	extensions = {
-		fzf = {
-			fuzzy = true,
+
+		fzy_native = {
 			override_generic_sorter = true,
 			override_file_sorter = true,
-			case_mode = "smart_case",
 		},
+
+		fzf_writer = {
+			use_highlighter = false,
+			minimum_grep_characters = 6,
+		},
+
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown(),
 		},
+
 		lsp_handlers = {
 			disable = {},
 			location = {
@@ -100,15 +91,6 @@ local options = {
 			},
 		},
 	},
-
-	extensions_list = { "ui-select", "fzf", "dap", "lsp_handlers", "glyph" },
 }
 
 telescope.setup(options)
-
--- load extensions
-pcall(function()
-	for _, ext in ipairs(options.extensions_list) do
-		telescope.load_extension(ext)
-	end
-end)
