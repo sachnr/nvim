@@ -13,6 +13,7 @@ local has_words_before = function()
 end
 local lspkind = require("lspkind")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+require("luasnip.loaders.from_vscode").lazy_load()
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 cmp.setup({
@@ -27,7 +28,7 @@ cmp.setup({
 			winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
 		},
 		documentation = {
-			border = utils.border("CmpDocBorder"),
+			border = utils.border("CmpBorder"),
 			winhighlight = "Normal:CmpDoc",
 		},
 	},
@@ -40,8 +41,6 @@ cmp.setup({
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-			-- they way you will only jump inside the snippet region
 			elseif luasnip.expand_or_jumpable() then
 				luasnip.expand_or_jump()
 			elseif has_words_before() then
@@ -50,7 +49,6 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()

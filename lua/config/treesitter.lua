@@ -37,6 +37,7 @@ local options = {
 		"latex",
 		"scss",
 		"nix",
+    "query"
 	},
 
 	highlight = {

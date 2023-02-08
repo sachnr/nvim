@@ -30,7 +30,7 @@ opt.undodir = vim.fn.stdpath("data") .. "/undofile" -- where to store undo files
 opt.expandtab = true -- converts tabs to spaces
 opt.autoindent = true -- take indent for new line from previous line
 opt.shiftwidth = 2 -- no of spaces for each indent
-opt.smartindent = true -- smart autoindenting for C programs
+-- opt.smartindent = true -- smart autoindenting for C programs
 opt.tabstop = 2 -- insert 2 spaces for tab
 opt.softtabstop = 2 -- number of spaces that <Tab> uses while editing
 
@@ -42,6 +42,6 @@ opt.relativenumber = true --show relative line number in front of each line
 
 vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false -- display lines as one long line
-vim.opt.scrolloff = 8 -- minimal number of screen lines to keep above and below the cursor
+vim.opt.scrolloff = 4 -- minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
 

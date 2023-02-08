@@ -7,8 +7,6 @@ end
 local options = {
 	disable_netrw = true,
 	hijack_netrw = true,
-	open_on_setup = false,
-	ignore_ft_on_setup = { "alpha" },
 	hijack_cursor = true,
 	hijack_unnamed_buffer_when_opening = false,
 	update_cwd = true,
@@ -17,10 +15,11 @@ local options = {
 		enable = true,
 		update_root = true,
 	},
+
 	view = {
-    hide_root_folder = true,
-		number = true,
-		relativenumber = true,
+		hide_root_folder = true,
+    centralize_selection = true,
+    preserve_window_proportions = true,
 	},
 	filesystem_watchers = {
 		enable = true,

@@ -3,7 +3,7 @@ if not present then
 	return
 end
 
-local capabilities = require("config.lsp.settings").capabilities()
+local capabilities = require("config.lsp.settings").capabilities
 local on_attach = require("config.lsp.settings").on_attach
 local plugin_folder = vim.fn.stdpath("data")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
@@ -91,15 +91,15 @@ local config = {
 				useBlocks = true,
 			},
 		},
-		configuration = {
-			updateBuildConfiguration = "interactive",
-			runtimes = {
-				{
-					name = "JavaSE-19",
-					path = "/usr/lib/jvm/java-19-openjdk/",
-				},
-			},
-		},
+		-- configuration = {
+		-- 	updateBuildConfiguration = "interactive",
+		-- 	runtimes = {
+		-- 		{
+		-- 			name = "JavaSE-19",
+		-- 			path = "/usr/lib/jvm/java-19-openjdk/",
+		-- 		},
+		-- 	},
+		-- },
 		flags = {
 			allow_incremental_sync = true,
 		},

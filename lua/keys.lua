@@ -8,7 +8,6 @@ local opts = {
 local utils = require("utils")
 local merge = require("utils").merge_tb
 
-
 M.bufdelete = function()
 	set("n", "<leader>q", function()
 		require("bufdelete").bufdelete(0, true)
@@ -21,14 +20,9 @@ M.defaults = function()
 	set("i", "<C-l>", "<Right>", merge(opts, { desc = "move right" }))
 	set("i", "<C-j>", "<Down>", merge(opts, { desc = "move down" }))
 	set("i", "<C-k>", "<Up>", merge(opts, { desc = "move up" }))
-	set("i", "<C-c>", "<ESC>", opts)
+	set("i", "<C-c>", "<ESC>", { silent = true })
 	-- remove highlight
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
-	-- switch between windows
-	set("n", "<C-h>", "<C-w>h", merge(opts, { desc = "window left" }))
-	set("n", "<C-l>", "<C-w>l", merge(opts, { desc = "window rught" }))
-	set("n", "<C-j>", "<C-w>j", merge(opts, { desc = "window down" }))
-	set("n", "<C-k>", "<C-w>k", merge(opts, { desc = "window up" }))
 	-- save
 	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
@@ -54,8 +48,42 @@ M.lsp_attach = function(bufnr)
 end
 
 M.nvim_tree = function()
-	set("n", "<C-n>", "<cmd> NvimTreeToggle <CR>", opts)
+	set("n", "<leader>n", "<cmd> NvimTreeToggle <CR>", opts)
 	set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
+end
+
+M.peek = function()
+	set("n", "<leader>bm", function()
+		local peek = require("peek")
+		if peek.is_open() then
+			peek.close()
+		else
+			peek.open()
+		end
+	end, merge(opts, { desc = "Markdown Peek" }))
+end
+
+M.yanky = function()
+	set({ "n", "x" }, "y", "<Plug>(YankyYank)")
+	set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+	set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+	set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+	set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+
+	set("n", "<c-n>", "<Plug>(YankyCycleForward)")
+	set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+
+	set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
+	set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
+	set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
+	set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
+
+	set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
+	set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
+	set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
+	set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
+
+	set("n", "<leader>p", "<cmd> Telescope yank_history <CR>", { desc = "Paste from Yanky" })
 end
 
 M.comment = function()
@@ -93,6 +121,15 @@ M.whichKey_n = {
 		c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
 		g = { "<cmd>lua _gitui_toggle()<CR>", "LazyGit UI" },
 	},
+	-- windows
+	w = {
+		name = "window actions",
+		v = { "<cmd> vsplit <cr>", "split vertical" },
+		h = { "<cmd> split <cr>", "split horizontal" },
+		a = { "<cmd> :Alpha <CR>", "Open Dashboard" },
+		d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
+		r = { "<cmd> set rnu! <CR>", "toggle relative number" },
+	},
 	-- lsp
 	l = {
 		name = "LSP",
@@ -101,14 +138,6 @@ M.whichKey_n = {
 		-- q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
 		e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
 		E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
-	},
-	o = {
-		name = "Dashboard/options",
-		b = { "<cmd> :Alpha <CR>", "Open Dashboard" },
-		s = { ":e $MYVIMRC | :cd %:p:h <CR>", "Settings/vimrc" },
-		n = { "<cmd> set nu! <CR>", "toggle line number" },
-		r = { "<cmd> set rnu! <CR>", "toggle relative number" },
-		d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
 	},
 	-- debugger
 	d = {
@@ -139,14 +168,13 @@ M.whichKey_n = {
 	-- comment box
 	c = {
 		name = "Comment Box",
-		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
-		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
-		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
+		l = { "<Cmd>lua require('comment-box').lbox(1)<CR>", "left aligned fixed size" },
+		c = { "<Cmd>lua require('comment-box').accbox(1)<CR>", "centered adapted box" },
+		v = { "<Cmd>lua require('comment-box').cline(1)<CR>", "centered line" },
 	},
 	-- local server
-	p = {
-		name = "Local webserver",
-		m = { "<cmd> MarkdownPreviewToggle <CR>", "Markdown" },
+	b = {
+		name = "localhost",
 		s = { "<cmd> BrowserSync <CR>", "run browser-sync server" },
 		o = { "<cmd> BrowserOpen <CR>", "strat server & preview current file" },
 		p = { "<cmd> BrowserPreview <CR>", "preview current file with browser sync" },
