@@ -21,6 +21,11 @@ M.defaults = function()
 	set("i", "<C-j>", "<Down>", merge(opts, { desc = "move down" }))
 	set("i", "<C-k>", "<Up>", merge(opts, { desc = "move up" }))
 	set("i", "<C-c>", "<ESC>", { silent = true })
+	-- center
+	set("n", "<C-u>", "<C-u>zz", opts)
+	set("n", "<C-d>", "<C-d>zz", opts)
+	-- Don't copy the replaced text after pasting in visual mode
+	-- set("x", "<p>", 'p:let @+=@0<CR>:let @"=@0<CR>', opts)
 	-- remove highlight
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
 	-- save
@@ -28,23 +33,57 @@ M.defaults = function()
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	-- buffer
-	set("n", "<Tab>", function()
-		utils.goto_next_buffer()
-	end, merge(opts, { desc = "next Buffer" }))
-	set("n", "<S-Tab>", function()
-		utils.goto_prev_buffer()
-	end, merge(opts, { desc = "Prev Buffer" }))
+	-- set("n", "<Tab>", function()
+	-- 	utils.goto_next_buffer()
+	-- end, merge(opts, { desc = "next Buffer" }))
+	-- set("n", "<S-Tab>", function()
+	-- 	utils.goto_prev_buffer()
+	-- end, merge(opts, { desc = "Prev Buffer" }))
 end
 
+-- -- normal
+-- M.lsp_attach = function(bufnr)
+-- 	set("n", "<space>e", vim.diagnostic.open_float, merge(opts, { desc = "diagnostic float" }))
+-- 	set("n", "[d", vim.diagnostic.goto_prev, merge(opts, { desc = "diagnostic goto prev" }))
+-- 	set("n", "]d", vim.diagnostic.goto_next, merge(opts, { desc = "diagnostic goto next" }))
+-- 	set("n", "<leader>lq", vim.diagnostic.setloclist, merge(opts, { desc = "diagnostic setlocklist" }))
+-- 	local lsp_opts = merge(opts, { buffer = bufnr })
+-- 	set("n", "ga", vim.lsp.buf.code_action, merge(lsp_opts, { desc = "code_action" }))
+-- 	set("n", "gr", vim.lsp.buf.references, merge(lsp_opts, { desc = "goto references" }))
+-- 	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
+-- 	set("n", "gD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "goto declaration" }))
+-- 	set("n", "gd", vim.lsp.buf.definition, merge(lsp_opts, { desc = "goto definition" }))
+-- 	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
+-- 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
+-- 	set("n", "<leader>ld", vim.lsp.buf.type_definition, merge(lsp_opts, { desc = "Type Definition" }))
+-- end
+
+-- lspsaga
 M.lsp_attach = function(bufnr)
+	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
+	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
+	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
+	set("n", "<leader>lq", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
-	set("n", "<leader>la", vim.lsp.buf.code_action, merge(lsp_opts, { desc = "code_action" }))
-	set("n", "<leader>lr", vim.lsp.buf.references, merge(lsp_opts, { desc = "references" }))
-	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
-	set("n", "<leader>lD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "declaration" }))
-	set("n", "<leader>ld", vim.lsp.buf.definition, merge(lsp_opts, { desc = "definition" }))
-	set("n", "<leader>li", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "implementation" }))
+	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
+	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
+	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
+	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
+	set("n", "gD", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
+	set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", merge(lsp_opts, { desc = "peek definition" }))
+	set("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>", merge(lsp_opts, { desc = "peek type definition" }))
+	set("n", "gT", "<cmd>Lspsaga goto_type_definition<CR>", merge(lsp_opts, { desc = "goto type definition" }))
+	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
+end
+
+M.cokeline = function()
+	set("n", "<S-Tab>", "<Plug>(cokeline-switch-prev)", opts)
+	set("n", "<Tab>", "<Plug>(cokeline-switch-next)", opts)
+
+	for i = 1, 9 do
+		set("n", ("<Leader>b%s"):format(i), ("<Plug>(cokeline-switch-%s)"):format(i), { silent = true })
+	end
 end
 
 M.nvim_tree = function()
@@ -61,6 +100,13 @@ M.peek = function()
 			peek.open()
 		end
 	end, merge(opts, { desc = "Markdown Peek" }))
+end
+
+M.windows = function()
+	set("n", "<C-w>z", "<cmd> WindowsMaximize <CR>", merge(opts, { desc = "copy whole file" }))
+	set("n", "<C-w>_", "<cmd> WindowsMaximizeVertically <CR>", merge(opts, { desc = "WindowsMaximizeVertically" }))
+	set("n", "<C-w>|", "<cmd> WindowsMaximizeHorizontally <CR>", merge(opts, { desc = "WindowsMaximizeHorizontally" }))
+	set("n", "<C-w>=", "<cmd> WindowsEqualize <CR>", merge(opts, { desc = "WindowsEqualize" }))
 end
 
 M.yanky = function()
@@ -121,11 +167,9 @@ M.whichKey_n = {
 		c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
 		g = { "<cmd>lua _gitui_toggle()<CR>", "LazyGit UI" },
 	},
-	-- windows
+	-- opts
 	w = {
-		name = "window actions",
-		v = { "<cmd> vsplit <cr>", "split vertical" },
-		h = { "<cmd> split <cr>", "split horizontal" },
+		name = "Options",
 		a = { "<cmd> :Alpha <CR>", "Open Dashboard" },
 		d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
 		r = { "<cmd> set rnu! <CR>", "toggle relative number" },

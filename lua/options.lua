@@ -3,45 +3,71 @@ local g = vim.g
 
 g.mapleader = " "
 
-opt.title = true -- let Vim set the title of the windowlet Vim set the title of the window
+opt.mouse = "a" -- allows use of mouse
+opt.title = false -- let Vim set the title of the windowlet Vim set the title of the window
+
 opt.clipboard = "unnamedplus" -- allow neovim to access system clipboard
+opt.termguicolors = true -- Enables 24-bit RGB color in the TUI
+
 opt.cursorline = true -- highlights the current line
+
+opt.showcmd = true -- Show (partial) command in the last line of the screen
+-- opt.showmatch = true -- show matching brackets when text indicator is over them
 opt.showmode = false -- message on status line to show current mode
-opt.smartcase = true -- no ignore case when pattern has uppercase
-opt.ignorecase = true -- ignore case for completions
+
 opt.shortmess:append("sI") -- list of flags, reduce length of messages
 opt.laststatus = 3 --tells when last window has status lines
-opt.mouse = "a" -- allows use of mouse
 opt.fillchars = { eob = " " } -- characters to use for displaying special items
-opt.signcolumn = "yes" -- when and how to display the sign column
+opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
+opt.writebackup = false -- make a backup before overwriting a file
+opt.fileencoding = "utf-8" -- encoding
+opt.swapfile = false -- whether to use a swapfile for a buffer
+
+-- window
 opt.splitbelow = true -- new window from split is below the current one
 opt.splitright = true -- new window is put right of the current one
-opt.termguicolors = true
-opt.timeoutlen = 400 -- time out time in milliseconds
-opt.updatetime = 250 -- after this many milliseconds flush swap file
-opt.writebackup = false -- make a backup before overwriting a file
-opt.wrap = true -- long lines wrap and continue on the next line
-opt.fileencoding = "utf-8" -- encoding
-vim.opt.swapfile = false -- whether to use a swapfile for a buffer
+opt.equalalways = false -- resize automatically
+
+-- scroll
+opt.scrolloff = 4 -- minimal number of screen lines to keep above and below the cursor
+opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
+
+-- search
+opt.incsearch = true -- Makes search act like search in modern browsers
+opt.ignorecase = true -- Ignore case when searching...
+opt.smartcase = true -- ... unless there is a capital letter in the query
+
+-- undo
 opt.undofile = true -- save undo information in a file
 opt.undodir = vim.fn.stdpath("data") .. "/undofile" -- where to store undo files
 
--- Indenting
-opt.expandtab = true -- converts tabs to spaces
+-- Tabs/indent
 opt.autoindent = true -- take indent for new line from previous line
-opt.shiftwidth = 2 -- no of spaces for each indent
--- opt.smartindent = true -- smart autoindenting for C programs
-opt.tabstop = 2 -- insert 2 spaces for tab
-opt.softtabstop = 2 -- number of spaces that <Tab> uses while editing
+opt.cindent = true --automatic indent for c programs
+opt.tabstop = 4 -- insert 4 spaces for tab
+opt.softtabstop = 4 -- number of spaces that <Tab> uses while editing
+opt.shiftwidth = 4 -- no of spaces for each indent
+opt.expandtab = true --insert mode: uses spaces for <Tab>
+
+opt.joinspaces = false
+-- text wrap
+opt.wrap = true -- long lines wrap and continue on the next line
+opt.breakindent = true -- Every wrapped line will continue visually indented
+opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
+opt.linebreak = true --wrap long lines at a character in 'breakat' rather than at the last character that fits on the screen
+-- fold
+opt.foldmethod = "marker"
+opt.foldlevel = 0
+opt.modelines = 1
+
+opt.belloff = "all"
 
 -- line numbers
 opt.number = true -- print the line number in front of each line
-opt.numberwidth = 2 -- number of columns used for the line number
-opt.ruler = false -- show cursor line and column in the status line
+opt.numberwidth = 3 -- number of columns used for the line number
 opt.relativenumber = true --show relative line number in front of each line
 
-vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
-vim.opt.wrap = false -- display lines as one long line
-vim.opt.scrolloff = 4 -- minimal number of screen lines to keep above and below the cursor
-vim.opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
+opt.inccommand = "split"
 
+opt.updatetime = 200 -- after this many milliseconds flush swap file, Make updates happen faster
+opt.timeoutlen = 600 -- time out time in milliseconds

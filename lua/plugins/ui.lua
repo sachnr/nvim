@@ -8,12 +8,17 @@ return {
 		priority = 1000,
 		config = function()
 			require("base46").setup({
-				transparency = false,
 				term_colors = true,
-				italics = true,
+				cokeline = true,
 			})
-			vim.cmd([[colorscheme nord]])
 		end,
+		dependencies = {
+			{
+				"noib3/nvim-cokeline",
+				keys = keys.cokeline,
+			},
+			"nvim-tree/nvim-web-devicons",
+		},
 	},
 
 	"nvim-tree/nvim-web-devicons",
@@ -25,12 +30,6 @@ return {
 		config = function()
 			require("config.treesitter")
 		end,
-	},
-
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = true,
 	},
 
 	{ "nvim-treesitter/playground", cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" } },
@@ -67,7 +66,9 @@ return {
 
 	{
 		"folke/which-key.nvim",
-		keys = { "<leader>", '"', "'", "`" },
+		-- keys = { "<leader>", '"', "'", "`", "@" },
+		lazy = false,
+		priority = 1000,
 		config = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
@@ -85,7 +86,7 @@ return {
 
 	{
 		"lewis6991/gitsigns.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		event = { "BufWinEnter" },
 		config = function()
 			require("config.gitsigns")
 		end,
@@ -99,9 +100,7 @@ return {
 			"nvim-telescope/telescope-ui-select.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			"kkharji/sqlite.lua",
-			"nvim-telescope/telescope-dap.nvim",
 			"nvim-telescope/telescope-project.nvim",
-			"benfowler/telescope-luasnip.nvim",
 			"gbrlsnchs/telescope-lsp-handlers.nvim",
 			{ "nvim-lua/plenary.nvim" },
 		},
@@ -112,7 +111,7 @@ return {
 
 	{
 		"nvim-tree/nvim-tree.lua",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		event = { "BufWinEnter" },
 		init = keys.nvim_tree(),
 		config = function()
 			require("config.nvim-tree")
@@ -121,16 +120,54 @@ return {
 
 	{
 		"anuvyklack/windows.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		event = { "BufRead", "BufWinEnter" },
 		dependencies = {
 			"anuvyklack/middleclass",
-			"anuvyklack/animation.nvim",
+			{ "anuvyklack/animation.nvim", enabled = false },
 		},
+		keys = keys.windows,
 		config = function()
 			vim.o.winwidth = 5
-			vim.o.winminwidth = 5
 			vim.o.equalalways = false
-			require("windows").setup()
+			require("windows").setup({
+				animation = { enable = false },
+				ignore = {
+					filetype = { "NvimTree", "lspsagaoutline", "undotree" },
+				},
+			})
+		end,
+	},
+
+	{
+		"glepnir/lspsaga.nvim",
+		event = { "BufRead", "BufWinEnter" },
+		config = function()
+			require("config.lspsaga")
+		end,
+		dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
+	},
+
+	{
+		"noib3/nvim-cokeline",
+		keys = keys.cokeline,
+		event = { "BufRead", "BufWinEnter" },
+		config = function()
+			require("config.cokeline")
+		end,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+
+	{
+		"utilyre/barbecue.nvim",
+		event = { "BufRead", "BufWinEnter" },
+		name = "barbecue",
+		version = "*",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		config = function()
+			require("config.barbecue")
 		end,
 	},
 }

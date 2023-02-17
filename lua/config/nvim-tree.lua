@@ -18,8 +18,8 @@ local options = {
 
 	view = {
 		hide_root_folder = true,
-    centralize_selection = true,
-    preserve_window_proportions = true,
+		centralize_selection = false,
+		preserve_window_proportions = true,
 	},
 	filesystem_watchers = {
 		enable = true,

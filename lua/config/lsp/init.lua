@@ -32,11 +32,14 @@ for _, lsp in ipairs(servers) do
 end
 
 -- lua
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
 	on_attach = on_attach,
 	capabilities = capablities,
 	settings = {
 		Lua = {
+			completion = {
+				callSnippet = "Replace",
+			},
 			diagnostics = {
 				globals = { "vim" },
 			},

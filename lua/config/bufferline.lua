@@ -3,11 +3,6 @@ if not status_ok then
 	return
 end
 
-local ok, base46 = pcall(require, "base46")
-if not ok then
-	return
-end
-
 local options = {
 	mode = "buffers",
 	numbers = "ordinal", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
@@ -57,7 +52,7 @@ local options = {
 	persist_buffer_sort = false,
 	separator_style = "thick", --"slant" | "thick" | "thin" | "padded_slant" { 'any', 'any' },
 	enforce_regular_tabs = true,
-	always_show_bufferline = false,
+	always_show_bufferline = true,
 	-- hover = {
 	--   enabled = true,
 	--   delay = 200,

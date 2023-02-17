@@ -20,11 +20,14 @@ return {
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 		config = function()
 			require("config.cmp")
 		end,
 	},
+
+	{ "folke/neodev.nvim", config = true },
 
 	{
 		"mhartington/formatter.nvim",

@@ -1,21 +1,28 @@
 local keys = require("keys")
 
 return {
-	-- markdown preview
-	--
 	-- {
 	-- 	"iamcco/markdown-preview.nvim",
-	-- 	build = "yarn build",
+	-- 	cmd = "MarkdownPreviewtoggle",
+	-- 	build = function()
+	-- 		vim.fn["mkdp#util#install"]()
+	-- 	end,
 	-- 	keys = {
-	-- 		{ "<leader>pm", "<cmd> MarkdownPreviewtoggle <cr>", desc = "markdown-preview" },
+	-- 		{ "<leader>bm", "<cmd> MarkdownPreviewtoggle <cr>", desc = "markdown-preview" },
 	-- 	},
 	-- },
-	--
+
 	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		keys = keys.peek,
-		opts = { theme = "light" },
+		config = function()
+			require("peek").setup({
+				syntax = true, -- enable syntax highlighting, affects performance
+				theme = "dark", -- 'dark' or 'light'
+				app = "chromium", -- 'webview', 'browser', string or a table of strings
+			})
+		end,
 	},
 
 	{
@@ -53,12 +60,6 @@ return {
 
 	{
 		"chentoast/marks.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = true,
-	},
-
-	{
-		"karb94/neoscroll.nvim",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = true,
 	},

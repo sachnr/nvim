@@ -87,7 +87,7 @@ local options = {
 		map("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle Deleted" })
 
 		-- Text object
-		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
+		map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
 	end,
 }
 

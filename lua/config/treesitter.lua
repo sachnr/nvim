@@ -18,6 +18,7 @@ local options = {
 		"javascript",
 		"json",
 		"markdown",
+        "markdown_inline",
 		"meson",
 		"ninja",
 		"php",
@@ -37,7 +38,7 @@ local options = {
 		"latex",
 		"scss",
 		"nix",
-    "query"
+		"query",
 	},
 
 	highlight = {

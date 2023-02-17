@@ -4,7 +4,7 @@ if not present then
 	return
 end
 
-local extensions_list = { "project", "dap", "luasnip", "yank_history" }
+local extensions_list = { "project", "yank_history" }
 pcall(function()
 	for _, ext in ipairs(extensions_list) do
 		telescope.load_extension(ext)
@@ -31,7 +31,7 @@ local options = {
 			height = 0.80,
 			preview_cutoff = 120,
 		},
-    results_title = "results",
+		results_title = "results",
 		file_ignore_patterns = {
 			"node_modules",
 			".git/",

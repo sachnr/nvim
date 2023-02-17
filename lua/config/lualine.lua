@@ -23,10 +23,31 @@ local options = {
 	icons_enabled = true,
 	theme = "base46",
 	component_separators = { left = "|", right = "|" },
-	section_separators = { left = "", right = "" },
+	section_separators = { left = "", right = "" },
 	disabled_filetypes = {
-		statusline = { "packer", "qf", "help", "quickfix", "prompt", "alpha", "dap-repl", "Trouble" },
-		winbar = { "quickfix", "prompt", "NvimTree", "packer", "qf", "help", "alpha", "dap-repl", "Trouble" },
+		statusline = {
+			"packer",
+			"qf",
+			"help",
+			"quickfix",
+			"prompt",
+			"alpha",
+			"dap-repl",
+			"Trouble",
+			"lspsagaoutline",
+		},
+		winbar = {
+			"quickfix",
+			"prompt",
+			"NvimTree",
+			"packer",
+			"qf",
+			"help",
+			"alpha",
+			"dap-repl",
+			"Trouble",
+			"lspsagaoutline",
+		},
 	},
 	ignore_focus = {},
 	always_divide_middle = true,
@@ -71,25 +92,8 @@ local inactive_sections = {
 	lualine_z = {},
 }
 local tabline = {}
-local winbar = {
-	lualine_a = {
-		{
-			"buffers",
-			symbols = {
-				modified = " ●", -- Text to show when the buffer is modified
-				alternate_file = "", -- Text to show to identify the alternate file
-				directory = "", -- Text to show when the buffer is a directory
-			},
-			buffers_color = {
-				active = "lualine_a_normal",
-				inactive = "lualine_c_normal",
-			},
-		},
-	},
-}
-local inactive_winbar = {
-	lualine_b = { "filename" },
-}
+local winbar = {}
+local inactive_winbar = {}
 local extensions = { "toggleterm", "nvim-tree", "nvim-dap-ui" }
 
 lualine.setup({
