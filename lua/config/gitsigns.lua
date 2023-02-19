@@ -47,49 +47,6 @@ local options = {
 	yadm = {
 		enable = false,
 	},
-	on_attach = function(bufnr)
-		local map = vim.keymap.set
-		-- Navigation
-		map("n", "]c", function()
-			if vim.wo.diff then
-				return "]c"
-			end
-			vim.schedule(function()
-				gitsigns.next_hunk()
-			end)
-			return "<Ignore>"
-		end, { expr = true, desc = "Next hunk" })
-		map("n", "[c", function()
-			if vim.wo.diff then
-				return "[c"
-			end
-			vim.schedule(function()
-				gitsigns.prev_hunk()
-			end)
-			return "<Ignore>"
-		end, { expr = true, desc = "prev hunk" })
-
-		-- Actions
-		map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage Hunk" })
-		map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "reset Hunk" })
-		map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
-		map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Undo Stage Hunk" })
-		map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "reset buffer" })
-		map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
-		map("n", "<leader>gb", function()
-			gitsigns.blame_line({ full = true }, { desc = "Blame line" })
-		end)
-		map("n", "<leader>gB", gitsigns.toggle_current_line_blame, { desc = "Toggle current line blame" })
-		map("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
-		map("n", "<leader>gD", function()
-			gitsigns.diffthis("~")
-		end, { desc = "diff this ~" })
-		map("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle Deleted" })
-
-		-- Text object
-		map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
-	end,
 }
 
 gitsigns.setup(options)
-

@@ -15,8 +15,8 @@ local options = {
 		enable = true,
 		update_root = true,
 	},
-
 	view = {
+		relativenumber = true,
 		hide_root_folder = true,
 		centralize_selection = false,
 		preserve_window_proportions = true,
@@ -25,7 +25,7 @@ local options = {
 		enable = true,
 	},
 	diagnostics = {
-		enable = true,
+		enable = false,
 		icons = {
 			hint = "",
 			info = "",

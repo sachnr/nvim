@@ -1,17 +1,6 @@
 local keys = require("keys")
 
 return {
-	-- {
-	-- 	"iamcco/markdown-preview.nvim",
-	-- 	cmd = "MarkdownPreviewtoggle",
-	-- 	build = function()
-	-- 		vim.fn["mkdp#util#install"]()
-	-- 	end,
-	-- 	keys = {
-	-- 		{ "<leader>bm", "<cmd> MarkdownPreviewtoggle <cr>", desc = "markdown-preview" },
-	-- 	},
-	-- },
-
 	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
@@ -28,7 +17,7 @@ return {
 	{
 		"gbprod/yanky.nvim",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		keys = keys.yanky,
+		init = keys.yanky,
 		config = function()
 			require("yanky").setup({
 				system_clipboard = {
@@ -47,11 +36,12 @@ return {
 	{
 		"numToStr/Comment.nvim",
 		cmd = "Comment",
-		init = keys.comment,
+		keys = keys.comment,
 		config = true,
 	},
 
 	"LudoPinelli/comment-box.nvim",
+	"famiu/bufdelete.nvim",
 
 	{
 		"akinsho/toggleterm.nvim",
@@ -70,10 +60,5 @@ return {
 		config = function()
 			require("config.nvim-colorizer")
 		end,
-	},
-
-	{
-		"famiu/bufdelete.nvim",
-		init = keys.bufdelete(),
 	},
 }

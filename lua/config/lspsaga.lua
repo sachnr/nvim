@@ -17,7 +17,7 @@ lspsaga.setup({
 	request_timeout = 2000,
 	--      ────────────────────────────────────────────────────────────
 	finder = {
-		max_height = 0.8,
+		max_height = 0.7,
 		keys = {
 			jump_to = "p",
 			edit = { "o", "<CR>" },
@@ -105,7 +105,7 @@ lspsaga.setup({
 			edit = "e",
 			vsplit = "s",
 			split = "i",
-			tabe = "",
+			tabe = "t",
 			jump = "o",
 			quit = "q",
 			expand_collapse = "u",

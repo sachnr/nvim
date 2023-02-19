@@ -9,15 +9,13 @@ return {
 		config = function()
 			require("base46").setup({
 				term_colors = true,
-				cokeline = true,
+				cokeline = false,
+				bufferline = true,
 			})
 		end,
 		dependencies = {
-			{
-				"noib3/nvim-cokeline",
-				keys = keys.cokeline,
-			},
 			"nvim-tree/nvim-web-devicons",
+			"akinsho/bufferline.nvim",
 		},
 	},
 
@@ -125,7 +123,7 @@ return {
 			"anuvyklack/middleclass",
 			{ "anuvyklack/animation.nvim", enabled = false },
 		},
-		keys = keys.windows,
+		init = keys.windows,
 		config = function()
 			vim.o.winwidth = 5
 			vim.o.equalalways = false
@@ -148,18 +146,8 @@ return {
 	},
 
 	{
-		"noib3/nvim-cokeline",
-		keys = keys.cokeline,
-		event = { "BufRead", "BufWinEnter" },
-		config = function()
-			require("config.cokeline")
-		end,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-	},
-
-	{
 		"utilyre/barbecue.nvim",
-		event = { "BufRead", "BufWinEnter" },
+		event = { "BufEnter" },
 		name = "barbecue",
 		version = "*",
 		dependencies = {
@@ -170,4 +158,7 @@ return {
 			require("config.barbecue")
 		end,
 	},
+
+	"mrjones2014/smart-splits.nvim",
+	"anuvyklack/hydra.nvim",
 }

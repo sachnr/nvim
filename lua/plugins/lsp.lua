@@ -66,6 +66,9 @@ return {
 
 	{
 		"mfussenegger/nvim-dap",
+		init = function()
+			require("config.hydra.dap")
+		end,
 		dependencies = {
 			{
 				"rcarriga/nvim-dap-ui",
@@ -73,7 +76,12 @@ return {
 					require("config.nvim-dap.dapui")
 				end,
 			},
-			{ "jbyuki/one-small-step-for-vimkind" },
+			{
+				"theHamsta/nvim-dap-virtual-text",
+				config = function()
+					require("nvim-dap-virtual-text").setup()
+				end,
+			},
 		},
 		config = function()
 			require("config.nvim-dap.dap")

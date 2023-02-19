@@ -5,22 +5,16 @@ if not present then
 end
 
 local keys = require("keys")
-local Terminal = require("toggleterm.terminal").Terminal
-local gitui = Terminal:new({
-	cmd = "gitui",
-	dir = "git_dir",
-	direction = "float",
-	float_opts = {
-		border = "double",
-	},
-})
-function _gitui_toggle()
-	gitui:toggle()
-end
 
 local options = {
 	window = {
 		border = "single", -- none, single, double, shadow
+	},
+	plugins = {
+		presets = {
+			windows = false, -- default bindings on <c-w>
+            nav = false, -- misc bindings to work with windows
+		},
 	},
 }
 

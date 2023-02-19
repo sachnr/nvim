@@ -84,7 +84,11 @@ local sections = {
 	lualine_z = { { getLspName } },
 }
 local inactive_sections = {
-	lualine_a = {},
+	lualine_a = { {
+		function()
+			return vim.api.nvim_win_get_number(0)
+		end,
+	} },
 	lualine_b = {},
 	lualine_c = { "filename" },
 	lualine_x = { "location" },

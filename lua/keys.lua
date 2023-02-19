@@ -39,6 +39,12 @@ M.defaults = function()
 	-- set("n", "<S-Tab>", function()
 	-- 	utils.goto_prev_buffer()
 	-- end, merge(opts, { desc = "Prev Buffer" }))
+	--
+	-- for i = 1, 9 do
+	-- 	set("n", ("<Leader>%s"):format(i), function()
+	-- 		utils.goto_buffer(i)
+	-- 	end, { silent = true })
+	-- end
 end
 
 -- -- normal
@@ -77,18 +83,8 @@ M.lsp_attach = function(bufnr)
 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
 end
 
-M.cokeline = function()
-	set("n", "<S-Tab>", "<Plug>(cokeline-switch-prev)", opts)
-	set("n", "<Tab>", "<Plug>(cokeline-switch-next)", opts)
-
-	for i = 1, 9 do
-		set("n", ("<Leader>b%s"):format(i), ("<Plug>(cokeline-switch-%s)"):format(i), { silent = true })
-	end
-end
-
 M.nvim_tree = function()
 	set("n", "<leader>n", "<cmd> NvimTreeToggle <CR>", opts)
-	set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
 end
 
 M.peek = function()
@@ -149,31 +145,30 @@ end
 
 M.whichKey_n = {
 	-- Search
-	t = {
-		name = "Telescope/Search",
-		s = { "<cmd> :Telescope current_buffer_fuzzy_find <CR>", "search in current buffer" },
-		t = { "<cmd> :Telescope buffers <CR>", "active buffers" },
-		m = { "<cmd> :Telescope marks <CR>", "Marks" },
-		p = { "<cmd> :Telescope project <CR>", "project" },
-		f = { "<cmd> Telescope find_files <CR>", "find files" },
-		w = { "<cmd> Telescope live_grep <CR>", "live grep" },
-		o = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
-	},
+	-- t = {
+	-- 	name = "Telescope/Search",
+	-- 	s = { "<cmd> :Telescope current_buffer_fuzzy_find <CR>", "search in current buffer" },
+	-- 	t = { "<cmd> :Telescope buffers <CR>", "active buffers" },
+	-- 	m = { "<cmd> :Telescope marks <CR>", "Marks" },
+	-- 	p = { "<cmd> :Telescope project <CR>", "project" },
+	-- 	f = { "<cmd> Telescope find_files <CR>", "find files" },
+	-- 	w = { "<cmd> Telescope live_grep <CR>", "live grep" },
+	-- 	o = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
+	-- },
 	-- Git
-	g = {
-		name = "Git",
-		o = { "<cmd>Telescope git_status<cr>", "Telescope git status" },
-		b = { "<cmd>Telescope git_branches<cr>", "Telescope git branches" },
-		c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
-		g = { "<cmd>lua _gitui_toggle()<CR>", "LazyGit UI" },
-	},
+	-- g = {
+	-- name = "Git",
+	-- o = { "<cmd>Telescope git_status<cr>", "Telescope git status" },
+	-- b = { "<cmd>Telescope git_branches<cr>", "Telescope git branches" },
+	-- c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
+	-- g = { "<cmd>lua _gitui_toggle()<CR>", "LazyGit UI" },
+	-- },
 	-- opts
-	w = {
-		name = "Options",
-		a = { "<cmd> :Alpha <CR>", "Open Dashboard" },
-		d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
-		r = { "<cmd> set rnu! <CR>", "toggle relative number" },
-	},
+	-- w = {
+	-- 	name = "Options",
+	-- 	a = { "<cmd> :Alpha <CR>", "Open Dashboard" },
+	-- 	d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
+	-- },
 	-- lsp
 	l = {
 		name = "LSP",
@@ -183,22 +178,27 @@ M.whichKey_n = {
 		e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
 		E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
 	},
-	-- debugger
 	d = {
-		name = "Debugger",
-		b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-		B = { "<cmd> lua require'telescope'.extensions.dap.list_breakpoints{}<cr>", "List Breakpoints" },
-		c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
-		i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
-		o = { "<cmd>lua require'dap'.step_over()<cr>", "Step over" },
-		O = { "<cmd>lua require'dap'.step_out()<cr>", "Step out" },
-		r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Repl Toggle" },
-		l = { "<cmd>lua require'dap'.run_last()<cr>", "Run Last" },
-		u = { "<cmd>lua require'dapui'.toggle()<cr>", "Dap UI Toggle" },
-		t = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
-		s = { "<cmd>lua require('osv').launch({ port = 8086 })<cr>", "Launch Lua Debugger Server" },
-		d = { "<cmd>lua require('osv').run_this()<cr>", "Launch Lua Debugger" },
+		function()
+			require("hydra").spawn("dap-hydra")
+		end, "spawn dap-hydra"
 	},
+	-- debugger
+	-- d = {
+	-- 	name = "Debugger",
+	-- 	b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+	-- 	B = { "<cmd> lua require'telescope'.extensions.dap.list_breakpoints{}<cr>", "List Breakpoints" },
+	-- 	c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+	-- 	i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+	-- 	o = { "<cmd>lua require'dap'.step_over()<cr>", "Step over" },
+	-- 	O = { "<cmd>lua require'dap'.step_out()<cr>", "Step out" },
+	-- 	r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Repl Toggle" },
+	-- 	l = { "<cmd>lua require'dap'.run_last()<cr>", "Run Last" },
+	-- 	u = { "<cmd>lua require'dapui'.toggle()<cr>", "Dap UI Toggle" },
+	-- 	t = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
+	-- 	s = { "<cmd>lua require('osv').launch({ port = 8086 })<cr>", "Launch Lua Debugger Server" },
+	-- 	d = { "<cmd>lua require('osv').run_this()<cr>", "Launch Lua Debugger" },
+	-- },
 	-- java lsp
 	j = {
 		name = "Java nvim-jdtls extra",
@@ -242,5 +242,42 @@ M.whichKey_v = {
 		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
 	},
 }
+
+M.gitsigns = function(gitsigns)
+	set("n", "]c", function()
+		if vim.wo.diff then
+			return "]c"
+		end
+		vim.schedule(function()
+			gitsigns.next_hunk()
+		end)
+		return "<Ignore>"
+	end, { expr = true, desc = "Next hunk" })
+	set("n", "[c", function()
+		if vim.wo.diff then
+			return "[c"
+		end
+		vim.schedule(function()
+			gitsigns.prev_hunk()
+		end)
+		return "<Ignore>"
+	end, { expr = true, desc = "prev hunk" })
+	set({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage Hunk" })
+	set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "reset Hunk" })
+	set("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
+	set("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Undo Stage Hunk" })
+	set("n", "<leader>gR", gitsigns.reset_buffer, { desc = "reset buffer" })
+	set("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
+	set("n", "<leader>gb", function()
+		gitsigns.blame_line({ full = true }, { desc = "Blame line" })
+	end)
+	set("n", "<leader>gB", gitsigns.toggle_current_line_blame, { desc = "Toggle current line blame" })
+	set("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
+	set("n", "<leader>gD", function()
+		gitsigns.diffthis("~")
+	end, { desc = "diff this ~" })
+	set("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle Deleted" })
+	set({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
+end
 
 return M
