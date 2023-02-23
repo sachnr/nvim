@@ -4,7 +4,6 @@ local cmd = require("hydra.keymap-util").cmd
 local hint = [[
   ^ ^        Options
   ^
-  _d_ set cwd
   _v_ %{ve} virtual edit
   _i_ %{list} invisible characters  
   _s_ %{spell} spell
@@ -23,21 +22,13 @@ Hydra({
 		color = "amaranth",
 		invoke_on_body = true,
 		hint = {
-			border = "rounded",
+			border = "single",
 			position = "middle",
 		},
 	},
 	mode = { "n", "x" },
 	body = "<leader>o",
 	heads = {
-		{
-			"d",
-			function()
-				cmd("cd%:h")
-			end,
-			{ exit = true, desc = "set cwd root" },
-		},
-
 		{
 			"n",
 			function()

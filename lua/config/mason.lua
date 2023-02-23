@@ -33,9 +33,10 @@ local options = {
 		"firefox-debug-adapter",
 		"java-debug-adapter",
 		"java-test",
-		"debugpy",
-		"cpptools",
-		"delve",
+		"js-debug-adapter",
+		-- "debugpy",
+		-- "cpptools",
+		-- "delve",
 		-- "vscode-go",
 	},
 

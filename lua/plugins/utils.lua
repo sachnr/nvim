@@ -16,8 +16,7 @@ return {
 
 	{
 		"gbprod/yanky.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		init = keys.yanky,
+		keys = keys.yanky,
 		config = function()
 			require("yanky").setup({
 				system_clipboard = {
@@ -50,15 +49,20 @@ return {
 
 	{
 		"chentoast/marks.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = true,
 	},
 
 	{
 		"NvChad/nvim-colorizer.lua",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("config.nvim-colorizer")
 		end,
+	},
+
+	{
+		"ThePrimeagen/harpoon",
+		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 }

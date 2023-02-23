@@ -2,16 +2,16 @@ local Hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd
 
 local hint = [[
-                 _f_: files       _m_: marks
+ ^              _f_: files       _m_: marks
    🭇🬭🬭🬭🬭🬭🬭🬭🬭🬼    _o_: old files   _g_: live grep
   🭉🭁🭠🭘    🭣🭕🭌🬾   _p_: projects    _/_: search in file
   🭅█ ▁     █🭐
   ██🬿      🭊██   _r_: registers   _t_: Buffers
  🭋█🬝🮄🮄🮄🮄🮄🮄🮄🮄🬆█🭀  _h_: vim help    _c_: execute command
  🭤🭒🬺🬹🬱🬭🬭🬭🬭🬵🬹🬹🭝🭙  _k_: keymaps     _;_: commands history 
-                 _O_: options     _?_: search history
+ ^               _O_: options     _?_: search history
  ^
-                 _<Enter>_: Telescope           _q_: exit
+ ^                _<Enter>_: Telescope           _q_: exit
 ]]
 
 Hydra({
@@ -22,7 +22,7 @@ Hydra({
 		invoke_on_body = true,
 		hint = {
 			position = "middle",
-			border = "rounded",
+			border = "single",
 		},
 	},
 	mode = "n",

@@ -1,2 +1,1 @@
 # nvim
-basic ide setup

@@ -1,5 +1,4 @@
 require("options")
 require("keys").defaults()
 require("lazy-nvim")
-require("config.hydra")
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme tokyonight]])

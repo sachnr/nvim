@@ -38,7 +38,8 @@ lspconfig.lua_ls.setup({
 	settings = {
 		Lua = {
 			completion = {
-				callSnippet = "Replace",
+				workspaceWord = true,
+				callSnippet = "Both",
 			},
 			diagnostics = {
 				globals = { "vim" },
@@ -54,3 +55,4 @@ lspconfig.lua_ls.setup({
 		},
 	},
 })
+

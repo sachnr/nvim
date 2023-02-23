@@ -19,7 +19,7 @@ local opts = {
 		lazy = true, -- should plugins be lazy-loaded?
 	},
 	ui = {
-		border = utils.border("FloatBorder"),
+		border = "single",
 	},
 	custom_keys = {
 		["<localleader>l"] = false,

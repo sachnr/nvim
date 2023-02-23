@@ -19,7 +19,7 @@ local gitui = Terminal:new({
 	dir = "git_dir",
 	direction = "float",
 	float_opts = {
-		border = "double",
+		border = "rounded",
 	},
 })
 
@@ -30,7 +30,7 @@ Hydra({
 		color = "pink",
 		invoke_on_body = true,
 		hint = {
-			border = "rounded",
+			border = "single",
 		},
 		on_enter = function()
 			vim.cmd("mkview")

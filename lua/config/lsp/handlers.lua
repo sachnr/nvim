@@ -1,16 +1,14 @@
-local border = require("utils").border("FloatBorder")
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+-- signs = {
+-- 	severity_limit = "Warning",
+-- },
+-- 	underline = {
+-- 		severity_limit = "Warning",
+-- 	},
+-- })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	signs = {
-		severity_limit = "Warning",
-	},
-	underline = {
-		severity_limit = "Warning",
-	},
-})
-
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
 
 -- jump to first definition
 vim.lsp.handlers["textDocument/definition"] = function(_, result)
@@ -31,18 +29,21 @@ vim.diagnostic.config({
 	virtual_text = {
 		source = "always",
 		prefix = "■",
-		-- Only show virtual text matching the given severity
+		spacing = 2,
 		severity = {
-			-- Specify a range of severities
 			min = vim.diagnostic.severity.ERROR,
 		},
 	},
 	float = {
 		source = "always",
-		border = "rounded",
+		border = "single",
 	},
 	signs = true,
-	underline = true,
+	underline = {
+		severity = {
+			min = vim.diagnostic.severity.WARN,
+		},
+	},
 	update_in_insert = false,
 	severity_sort = true,
 })

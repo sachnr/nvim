@@ -13,10 +13,11 @@ local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
 luasnip.config.set_config({
 	history = true,
-	updateevents = "TextChanged,TextChangedI",
 })
 require("luasnip.loaders.from_vscode").lazy_load()
+
 vim.api.nvim_create_autocmd("InsertLeave", {
+	group = vim.api.nvim_create_augroup("luasnip", { clear = true }),
 	callback = function()
 		if luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] and not luasnip.session.jump_active then
 			luasnip.unlink_current()
@@ -43,11 +44,11 @@ cmp.setup({
 	},
 	window = {
 		completion = {
-			border = utils.border("CmpBorder"),
+			border = "single",
 			winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
 		},
 		documentation = {
-			border = utils.border("CmpDocBorder"),
+			border = "single",
 			winhighlight = "Normal:CmpDoc",
 		},
 	},
@@ -90,11 +91,11 @@ cmp.setup({
 		}),
 	}),
 	sources = {
+		{ name = "path" },
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
-		{ name = "path" },
 		{ name = "nvim_lsp_signature_help" },
 	},
 	formatting = {

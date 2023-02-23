@@ -17,7 +17,7 @@ lspsaga.setup({
 	request_timeout = 2000,
 	--      ────────────────────────────────────────────────────────────
 	finder = {
-		max_height = 0.7,
+		max_height = 0.6,
 		keys = {
 			jump_to = "p",
 			edit = { "o", "<CR>" },
@@ -37,12 +37,14 @@ lspsaga.setup({
 		tabe = "<C-c>t",
 		quit = "q",
 		close = "<Esc>",
+		back = "<C-c>b",
+		next = "<C-c>n",
 	},
 	--      ────────────────────────────────────────────────────────────
 	code_action = {
 		num_shortcut = true,
 		show_server_name = false,
-		extend_gitsigns = true,
+		extend_gitsigns = false,
 		keys = {
 			-- string | table type
 			quit = "q",
@@ -51,14 +53,17 @@ lspsaga.setup({
 	},
 	--      ────────────────────────────────────────────────────────────
 	lightbulb = {
-		enable = true,
+		enable = false,
 		enable_in_insert = true,
 		sign = true,
 		sign_priority = 40,
-		virtual_text = false,
+		virtual_text = true,
 	},
 	--      ────────────────────────────────────────────────────────────
 	diagnostic = {
+		on_insert = false,
+		on_insert_follow = true,
+		insert_winblend = 0,
 		show_code_action = true,
 		show_source = true,
 		jump_num_shortcut = true,
@@ -113,7 +118,7 @@ lspsaga.setup({
 	},
 	--      ────────────────────────────────────────────────────────────
 	symbol_in_winbar = {
-		enable = false,
+		enable = true,
 		separator = "  ",
 		hide_keyword = true,
 		show_file = true,
@@ -133,7 +138,7 @@ lspsaga.setup({
 		-- This option only works in Neovim 0.9
 		title = true,
 		-- Border type can be single, double, rounded, solid, shadow.
-		border = "rounded",
+		border = "single",
 		winblend = 0,
 		expand = "",
 		collapse = "",

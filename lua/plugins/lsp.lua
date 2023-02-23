@@ -5,6 +5,14 @@ return {
 		config = function()
 			require("config.lsp")
 		end,
+		dependencies = {
+			{
+				"folke/neodev.nvim",
+				config = function()
+					require("neodev").setup({ library = { plugins = { "nvim-dap-ui" }, types = true } })
+				end,
+			},
+		},
 	},
 
 	{
@@ -23,11 +31,9 @@ return {
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 		config = function()
-			require("config.cmp")
+			require("config.lsp.cmp")
 		end,
 	},
-
-	{ "folke/neodev.nvim", config = true },
 
 	{
 		"mhartington/formatter.nvim",
@@ -66,26 +72,34 @@ return {
 
 	{
 		"mfussenegger/nvim-dap",
-		init = function()
-			require("config.hydra.dap")
-		end,
 		dependencies = {
 			{
-				"rcarriga/nvim-dap-ui",
-				config = function()
-					require("config.nvim-dap.dapui")
-				end,
-			},
-			{
 				"theHamsta/nvim-dap-virtual-text",
+				config = true,
+			},
+			{ "jbyuki/one-small-step-for-vimkind" },
+			{
+				"mxsdev/nvim-dap-vscode-js",
 				config = function()
-					require("nvim-dap-virtual-text").setup()
+					require("dap-vscode-js").setup({
+						debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
+						adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }, -- which adapters to register in nvim-dap
+					})
 				end,
 			},
 		},
+	},
+
+	{
+		"rcarriga/nvim-dap-ui",
 		config = function()
-			require("config.nvim-dap.dap")
+			require("config.nvim-dap.dapui")
 		end,
+	},
+
+	{
+		"microsoft/vscode-js-debug",
+		build = "npm install --legacy-peer-deps && npm run compile",
 	},
 
 	"mfussenegger/nvim-jdtls",

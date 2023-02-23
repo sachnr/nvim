@@ -6,13 +6,10 @@ return {
 		"sachnr/base46",
 		lazy = false,
 		priority = 1000,
-		config = function()
-			require("base46").setup({
-				term_colors = true,
-				cokeline = false,
-				bufferline = true,
-			})
-		end,
+		opts = {
+			term_colors = true,
+			bufferline = true,
+		},
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"akinsho/bufferline.nvim",
@@ -36,7 +33,7 @@ return {
 		"nvim-lualine/lualine.nvim",
 		lazy = false,
 		config = function()
-			require("config.lualine")
+			require("config.uistuff.lualine")
 		end,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
@@ -47,19 +44,24 @@ return {
 		lazy = false,
 		"goolord/alpha-nvim",
 		config = function()
-			require("config.alpha-nvim")
+			require("config.uistuff.alpha-nvim")
 		end,
 	},
 
 	{
 		"petertriho/nvim-scrollbar",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		dependencies = {
-			{ "kevinhwang91/nvim-hlslens", config = require("config.hls-lens") },
-		},
 		config = function()
-			require("config.scrollbar")
+			require("config.uistuff.scrollbar")
 		end,
+		dependencies = {
+			{
+				"kevinhwang91/nvim-hlslens",
+				config = function()
+					require("config.hls-lens")
+				end,
+			},
+		},
 	},
 
 	{
@@ -78,13 +80,13 @@ return {
 		"lukas-reineke/indent-blankline.nvim",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
-			require("config.indent-blankline")
+			require("config.uistuff.indent-blankline")
 		end,
 	},
 
 	{
 		"lewis6991/gitsigns.nvim",
-		event = { "BufWinEnter" },
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("config.gitsigns")
 		end,
@@ -96,7 +98,10 @@ return {
 		priority = 1000,
 		dependencies = {
 			"nvim-telescope/telescope-ui-select.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+			},
 			"kkharji/sqlite.lua",
 			"nvim-telescope/telescope-project.nvim",
 			"gbrlsnchs/telescope-lsp-handlers.nvim",
@@ -109,7 +114,7 @@ return {
 
 	{
 		"nvim-tree/nvim-tree.lua",
-		event = { "BufWinEnter" },
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		init = keys.nvim_tree(),
 		config = function()
 			require("config.nvim-tree")
@@ -118,7 +123,7 @@ return {
 
 	{
 		"anuvyklack/windows.nvim",
-		event = { "BufRead", "BufWinEnter" },
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		dependencies = {
 			"anuvyklack/middleclass",
 			{ "anuvyklack/animation.nvim", enabled = false },
@@ -138,27 +143,33 @@ return {
 
 	{
 		"glepnir/lspsaga.nvim",
-		event = { "BufRead", "BufWinEnter" },
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
-			require("config.lspsaga")
+			require("config.uistuff.lspsaga")
 		end,
 		dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
 	},
 
-	{
-		"utilyre/barbecue.nvim",
-		event = { "BufEnter" },
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		config = function()
-			require("config.barbecue")
-		end,
-	},
+	-- {
+	-- 	"utilyre/barbecue.nvim",
+	-- 	event = { "BufEnter" },
+	-- 	name = "barbecue",
+	-- 	version = "*",
+	-- 	dependencies = {
+	-- 		"SmiteshP/nvim-navic",
+	-- 		"nvim-tree/nvim-web-devicons", -- optional dependency
+	-- 	},
+	-- 	config = function()
+	-- 		require("config.barbecue")
+	-- 	end,
+	-- },
 
 	"mrjones2014/smart-splits.nvim",
-	"anuvyklack/hydra.nvim",
+	{
+		"anuvyklack/hydra.nvim",
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		config = function()
+			require("config.hydra")
+		end,
+	},
 }

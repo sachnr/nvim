@@ -20,7 +20,7 @@ M.defaults = function()
 	set("i", "<C-l>", "<Right>", merge(opts, { desc = "move right" }))
 	set("i", "<C-j>", "<Down>", merge(opts, { desc = "move down" }))
 	set("i", "<C-k>", "<Up>", merge(opts, { desc = "move up" }))
-	set("i", "<C-c>", "<ESC>", { silent = true })
+	set("i", "<C-c>", "<ESC>")
 	-- center
 	set("n", "<C-u>", "<C-u>zz", opts)
 	set("n", "<C-d>", "<C-d>zz", opts)
@@ -32,6 +32,10 @@ M.defaults = function()
 	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
+	-- harpoon
+	set("n", "gh", function()
+		require("harpoon.ui").toggle_quick_menu()
+	end, merge(opts, { desc = "harpoon ui" }))
 	-- buffer
 	-- set("n", "<Tab>", function()
 	-- 	utils.goto_next_buffer()
@@ -69,10 +73,10 @@ M.lsp_attach = function(bufnr)
 	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
 	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
 	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
-	set("n", "<leader>lq", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
+	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
 	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
-	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
+	set("n", "gr", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
 	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
 	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
 	set("n", "gD", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
@@ -170,18 +174,19 @@ M.whichKey_n = {
 	-- 	d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
 	-- },
 	-- lsp
-	l = {
-		name = "LSP",
-		I = { "<cmd>LspInfo<cr>", "Info" },
+	-- l = {
+		-- name = "LSP",
+		-- I = { "<cmd>LspInfo<cr>", "Info" },
 		-- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
 		-- q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
-		e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
-		E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
-	},
+		-- e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
+		-- E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
+	-- },
 	d = {
 		function()
 			require("hydra").spawn("dap-hydra")
-		end, "spawn dap-hydra"
+		end,
+		"[Hydra] dap",
 	},
 	-- debugger
 	-- d = {

@@ -38,19 +38,6 @@ M.merge_tb = function(table1, table2)
 	return vim.tbl_deep_extend("force", table1, table2)
 end
 
-M.border = function(hl_name)
-	return {
-		{ "╭", hl_name },
-		{ "─", hl_name },
-		{ "╮", hl_name },
-		{ "│", hl_name },
-		{ "╯", hl_name },
-		{ "─", hl_name },
-		{ "╰", hl_name },
-		{ "│", hl_name },
-	}
-end
-
 M.goto_buffer = function(buf_idx)
 	local active_bufs = get_active_buffers()
 	local selected_buf = active_bufs[buf_idx]

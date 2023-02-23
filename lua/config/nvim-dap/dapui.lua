@@ -38,7 +38,7 @@ dapui.setup({
 	floating = {
 		max_height = 0.9,
 		max_width = 0.5, -- Floats will be treated as percentage of your screen.
-		border = vim.g.border_chars, -- Border style. Can be 'single', 'double' or 'rounded'
+		border = "single", -- Border style. Can be 'single', 'double' or 'rounded'
 		mappings = {
 			close = { "q", "<Esc>" },
 		},
