@@ -15,6 +15,7 @@ local servers = {
 	"cssls",
 	"ccls",
 	"vuels",
+	"lua_ls",
 	"pylsp",
 	"sqls",
 	"gopls",
@@ -24,35 +25,12 @@ local servers = {
 	"rnix",
 }
 
+require("neoconf").setup({})
+require("neodev").setup()
+
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
 		capabilities = capablities,
 	})
 end
-
--- lua
-lspconfig.lua_ls.setup({
-	on_attach = on_attach,
-	capabilities = capablities,
-	settings = {
-		Lua = {
-			completion = {
-				workspaceWord = true,
-				callSnippet = "Both",
-			},
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-				},
-				maxPreload = 100000,
-				preloadFileSize = 10000,
-			},
-		},
-	},
-})
-

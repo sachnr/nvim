@@ -1,0 +1,38 @@
+{
+  "neodev": {
+    "library": {
+      "enabled": true,
+      "plugins": true,
+      "types": true,
+      "runtime": true
+    },
+    "setup_jsonls": true,
+    "lspconfig": true,
+    "pathStrict": true
+  },
+  "neoconf": {
+    "plugins": {
+      "lua_ls": {
+        "enabled": true
+      }
+    }
+  },
+  "lspconfig": {
+    "lua_ls": {
+      "Lua": {
+        "completion": {
+          "callSnippet": "Replace"
+        },
+        "diagnostic": {
+          "globals": "vim"
+        },
+        "workspace": {
+          "library": {
+            "[vim.fn.expand('$VIMRUNTIME/lua')]": true,
+            "[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')]": true
+          }
+        }
+      }
+    }
+  }
+}

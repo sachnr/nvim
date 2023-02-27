@@ -91,15 +91,15 @@ local config = {
 				useBlocks = true,
 			},
 		},
-		-- configuration = {
-		-- 	updateBuildConfiguration = "interactive",
-		-- 	runtimes = {
-		-- 		{
-		-- 			name = "JavaSE-19",
-		-- 			path = "/usr/lib/jvm/java-19-openjdk/",
-		-- 		},
-		-- 	},
-		-- },
+		configuration = {
+			updateBuildConfiguration = "interactive",
+			runtimes = {
+				{
+					name = "JavaSE-19",
+					path = vim.fn.expand("$JAVA_HOME"),
+				},
+			},
+		},
 		flags = {
 			allow_incremental_sync = true,
 		},

@@ -2,8 +2,8 @@ M = {}
 
 local set = vim.keymap.set
 local opts = {
-	silent = true, -- use `silent` when creating keymaps
-	noremap = true, -- use `noremap` when creating keymaps
+	silent = true,
+	noremap = true,
 }
 local utils = require("utils")
 local merge = require("utils").merge_tb
@@ -32,10 +32,6 @@ M.defaults = function()
 	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
-	-- harpoon
-	set("n", "gh", function()
-		require("harpoon.ui").toggle_quick_menu()
-	end, merge(opts, { desc = "harpoon ui" }))
 	-- buffer
 	-- set("n", "<Tab>", function()
 	-- 	utils.goto_next_buffer()
@@ -43,12 +39,9 @@ M.defaults = function()
 	-- set("n", "<S-Tab>", function()
 	-- 	utils.goto_prev_buffer()
 	-- end, merge(opts, { desc = "Prev Buffer" }))
-	--
-	-- for i = 1, 9 do
-	-- 	set("n", ("<Leader>%s"):format(i), function()
-	-- 		utils.goto_buffer(i)
-	-- 	end, { silent = true })
-	-- end
+end
+M.neogen = function()
+	vim.api.nvim_set_keymap("n", "<Leader>a", ":lua require('neogen').generate()<CR>", opts)
 end
 
 -- -- normal
@@ -87,6 +80,15 @@ M.lsp_attach = function(bufnr)
 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
 end
 
+M.harpoon = function()
+	set("n", "gh", function()
+		require("harpoon.ui").toggle_quick_menu()
+	end, merge(opts, { desc = "harpoon ui" }))
+	set("n", "gH", function()
+		require("harpoon.mark").add_file()
+	end, merge(opts, { desc = "harpoon mark" }))
+end
+
 M.nvim_tree = function()
 	set("n", "<leader>n", "<cmd> NvimTreeToggle <CR>", opts)
 end
@@ -113,22 +115,8 @@ M.yanky = function()
 	set({ "n", "x" }, "y", "<Plug>(YankyYank)")
 	set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
 	set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-	set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-	set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-
 	set("n", "<c-n>", "<Plug>(YankyCycleForward)")
 	set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
-
-	set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
-	set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
-	set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
-	set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
-
-	set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
-	set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
-	set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
-	set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
-
 	set("n", "<leader>p", "<cmd> Telescope yank_history <CR>", { desc = "Paste from Yanky" })
 end
 
@@ -175,12 +163,12 @@ M.whichKey_n = {
 	-- },
 	-- lsp
 	-- l = {
-		-- name = "LSP",
-		-- I = { "<cmd>LspInfo<cr>", "Info" },
-		-- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-		-- q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
-		-- e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
-		-- E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
+	-- name = "LSP",
+	-- I = { "<cmd>LspInfo<cr>", "Info" },
+	-- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
+	-- q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
+	-- e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
+	-- E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
 	-- },
 	d = {
 		function()
@@ -224,11 +212,6 @@ M.whichKey_n = {
 	-- local server
 	b = {
 		name = "localhost",
-		s = { "<cmd> BrowserSync <CR>", "run browser-sync server" },
-		o = { "<cmd> BrowserOpen <CR>", "strat server & preview current file" },
-		p = { "<cmd> BrowserPreview <CR>", "preview current file with browser sync" },
-		r = { "<cmd> BrowserRestart <CR>", "restart browser sync" },
-		S = { "<cmd> Browserstop <CR>", "stop browser sync" },
 	},
 }
 

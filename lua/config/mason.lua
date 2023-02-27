@@ -30,10 +30,10 @@ local options = {
 		-- "shfmt",
 
 		-- debuggers
-		"firefox-debug-adapter",
+		-- "firefox-debug-adapter",
 		"java-debug-adapter",
 		"java-test",
-		"js-debug-adapter",
+		-- "js-debug-adapter",
 		-- "debugpy",
 		-- "cpptools",
 		-- "delve",

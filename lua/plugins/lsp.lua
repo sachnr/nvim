@@ -8,9 +8,7 @@ return {
 		dependencies = {
 			{
 				"folke/neodev.nvim",
-				config = function()
-					require("neodev").setup({ library = { plugins = { "nvim-dap-ui" }, types = true } })
-				end,
+				"folke/neoconf.nvim",
 			},
 		},
 	},
@@ -45,15 +43,6 @@ return {
 		end,
 	},
 
-	{
-		"folke/trouble.nvim",
-		cmd = { "TroubleToggle", "TroubleRefresh" },
-		config = true,
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-	},
-
 	-- {
 	-- 	"jose-elias-alvarez/null-ls.nvim",
 	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
@@ -72,6 +61,9 @@ return {
 
 	{
 		"mfussenegger/nvim-dap",
+		config = function()
+			require("config.nvim-dap.dap")
+		end,
 		dependencies = {
 			{
 				"theHamsta/nvim-dap-virtual-text",
@@ -83,7 +75,7 @@ return {
 				config = function()
 					require("dap-vscode-js").setup({
 						debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-						adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }, -- which adapters to register in nvim-dap
+						adapters = { "pwa-node" }, -- which adapters to register in nvim-dap
 					})
 				end,
 			},

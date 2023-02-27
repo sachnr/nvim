@@ -49,13 +49,13 @@ return {
 
 	{
 		"chentoast/marks.nvim",
-        event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = true,
 	},
 
 	{
 		"NvChad/nvim-colorizer.lua",
-        event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("config.nvim-colorizer")
 		end,
@@ -63,6 +63,16 @@ return {
 
 	{
 		"ThePrimeagen/harpoon",
+		keys = keys.harpoon,
 		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+
+	{
+		"danymat/neogen",
+		keys = keys.neogen,
+		dependencies = "nvim-treesitter/nvim-treesitter",
+		config = function()
+			require("neogen").setup({ snippet_engine = "luasnip" })
+		end,
 	},
 }

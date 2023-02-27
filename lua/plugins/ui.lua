@@ -97,14 +97,14 @@ return {
 		lazy = false,
 		priority = 1000,
 		dependencies = {
-			"nvim-telescope/telescope-ui-select.nvim",
+			-- "nvim-telescope/telescope-ui-select.nvim",
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "make",
 			},
 			"kkharji/sqlite.lua",
 			"nvim-telescope/telescope-project.nvim",
-			"gbrlsnchs/telescope-lsp-handlers.nvim",
+			-- "gbrlsnchs/telescope-lsp-handlers.nvim",
 			{ "nvim-lua/plenary.nvim" },
 		},
 		config = function()
@@ -164,7 +164,6 @@ return {
 	-- 	end,
 	-- },
 
-	"mrjones2014/smart-splits.nvim",
 	{
 		"anuvyklack/hydra.nvim",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },

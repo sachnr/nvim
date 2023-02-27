@@ -17,6 +17,7 @@ local options = {
 		selection_caret = "  ",
 		entry_prefix = "  ",
 		multi_icon = " + ",
+		borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 		sorting_strategy = "ascending",
 		layout_config = {
 			horizontal = {
