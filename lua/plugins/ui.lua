@@ -1,18 +1,15 @@
 local keys = require("keys")
 
 return {
-	-- colorscheme
 	{
-		"sachnr/base46",
+		dir = "~/Downloads/base46/",
 		lazy = false,
 		priority = 1000,
 		opts = {
 			term_colors = true,
-			bufferline = true,
-		},
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"akinsho/bufferline.nvim",
+			lualine_style = "simple",
+			bold = true,
+			italics = true,
 		},
 	},
 
@@ -87,9 +84,7 @@ return {
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = function()
-			require("config.gitsigns")
-		end,
+		config = true,
 	},
 
 	{

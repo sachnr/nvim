@@ -16,23 +16,24 @@ luasnip.config.set_config({
 })
 require("luasnip.loaders.from_vscode").lazy_load()
 
-vim.api.nvim_create_autocmd("InsertLeave", {
-	group = vim.api.nvim_create_augroup("luasnip", { clear = true }),
-	callback = function()
-		if luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] and not luasnip.session.jump_active then
-			luasnip.unlink_current()
-		end
-	end,
-})
-
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+local has_words_before = function()
+	---@diagnostic disable-next-line: deprecated
+	unpack = unpack or table.unpack
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 cmp.setup({
 	enabled = function()
 		-- disable completion in comments
 		local context = require("cmp.config.context")
+		local buftype = vim.api.nvim_buf_get_option(0, "buftype")
 		if vim.api.nvim_get_mode().mode == "c" then
 			return true
+		elseif buftype == "prompt" then
+			return false
 		else
 			return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
 		end
@@ -42,53 +43,49 @@ cmp.setup({
 			luasnip.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
-	window = {
-		completion = {
-			border = "single",
-			winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
-		},
-		documentation = {
-			border = "single",
-			winhighlight = "Normal:CmpDoc",
-		},
-	},
 	mapping = cmp.mapping.preset.insert({
-		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
-		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-		["<C-e>"] = cmp.mapping({
-			i = cmp.mapping.abort(),
-			c = cmp.mapping.close(),
-		}),
-		-- Accept currently selected item. If none selected, `select` first item.
-		-- Set `select` to `false` to only confirm explicitly selected items.
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		---@diagnostic disable-next-line: missing-parameter
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+			elseif has_words_before() then
+				cmp.complete()
 			else
 				fallback()
 			end
-		end, {
-			"i",
-			"s",
-		}),
+		end, { "i", "s" }),
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
 			else
 				fallback()
 			end
-		end, {
-			"i",
-			"s",
-		}),
+		end, { "i", "s" }),
+		["<A-k>"] = cmp.mapping(function()
+			if luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			end
+		end, { "i", "s" }),
+		["<A-j>"] = cmp.mapping(function()
+			if luasnip.jumpable(1) then
+				luasnip.jump(1)
+			end
+		end, { "i", "s" }),
+		["<A-h>"] = cmp.mapping(function()
+			if luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			end
+		end, { "i", "s" }),
+		["<A-l>"] = cmp.mapping(function()
+			if luasnip.jumpable(1) then
+				luasnip.jump(1)
+			end
+		end, { "i", "s" }),
 	}),
 	sources = {
 		{ name = "path" },

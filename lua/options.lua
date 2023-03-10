@@ -39,7 +39,6 @@ opt.smartcase = true -- ... unless there is a capital letter in the query
 
 -- undo
 opt.undofile = true -- save undo information in a file
-opt.undodir = vim.fn.stdpath("data") .. "/undofile" -- where to store undo files
 
 -- Tabs/indent
 opt.autoindent = true -- take indent for new line from previous line

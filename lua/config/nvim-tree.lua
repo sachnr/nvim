@@ -16,7 +16,7 @@ local options = {
 		update_root = true,
 	},
 	view = {
-		relativenumber = true,
+		relativenumber = false,
 		hide_root_folder = true,
 		centralize_selection = false,
 		preserve_window_proportions = true,
@@ -33,18 +33,27 @@ local options = {
 			error = "",
 		},
 	},
+	actions = {
+		open_file = {
+			quit_on_open = true,
+			resize_window = false,
+			window_picker = {
+				chars = "1234567890",
+			},
+		},
+	},
 	renderer = {
 		highlight_git = true,
 		indent_markers = {
 			enable = true,
 			inline_arrows = true,
-			icons = {
-				corner = "╰",
-				edge = "│",
-				item = "│",
-				bottom = "─",
-				none = " ",
-			},
+			-- icons = {
+			-- 	corner = "╰",
+			-- 	edge = "│",
+			-- 	item = "│",
+			-- 	bottom = "─",
+			-- 	none = " ",
+			-- },
 		},
 		icons = {
 			glyphs = {

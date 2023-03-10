@@ -41,7 +41,12 @@ M.defaults = function()
 	-- end, merge(opts, { desc = "Prev Buffer" }))
 end
 M.neogen = function()
-	vim.api.nvim_set_keymap("n", "<Leader>a", ":lua require('neogen').generate()<CR>", opts)
+	vim.api.nvim_set_keymap(
+		"n",
+		"<Leader>n",
+		":lua require('neogen').generate()<CR>",
+		merge(opts, { desc = "neogen generate " })
+	)
 end
 
 -- -- normal
@@ -81,16 +86,16 @@ M.lsp_attach = function(bufnr)
 end
 
 M.harpoon = function()
-	set("n", "gh", function()
+	set("n", "<leader>2", function()
 		require("harpoon.ui").toggle_quick_menu()
 	end, merge(opts, { desc = "harpoon ui" }))
-	set("n", "gH", function()
+	set("n", "<leader>3>", function()
 		require("harpoon.mark").add_file()
 	end, merge(opts, { desc = "harpoon mark" }))
 end
 
 M.nvim_tree = function()
-	set("n", "<leader>n", "<cmd> NvimTreeToggle <CR>", opts)
+	set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
 end
 
 M.peek = function()

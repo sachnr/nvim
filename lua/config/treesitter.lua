@@ -39,6 +39,7 @@ local options = {
 		"scss",
 		"nix",
 		"query",
+        "yuck"
 	},
 
 	highlight = {

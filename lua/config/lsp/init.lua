@@ -25,7 +25,19 @@ local servers = {
 	"rnix",
 }
 
-require("neoconf").setup({})
+require("neoconf").setup({
+	import = {
+		vscode = false, -- local .vscode/settings.json
+		coc = false, -- global/local coc-settings.json
+		nlsp = false, -- global/local nlsp-settings.nvim json settings
+	},
+	live_reload = false,
+	plugins = {
+		lua_ls = {
+			enabled = true,
+		},
+	},
+})
 require("neodev").setup()
 
 for _, lsp in ipairs(servers) do
@@ -34,3 +46,24 @@ for _, lsp in ipairs(servers) do
 		capabilities = capablities,
 	})
 end
+
+lspconfig.lua_ls.setup({
+	on_attach = on_attach,
+	capabilities = capablities,
+	settings = {
+		Lua = {
+			completion = {
+				callSnippet = "Replace",
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			},
+		},
+	},
+})

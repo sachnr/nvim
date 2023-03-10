@@ -17,21 +17,9 @@ local options = {
 		selection_caret = "  ",
 		entry_prefix = "  ",
 		multi_icon = " + ",
+        borders = false,
 		borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 		sorting_strategy = "ascending",
-		layout_config = {
-			horizontal = {
-				prompt_position = "top",
-				preview_width = 0.55,
-				results_width = 0.6,
-			},
-			vertical = {
-				mirror = false,
-			},
-			width = 0.67,
-			height = 0.60,
-			preview_cutoff = 120,
-		},
 		results_title = "results",
 		file_ignore_patterns = {
 			"node_modules",
@@ -45,7 +33,6 @@ local options = {
 		},
 		mappings = {
 			n = {
-				["q"] = require("telescope.actions").close,
 				["d"] = require("telescope.actions").delete_buffer,
 			},
 			i = {
