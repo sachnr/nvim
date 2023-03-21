@@ -75,4 +75,11 @@ return {
 			require("neogen").setup({ snippet_engine = "luasnip" })
 		end,
 	},
+
+	{
+		"j-morano/buffer_manager.nvim",
+		keys = keys.buffer_manager,
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = true,
+	},
 }

@@ -2,14 +2,13 @@ local keys = require("keys")
 
 return {
 	{
-		dir = "~/Downloads/base46/",
+        "sachnr/base46",
 		lazy = false,
 		priority = 1000,
 		opts = {
 			term_colors = true,
-			lualine_style = "simple",
+			simple_lualine = true,
 			bold = true,
-			italics = true,
 		},
 	},
 

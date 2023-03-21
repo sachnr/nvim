@@ -3,6 +3,4 @@ return {
 	require("plugins.ui"),
 	require("plugins.lsp"),
 	require("plugins.utils"),
-	require("plugins.local"),
-	require("plugins.themes"),
 }

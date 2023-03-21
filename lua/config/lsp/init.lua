@@ -20,25 +20,32 @@ local servers = {
 	"sqls",
 	"gopls",
 	"tsserver",
-	-- "eslint",
 	"yamlls",
 	"rnix",
+	"rust_analyzer",
 }
 
-require("neoconf").setup({
-	import = {
-		vscode = false, -- local .vscode/settings.json
-		coc = false, -- global/local coc-settings.json
-		nlsp = false, -- global/local nlsp-settings.nvim json settings
-	},
-	live_reload = false,
-	plugins = {
-		lua_ls = {
-			enabled = true,
+local neoconf_ok, neoconf = pcall(require, "neoconf")
+if neoconf_ok then
+	neoconf.setup({
+		import = {
+			vscode = false, -- local .vscode/settings.json
+			coc = false, -- global/local coc-settings.json
+			nlsp = false, -- global/local nlsp-settings.nvim json settings
 		},
-	},
-})
-require("neodev").setup()
+		live_reload = false,
+		plugins = {
+			lua_ls = {
+				enabled = true,
+			},
+		},
+	})
+end
+
+local neodev_ok, neodev = pcall(require, "neodev")
+if neodev_ok then
+	neodev.setup()
+end
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({

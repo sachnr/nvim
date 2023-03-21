@@ -47,6 +47,7 @@ local filetypes = {
 	sh = require("formatter.filetypes.sh").shfmt,
 	python = require("formatter.filetypes.python").black,
 	nix = require("formatter.filetypes.nix").alejandra,
+	rust = require("formatter.filetypes.rust").rustfmt,
 }
 
 formatter.setup({

@@ -96,12 +96,8 @@ local inactive_sections = {
 	lualine_z = {},
 }
 local tabline = {}
-local winbar = { lualine_c = {
-	"filename",
-} }
-local inactive_winbar = { lualine_c = {
-	"filename",
-} }
+local winbar = {}
+local inactive_winbar = {}
 local extensions = { "toggleterm", "nvim-tree", "nvim-dap-ui" }
 
 lualine.setup({

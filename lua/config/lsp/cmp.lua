@@ -92,22 +92,27 @@ cmp.setup({
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
-		{ name = "nvim_lua" },
 		{ name = "nvim_lsp_signature_help" },
+	},
+	window = {
+		completion = {
+			col_offset = -3,
+			side_padding = 0,
+			winhighlight = "Normal:Pmenu,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
+		},
+		documentation = {
+			border = "single",
+			winhighlight = "Normal:CmpDocumentation,FloatBorder:CmpDocumentationBorder",
+		},
 	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
-		format = lspkind.cmp_format({
-			mode = "symbol",
-			maxwidth = 40,
-			ellipsis_char = "...",
-			menu = {
-				buffer = "[Buffer]",
-				nvim_lsp = "[LSP]",
-				luasnip = "[LuaSnip]",
-				nvim_lua = "[Lua]",
-				latex_symbols = "[Latex]",
-			},
-		}),
+		format = function(entry, vim_item)
+			local kind = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+			local strings = vim.split(kind.kind, "%s", { trimempty = true })
+			kind.kind = " " .. (strings[1] or "") .. " "
+			kind.menu = "    (" .. (strings[2] or "") .. ")"
+			return kind
+		end,
 	},
 })

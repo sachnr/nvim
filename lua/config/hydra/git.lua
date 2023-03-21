@@ -9,13 +9,13 @@ local hint = [[
  _K_: prev hunk   _u_: undo last stage   _p_: preview hunk   _B_: blame show full 
  ^ ^              _S_: stage buffer      ^ ^                 
  ^
- ^ ^              _<Enter>_: Gitui              _q_: exit
+ ^ ^              _<Enter>_: lazygit              _q_: exit
 ]]
 
 local Terminal = require("toggleterm.terminal").Terminal
 
-local gitui = Terminal:new({
-	cmd = "gitui",
+local lazygit = Terminal:new({
+	cmd = "lazygit",
 	dir = "git_dir",
 	direction = "float",
 	float_opts = {
@@ -94,7 +94,7 @@ Hydra({
 		{
 			"<Enter>",
 			function()
-				gitui:toggle()
+				lazygit:toggle()
 			end,
 			{ exit = true, desc = "Neogit" },
 		},

@@ -5,7 +5,6 @@ local opts = {
 	silent = true,
 	noremap = true,
 }
-local utils = require("utils")
 local merge = require("utils").merge_tb
 
 M.bufdelete = function()
@@ -32,6 +31,7 @@ M.defaults = function()
 	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
+	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "copy whole file" }))
 	-- buffer
 	-- set("n", "<Tab>", function()
 	-- 	utils.goto_next_buffer()
@@ -39,6 +39,20 @@ M.defaults = function()
 	-- set("n", "<S-Tab>", function()
 	-- 	utils.goto_prev_buffer()
 	-- end, merge(opts, { desc = "Prev Buffer" }))
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = {
+			"help",
+			"qf",
+			"lspinfo",
+			"man",
+			"quickfix",
+			"checkhealth",
+		},
+		command = [[
+            nnoremap <buffer><silent> q :close<CR>
+            set nobuflisted 
+        ]],
+	})
 end
 M.neogen = function()
 	vim.api.nvim_set_keymap(
@@ -86,12 +100,16 @@ M.lsp_attach = function(bufnr)
 end
 
 M.harpoon = function()
-	set("n", "<leader>2", function()
+	set("n", "<S-Tab>", function()
+		require("harpoon.mark").add_file()
 		require("harpoon.ui").toggle_quick_menu()
 	end, merge(opts, { desc = "harpoon ui" }))
-	set("n", "<leader>3>", function()
-		require("harpoon.mark").add_file()
-	end, merge(opts, { desc = "harpoon mark" }))
+end
+
+M.buffer_manager = function()
+	set("n", "<Tab>", function()
+		require("buffer_manager.ui").toggle_quick_menu()
+	end, merge(opts, { desc = "harpoon ui" }))
 end
 
 M.nvim_tree = function()
@@ -210,9 +228,9 @@ M.whichKey_n = {
 	-- comment box
 	c = {
 		name = "Comment Box",
-		l = { "<Cmd>lua require('comment-box').lbox(1)<CR>", "left aligned fixed size" },
-		c = { "<Cmd>lua require('comment-box').accbox(1)<CR>", "centered adapted box" },
-		v = { "<Cmd>lua require('comment-box').cline(1)<CR>", "centered line" },
+		l = { "<Cmd>lua require('comment-box').llbox(2)<CR>", "left aligned fixed size" },
+		c = { "<Cmd>lua require('comment-box').lcbox(2)<CR>", "centered adapted box" },
+		v = { "<Cmd>lua require('comment-box').cline(8)<CR>", "centered line" },
 	},
 	-- local server
 	b = {

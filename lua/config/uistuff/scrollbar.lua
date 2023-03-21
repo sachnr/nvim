@@ -4,8 +4,9 @@ if not status_ok then
 end
 
 scrollbar.setup({
+	set_highlights = false,
 	handle = {
-		hide_if_all_visible = false, -- Hides handle if all lines are visible
+		hide_if_all_visible = true, -- Hides handle if all lines are visible
 	},
 	excluded_filetypes = {
 		"prompt",
@@ -22,25 +23,10 @@ scrollbar.setup({
 	},
 	marks = {
 		Search = {
-			text = { "▁" },
+			text = { "" },
 		},
 		Error = {
-			text = { "" },
-		},
-		Warn = {
-			text = { "" },
-		},
-		Info = {
-			text = { "" },
-		},
-		Hint = {
-			text = { "" },
-		},
-		Misc = {
-			text = { "" },
-		},
-		GitDelete = {
-			text = "┆",
+			text = { "" },
 		},
 	},
 })
