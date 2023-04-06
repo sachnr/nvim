@@ -3,8 +3,8 @@ if not status_ok then
 	return
 end
 
-require("config.lsp.handlers")
-local opts = require("config.lsp.settings")
+require("config.plugins.lsp.handlers")
+local opts = require("config.plugins.lsp.settings")
 local on_attach = opts.on_attach
 local capablities = opts.capablities
 
@@ -14,11 +14,11 @@ local servers = {
 	"jsonls",
 	"cssls",
 	"ccls",
-	"vuels",
+	-- "vuels",
 	"lua_ls",
 	"pylsp",
-	"sqls",
-	"gopls",
+	"sqlls",
+	-- "gopls",
 	"tsserver",
 	"yamlls",
 	"rnix",

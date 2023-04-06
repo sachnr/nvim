@@ -17,9 +17,24 @@ local options = {
 		selection_caret = "  ",
 		entry_prefix = "  ",
 		multi_icon = " + ",
-        borders = false,
+		borders = false,
 		borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 		sorting_strategy = "ascending",
+		layout_strategy = "horizontal",
+		layout_config = {
+			cursor = {
+				height = 0.9,
+				preview_cutoff = 40,
+				width = 0.8,
+			},
+			horizontal = {
+				height = 0.9,
+				preview_cutoff = 120,
+				preview_width = 0.6,
+				prompt_position = "top",
+				width = 0.8,
+			},
+		},
 		results_title = "results",
 		file_ignore_patterns = {
 			"node_modules",

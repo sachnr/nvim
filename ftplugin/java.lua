@@ -3,8 +3,8 @@ if not present then
 	return
 end
 
-local capabilities = require("config.lsp.settings").capabilities
-local on_attach = require("config.lsp.settings").on_attach
+local capabilities = require("config.plugins.lsp.settings").capabilities
+local on_attach = require("config.plugins.lsp.settings").on_attach
 local plugin_folder = vim.fn.stdpath("data")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = plugin_folder .. "/workspace/" .. project_name

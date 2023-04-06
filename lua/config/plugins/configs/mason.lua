@@ -1,9 +1,4 @@
-local present, mason = pcall(require, "mason")
-
-if not present then
-	return
-end
-
+local mason = require("mason")
 local options = {
 	ensure_installed = {
 		-- Language Servers
@@ -67,7 +62,7 @@ local options = {
 	max_concurrent_installers = 10,
 }
 
-vim.api.nvim_create_user_command("MasonInstallAll", function()
+vim.api.nvim_create_user_command("MasonInstallFromConfig", function()
 	vim.cmd("MasonInstall " .. table.concat(options.ensure_installed, " "))
 end, {})
 

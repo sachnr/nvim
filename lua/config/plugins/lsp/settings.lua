@@ -4,16 +4,8 @@ local keys = require("keys")
 M.on_attach = function(client, bufnr)
 	client.server_capabilities.documentFormattingProvider = false
 	client.server_capabilities.documentRangeFormattingProvider = false
-	client.server_capabilities.semanticTokensProvider = nil
-
+	-- client.server_capabilities.semanticTokensProvider = nil
 	keys.lsp_attach(bufnr)
-
-	-- jdtls
-	if client.name == "jdtls" then
-		require("jdtls").setup_dap({ hotcodereplace = "auto" })
-		require("jdtls").add_commands()
-		require("jdtls.dap").setup_dap_main_class_configs()
-	end
 end
 
 M.capabilities = require("cmp_nvim_lsp").default_capabilities()

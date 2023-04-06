@@ -1,8 +1,4 @@
-local present, formatter = pcall(require, "formatter")
-if not present then
-	return
-end
-
+local formatter = require("formatter")
 local util = require("formatter.util")
 
 local filetypes = {

@@ -1,8 +1,5 @@
-local present, nvimtree = pcall(require, "nvim-tree")
 
-if not present then
-	return
-end
+local nvimtree = require("nvim-tree")
 
 local options = {
 	disable_netrw = true,
@@ -75,7 +72,7 @@ local options = {
 					unmerged = "",
 					renamed = "➜",
 					untracked = "★",
-					deleted = "",
+					deleted = "✘",
 					ignored = "◌",
 				},
 			},

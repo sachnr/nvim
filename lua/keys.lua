@@ -5,20 +5,11 @@ local opts = {
 	silent = true,
 	noremap = true,
 }
-local merge = require("utils").merge_tb
-
-M.bufdelete = function()
-	set("n", "<leader>q", function()
-		require("bufdelete").bufdelete(0, true)
-	end, merge(opts, { desc = "close buffer" }))
+local merge = function(table1, table2)
+	return vim.tbl_deep_extend("force", table1, table2)
 end
 
 M.defaults = function()
-	-- navigate within insert mode
-	set("i", "<C-h>", "<left>", merge(opts, { desc = "move left" }))
-	set("i", "<C-l>", "<Right>", merge(opts, { desc = "move right" }))
-	set("i", "<C-j>", "<Down>", merge(opts, { desc = "move down" }))
-	set("i", "<C-k>", "<Up>", merge(opts, { desc = "move up" }))
 	set("i", "<C-c>", "<ESC>")
 	-- center
 	set("n", "<C-u>", "<C-u>zz", opts)
@@ -32,13 +23,6 @@ M.defaults = function()
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "copy whole file" }))
-	-- buffer
-	-- set("n", "<Tab>", function()
-	-- 	utils.goto_next_buffer()
-	-- end, merge(opts, { desc = "next Buffer" }))
-	-- set("n", "<S-Tab>", function()
-	-- 	utils.goto_prev_buffer()
-	-- end, merge(opts, { desc = "Prev Buffer" }))
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = {
 			"help",
@@ -54,6 +38,7 @@ M.defaults = function()
         ]],
 	})
 end
+
 M.neogen = function()
 	vim.api.nvim_set_keymap(
 		"n",
@@ -61,6 +46,25 @@ M.neogen = function()
 		":lua require('neogen').generate()<CR>",
 		merge(opts, { desc = "neogen generate " })
 	)
+end
+
+M.hlslens = function()
+	vim.api.nvim_set_keymap(
+		"n",
+		"n",
+		[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+		opts
+	)
+	vim.api.nvim_set_keymap(
+		"n",
+		"N",
+		[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+		opts
+	)
+	vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], opts)
+	vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], opts)
+	vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], opts)
+	vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], opts)
 end
 
 -- -- normal
@@ -100,20 +104,21 @@ M.lsp_attach = function(bufnr)
 end
 
 M.harpoon = function()
-	set("n", "<S-Tab>", function()
+	set("n", "gh", function()
 		require("harpoon.mark").add_file()
 		require("harpoon.ui").toggle_quick_menu()
 	end, merge(opts, { desc = "harpoon ui" }))
 end
 
 M.buffer_manager = function()
-	set("n", "<Tab>", function()
+	set("n", "\\", function()
 		require("buffer_manager.ui").toggle_quick_menu()
-	end, merge(opts, { desc = "harpoon ui" }))
+	end, merge(opts, { desc = "buffer manager ui" }))
 end
 
 M.nvim_tree = function()
-	set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
+	-- set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
+	set("n", "<leader>1", "<cmd> NeoTreeFocus <CR>", opts)
 end
 
 M.peek = function()
@@ -159,40 +164,6 @@ M.comment = function()
 end
 
 M.whichKey_n = {
-	-- Search
-	-- t = {
-	-- 	name = "Telescope/Search",
-	-- 	s = { "<cmd> :Telescope current_buffer_fuzzy_find <CR>", "search in current buffer" },
-	-- 	t = { "<cmd> :Telescope buffers <CR>", "active buffers" },
-	-- 	m = { "<cmd> :Telescope marks <CR>", "Marks" },
-	-- 	p = { "<cmd> :Telescope project <CR>", "project" },
-	-- 	f = { "<cmd> Telescope find_files <CR>", "find files" },
-	-- 	w = { "<cmd> Telescope live_grep <CR>", "live grep" },
-	-- 	o = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
-	-- },
-	-- Git
-	-- g = {
-	-- name = "Git",
-	-- o = { "<cmd>Telescope git_status<cr>", "Telescope git status" },
-	-- b = { "<cmd>Telescope git_branches<cr>", "Telescope git branches" },
-	-- c = { "<cmd>Telescope git_commits<cr>", "Telescope git commits" },
-	-- g = { "<cmd>lua _gitui_toggle()<CR>", "LazyGit UI" },
-	-- },
-	-- opts
-	-- w = {
-	-- 	name = "Options",
-	-- 	a = { "<cmd> :Alpha <CR>", "Open Dashboard" },
-	-- 	d = { "<cmd> cd%:h <CR>", "Change to Directory of Current file" },
-	-- },
-	-- lsp
-	-- l = {
-	-- name = "LSP",
-	-- I = { "<cmd>LspInfo<cr>", "Info" },
-	-- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-	-- q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Buf setloclist" },
-	-- e = { "<cmd> :TroubleToggle <CR>", "Toggle Errors" },
-	-- E = { "<cmd> :TroubleRefresh <CR>", "Refresh Errors" },
-	-- },
 	d = {
 		function()
 			require("hydra").spawn("dap-hydra")

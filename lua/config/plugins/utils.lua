@@ -34,13 +34,12 @@ return {
 
 	{
 		"numToStr/Comment.nvim",
-		cmd = "Comment",
-		keys = keys.comment,
-		config = true,
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		config = function()
+			require("Comment").setup()
+			-- require("Comment.ft").set("lua", { "--%s", "--[[%s]]" })
+		end,
 	},
-
-	"LudoPinelli/comment-box.nvim",
-	"famiu/bufdelete.nvim",
 
 	{
 		"akinsho/toggleterm.nvim",
@@ -57,14 +56,26 @@ return {
 		"NvChad/nvim-colorizer.lua",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
-			require("config.nvim-colorizer")
+			require("colorizer").setup({
+				filetypes = {
+					"*",
+				},
+				user_default_options = {
+					RGB = true, -- #RGB hex codes
+					RRGGBB = true, -- #RRGGBB hex codes
+					names = false, -- "Name" codes like Blue or blue
+					RRGGBBAA = true, -- #RRGGBBAA hex codes
+					AARRGGBB = true, -- 0xAARRGGBB hex codes
+					rgb_fn = true, -- CSS rgb() and rgba() functions
+					hsl_fn = false, -- CSS hsl() and hsla() functions
+					css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+					css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+					-- Available modes for `mode`: foreground, background,  virtualtext
+					mode = "background", -- Set the display mode.
+					virtualtext = "■",
+				},
+			})
 		end,
-	},
-
-	{
-		"ThePrimeagen/harpoon",
-		keys = keys.harpoon,
-		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
 	{
@@ -74,12 +85,5 @@ return {
 		config = function()
 			require("neogen").setup({ snippet_engine = "luasnip" })
 		end,
-	},
-
-	{
-		"j-morano/buffer_manager.nvim",
-		keys = keys.buffer_manager,
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = true,
 	},
 }
