@@ -40,12 +40,20 @@ M.defaults = function()
 end
 
 M.neogen = function()
-	vim.api.nvim_set_keymap(
-		"n",
-		"<Leader>n",
-		":lua require('neogen').generate()<CR>",
-		merge(opts, { desc = "neogen generate " })
-	)
+	return {
+		{
+			"<Leader>n",
+			mode = "n",
+			"<cmd> Neogen <CR>",
+			desc = "generate docs",
+		},
+	}
+end
+
+M.toggleterm = function()
+	return {
+		{ "<F2>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=100<cr>", desc = "toggleterm" },
+	}
 end
 
 M.hlslens = function()
@@ -104,68 +112,81 @@ M.lsp_attach = function(bufnr)
 end
 
 M.harpoon = function()
-	set("n", "gh", function()
-		require("harpoon.mark").add_file()
-		require("harpoon.ui").toggle_quick_menu()
-	end, merge(opts, { desc = "harpoon ui" }))
+	return {
+		{
+			"gh",
+			mode = "n",
+			function()
+				require("harpoon.mark").add_file()
+				require("harpoon.ui").toggle_quick_menu()
+			end,
+			desc = "harpoon ui",
+		},
+	}
 end
 
 M.buffer_manager = function()
-	set("n", "\\", function()
-		require("buffer_manager.ui").toggle_quick_menu()
-	end, merge(opts, { desc = "buffer manager ui" }))
+	return {
+		{
+			"\\",
+			mode = "n",
+			function()
+				require("buffer_manager.ui").toggle_quick_menu()
+			end,
+			desc = "buffermanager ui",
+		},
+	}
 end
 
 M.nvim_tree = function()
 	-- set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
-	set("n", "<leader>1", "<cmd> NeoTreeFocus <CR>", opts)
+	return {
+		{ "<leader>1", mode = "n", "<cmd> NeoTreeFocus <CR>", desc = "toggle neotree" },
+	}
 end
 
 M.peek = function()
-	set("n", "<leader>bm", function()
-		local peek = require("peek")
-		if peek.is_open() then
-			peek.close()
-		else
-			peek.open()
-		end
-	end, merge(opts, { desc = "Markdown Peek" }))
+	return {
+		{
+			"<leader>bm",
+			mode = "n",
+			function()
+				local peek = require("peek")
+				if peek.is_open() then
+					peek.close()
+				else
+					peek.open()
+				end
+			end,
+			desc = "Markdown Peek",
+		},
+	}
 end
 
 M.windows = function()
-	set("n", "<C-w>z", "<cmd> WindowsMaximize <CR>", merge(opts, { desc = "copy whole file" }))
-	set("n", "<C-w>_", "<cmd> WindowsMaximizeVertically <CR>", merge(opts, { desc = "WindowsMaximizeVertically" }))
-	set("n", "<C-w>|", "<cmd> WindowsMaximizeHorizontally <CR>", merge(opts, { desc = "WindowsMaximizeHorizontally" }))
-	set("n", "<C-w>=", "<cmd> WindowsEqualize <CR>", merge(opts, { desc = "WindowsEqualize" }))
+	return {
+		{ "<C-w>z", mode = "n", "<cmd> WindowsMaximize <CR>", desc = "Maximize" },
+		{ "<C-w>_", mode = "n", "<cmd> WindowsMaximizeVertically <CR>", desc = "WindowsMaximizeVertically" },
+		{ "<C-w>|", mode = "n", "<cmd> WindowsMaximizeHorizontally <CR>", desc = "WindowsMaximizeHorizontally" },
+		{ "<C-w>=", mode = "n", "<cmd> WindowsEqualize <CR>", desc = "WindowsEqualize" },
+	}
 end
 
 M.yanky = function()
-	set({ "n", "x" }, "y", "<Plug>(YankyYank)")
-	set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-	set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-	set("n", "<c-n>", "<Plug>(YankyCycleForward)")
-	set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
-	set("n", "<leader>p", "<cmd> Telescope yank_history <CR>", { desc = "Paste from Yanky" })
-end
-
-M.comment = function()
-	set(
-		"n",
-		"<leader>/",
-		"<cmd>lua require('Comment.api').toggle.linewise.current() <CR>",
-		merge(opts, { desc = "toggle comment" })
-	)
-	set(
-		"v",
-		"<leader>/",
-		"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-		merge(opts, { desc = "toggle comment" })
-	)
+	return {
+		{ "y", mode = { "n", "x" }, "<Plug>(YankyYank)", desc = "Yanky Yank" },
+		{ "p", mode = { "n", "x" }, "<Plug>(YankyPutAfter)", desc = "Yanky Put After" },
+		{ "P", mode = { "n", "x" }, "<Plug>(YankyPutBefore)", desc = "Yanky Put Before" },
+		{ "<c-n>", mode = "n", "<Plug>(YankyCycleForward)", desc = "Yanky Cycle Forward" },
+		{ "<c-p>", mode = "n", "<Plug>(YankyCycleBackward)", desc = "Yanky Cycle Back" },
+		{ "<leader>p", mode = { "n", "x" }, "<cmd> Telescope yank_history <CR>", desc = "Paste from Yanky" },
+	}
 end
 
 M.whichKey_n = {
 	d = {
 		function()
+			---@diagnostic disable-next-line: undefined-field
 			require("hydra").spawn("dap-hydra")
 		end,
 		"[Hydra] dap",

@@ -10,19 +10,18 @@ local window_hint = [[
   ^ ^ ^ _j_ ^ ^   ^   _<C-j>_   ^   _d_: close
   ^ ^     ^^ ^^^  ^^        ^      _z_: maximize
   ^ _=_: equalize   ^        _o_: remain only
-  ^_<Esc>_, _q_ : exit
+  ^_<Esc>_, _q_ : exit     
 ]]
 
 Hydra({
 	name = "Windows",
-	mode = "n",
+	mode = { "n", "t" },
 	hint = window_hint,
 	config = {
 		invoke_on_body = true,
 		hint = {
-			position = "bottom",
+			position = "middle",
 			border = "single",
-			offset = -2,
 		},
 	},
 	body = "<leader>w",

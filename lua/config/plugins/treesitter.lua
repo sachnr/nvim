@@ -1,8 +1,7 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSEnable", "TSDisable", "TSModuleInfo" },
+		lazy = false,
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {

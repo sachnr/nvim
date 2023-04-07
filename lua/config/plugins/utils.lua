@@ -4,7 +4,7 @@ return {
 	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
-		keys = keys.peek,
+		keys = keys.peek(),
 		config = function()
 			require("peek").setup({
 				syntax = true, -- enable syntax highlighting, affects performance
@@ -16,7 +16,7 @@ return {
 
 	{
 		"gbprod/yanky.nvim",
-		keys = keys.yanky,
+		keys = keys.yanky(),
 		config = function()
 			require("yanky").setup({
 				system_clipboard = {
@@ -43,6 +43,7 @@ return {
 
 	{
 		"akinsho/toggleterm.nvim",
+		keys = keys.toggleterm(),
 		config = true,
 	},
 
@@ -80,7 +81,8 @@ return {
 
 	{
 		"danymat/neogen",
-		keys = keys.neogen,
+		keys = keys.neogen(),
+		cmd = "Neogen",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("neogen").setup({ snippet_engine = "luasnip" })

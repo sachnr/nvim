@@ -8,12 +8,12 @@ return {
 
 	{
 		"anuvyklack/windows.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		lazy = false,
 		dependencies = {
 			"anuvyklack/middleclass",
 			{ "anuvyklack/animation.nvim", enabled = false },
 		},
-		init = keys.windows,
+		keys = keys.windows,
 		config = function()
 			vim.o.winwidth = 5
 			vim.o.equalalways = false
@@ -25,5 +25,4 @@ return {
 			})
 		end,
 	},
-
 }

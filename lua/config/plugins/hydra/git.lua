@@ -9,7 +9,7 @@ local hint = [[
  _K_: prev hunk   _u_: undo last stage   _p_: preview hunk   _B_: blame show full 
  ^ ^              _S_: stage buffer      ^ ^                 
  ^
- ^ ^              _<Enter>_: lazygit              _q_: exit
+ ^ ^              _g_: lazygit              _q_: exit
 ]]
 
 local Terminal = require("toggleterm.terminal").Terminal
@@ -92,7 +92,7 @@ Hydra({
 			{ desc = "blame show full" },
 		},
 		{
-			"<Enter>",
+			"g",
 			function()
 				lazygit:toggle()
 			end,

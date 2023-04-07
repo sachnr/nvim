@@ -6,8 +6,9 @@ neotree.setup({
 		winbar = true,
 		statusline = false,
 		tab_labels = { -- table
-			filesystem = "  Files ", -- string | nil
+			filesystem = "  File ", -- string | nil
 			git_status = "  Git ", -- string | nil
+			buffers = "  Buff ",
 		},
 	},
 	popup_border_style = "single",
@@ -28,7 +29,7 @@ neotree.setup({
 				deleted = "",
 				renamed = "",
 				-- Status type
-				untracked = "",
+				untracked = "?",
 				ignored = "",
 				unstaged = "✘",
 				staged = "✓",
@@ -41,6 +42,7 @@ neotree.setup({
 		width = 30,
 	},
 	filesystem = {
+		follow_current_file = false,
 		filtered_items = {
 			visible = true,
 		},

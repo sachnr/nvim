@@ -1,7 +1,7 @@
 return {
 	{
 		"glepnir/lspsaga.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		lazy = false,
 		config = function()
 			require("lspsaga").setup({
 				--      ────────────────────────────────────────────────────────────

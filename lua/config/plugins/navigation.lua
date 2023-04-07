@@ -3,14 +3,13 @@ local keys = require("keys")
 return {
 	{
 		"ThePrimeagen/harpoon",
-		keys = keys.harpoon,
+		keys = keys.harpoon(),
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		init = keys.nvim_tree(),
+		keys = keys.nvim_tree(),
 		config = function()
 			require("config.plugins.configs.neotree")
 		end,
@@ -23,8 +22,7 @@ return {
 
 	{
 		"nvim-telescope/telescope.nvim",
-		lazy = false,
-		priority = 1000,
+        cmd = "Telescope",
 		dependencies = {
 			-- "nvim-telescope/telescope-ui-select.nvim",
 			{

@@ -1,22 +1,44 @@
 local keys = require("keys")
 
 return {
-	{
-		dir = "~/Downloads/base46/",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			italic = true,
-			simple_lualine = true,
-		},
-	},
-
 	"j-hui/fidget.nvim",
 	"rcarriga/nvim-notify",
 
 	{
+		"b0o/incline.nvim",
+        lazy = false,
+		config = function()
+			require("incline").setup({
+				highlight = {
+					groups = {
+						InclineNormal = {
+							default = false,
+							group = "TablineSel",
+						},
+						InclineNormalNC = {
+							default = false,
+							group = "Tabline",
+						},
+					},
+				},
+				render = function(props)
+					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+					local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
+					local buffer = {
+						{ ft_icon, guifg = ft_color, guibg = "NONE" },
+						{ " " },
+						{ filename, gui = modified },
+					}
+					return buffer
+				end,
+			})
+		end,
+	},
+
+	{
 		"petertriho/nvim-scrollbar",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+        lazy = false,
 		config = function()
 			require("scrollbar").setup({
 				set_highlights = false,
@@ -61,7 +83,7 @@ return {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+        lazy = false,
 		config = function()
 			require("indent_blankline").setup({
 				char = "▎",

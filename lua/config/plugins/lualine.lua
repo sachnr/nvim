@@ -66,7 +66,7 @@ return {
 						"mode",
 					},
 				},
-				lualine_b = { "filename" },
+				lualine_b = { "filetype" },
 				lualine_c = { "branch", "diff" },
 				lualine_x = {
 					"location",
@@ -76,7 +76,7 @@ return {
 						color = { fg = "#ff9e64" },
 					},
 				},
-				lualine_y = { "searchcount", "diagnostics", "filetype", "progress" },
+				lualine_y = { "searchcount", "diagnostics", "progress" },
 				lualine_z = { { getLspName } },
 			}
 			local inactive_sections = {
