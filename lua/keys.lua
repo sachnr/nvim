@@ -22,7 +22,7 @@ M.defaults = function()
 	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
-	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "copy whole file" }))
+	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = {
 			"help",
@@ -52,7 +52,7 @@ end
 
 M.toggleterm = function()
 	return {
-		{ "<F2>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=100<cr>", desc = "toggleterm" },
+		{ "<F5>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=100<cr>", desc = "toggleterm" },
 	}
 end
 
@@ -114,21 +114,33 @@ end
 M.harpoon = function()
 	return {
 		{
-			"gh",
+			"<M-h><M-m>",
 			mode = "n",
 			function()
 				require("harpoon.mark").add_file()
+			end,
+			desc = "harpoon mark",
+		},
+		{
+			"<M-h><M-l>",
+			mode = "n",
+			function()
 				require("harpoon.ui").toggle_quick_menu()
 			end,
 			desc = "harpoon ui",
 		},
+		{ "<space>1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", desc = "goto 1" },
+		{ "<space>2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", desc = "goto 2" },
+		{ "<space>3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", desc = "goto 3" },
+		{ "<space>4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", desc = "goto 4" },
+		{ "<space>5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>", desc = "goto 5" },
 	}
 end
 
 M.buffer_manager = function()
 	return {
 		{
-			"\\",
+			"<M-h><M-b>",
 			mode = "n",
 			function()
 				require("buffer_manager.ui").toggle_quick_menu()
@@ -141,7 +153,7 @@ end
 M.nvim_tree = function()
 	-- set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
 	return {
-		{ "<leader>1", mode = "n", "<cmd> NeoTreeFocus <CR>", desc = "toggle neotree" },
+		{ "<M-h><M-j>", mode = "n", "<cmd> NeoTreeFocusToggle <CR>", desc = "toggle neotree" },
 	}
 end
 

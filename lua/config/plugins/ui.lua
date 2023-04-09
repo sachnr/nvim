@@ -1,32 +1,38 @@
 local keys = require("keys")
 
 return {
-	"j-hui/fidget.nvim",
-	"rcarriga/nvim-notify",
+	{ "j-hui/fidget.nvim", event = { "BufRead", "BufWinEnter" }, config = true },
+	{ "rcarriga/nvim-notify", event = { "BufRead", "BufWinEnter" }, config = true },
 
 	{
 		"b0o/incline.nvim",
-        lazy = false,
+		lazy = false,
 		config = function()
 			require("incline").setup({
 				highlight = {
 					groups = {
 						InclineNormal = {
 							default = false,
-							group = "TablineSel",
+							group = "PmenuSel",
 						},
 						InclineNormalNC = {
 							default = false,
-							group = "Tabline",
+							group = "Pmenu",
 						},
 					},
 				},
 				render = function(props)
+					local get_hex = function(hlgroup_name, attr)
+						local hlgroup_ID = vim.fn.synIDtrans(vim.fn.hlID(hlgroup_name))
+						local hex = vim.fn.synIDattr(hlgroup_ID, attr)
+						return hex ~= "" and hex or "NONE"
+					end
+					local normal = get_hex("Normal", "bg")
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 					local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
 					local buffer = {
-						{ ft_icon, guifg = ft_color, guibg = "NONE" },
+						{ ft_icon, guifg = normal, guibg = "NONE" },
 						{ " " },
 						{ filename, gui = modified },
 					}
@@ -38,7 +44,7 @@ return {
 
 	{
 		"petertriho/nvim-scrollbar",
-        lazy = false,
+		lazy = false,
 		config = function()
 			require("scrollbar").setup({
 				set_highlights = false,
@@ -83,7 +89,7 @@ return {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
-        lazy = false,
+		lazy = false,
 		config = function()
 			require("indent_blankline").setup({
 				char = "▎",
@@ -92,6 +98,7 @@ return {
 					"help",
 					"terminal",
 					"alpha",
+					"dashboard",
 					"packer",
 					"lspinfo",
 					"TelescopePrompt",

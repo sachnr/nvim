@@ -1,6 +1,7 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
+		event = "VeryLazy",
 		config = function()
 			local dap = require("dap")
 			local plugin_folder = vim.fn.stdpath("data")
@@ -33,7 +34,10 @@ return {
 				"theHamsta/nvim-dap-virtual-text",
 				config = true,
 			},
-			{ "jbyuki/one-small-step-for-vimkind" },
+			{
+				"rcarriga/nvim-dap-ui",
+				config = true,
+			},
 			{
 				"mxsdev/nvim-dap-vscode-js",
 				config = function()
@@ -44,11 +48,6 @@ return {
 				end,
 			},
 		},
-	},
-
-	{
-		"rcarriga/nvim-dap-ui",
-		config = true,
 	},
 
 	{

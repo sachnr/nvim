@@ -9,6 +9,7 @@ return {
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",
+		lazy = false,
 		keys = keys.nvim_tree(),
 		config = function()
 			require("config.plugins.configs.neotree")
@@ -22,7 +23,7 @@ return {
 
 	{
 		"nvim-telescope/telescope.nvim",
-        cmd = "Telescope",
+		cmd = "Telescope",
 		dependencies = {
 			-- "nvim-telescope/telescope-ui-select.nvim",
 			{

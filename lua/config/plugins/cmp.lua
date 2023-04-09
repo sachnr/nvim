@@ -12,6 +12,7 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"petertriho/cmp-git",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -29,7 +30,6 @@ return {
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 			local has_words_before = function()
-				---@diagnostic disable-next-line: deprecated
 				unpack = unpack or table.unpack
 				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 				return col ~= 0
@@ -57,9 +57,8 @@ return {
 				mapping = cmp.mapping.preset.insert({
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					---@diagnostic disable-next-line: missing-parameter
-					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
+					["<C-space>"] = cmp.mapping.complete(),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
@@ -77,22 +76,12 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-					["<A-k>"] = cmp.mapping(function()
+					["<C-h>"] = cmp.mapping(function()
 						if luasnip.jumpable(-1) then
 							luasnip.jump(-1)
 						end
 					end, { "i", "s" }),
-					["<A-j>"] = cmp.mapping(function()
-						if luasnip.jumpable(1) then
-							luasnip.jump(1)
-						end
-					end, { "i", "s" }),
-					["<A-h>"] = cmp.mapping(function()
-						if luasnip.jumpable(-1) then
-							luasnip.jump(-1)
-						end
-					end, { "i", "s" }),
-					["<A-l>"] = cmp.mapping(function()
+					["<C-l>"] = cmp.mapping(function()
 						if luasnip.jumpable(1) then
 							luasnip.jump(1)
 						end
@@ -100,10 +89,26 @@ return {
 				}),
 				sources = {
 					{ name = "path" },
-					{ name = "luasnip" },
-					{ name = "nvim_lsp" },
-					{ name = "buffer" },
+					{ name = "nvim_lsp", priority = 8 },
+					{ name = "luasnip", priority = 7 },
+					{ name = "buffer", keyword_length = 4 },
 					{ name = "nvim_lsp_signature_help" },
+					{ name = "crates" },
+					{ name = "git" },
+					{ name = "neorg" },
+				},
+				sorting = {
+					comparators = {
+						cmp.config.compare.offset,
+						cmp.config.compare.exact,
+						cmp.config.compare.score,
+						cmp.config.compare.recently_used,
+						cmp.config.compare.locality,
+						cmp.config.compare.kind,
+						cmp.config.compare.sort_text,
+						cmp.config.compare.length,
+						cmp.config.compare.order,
+					},
 				},
 				window = {
 					completion = {
@@ -119,14 +124,21 @@ return {
 				formatting = {
 					fields = { "kind", "abbr", "menu" },
 					format = function(entry, vim_item)
-						local kind = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+						local kind = lspkind.cmp_format({
+							mode = "symbol_text",
+							maxwidth = 50,
+						})(entry, vim_item)
 						local strings = vim.split(kind.kind, "%s", { trimempty = true })
 						kind.kind = " " .. (strings[1] or "") .. " "
 						kind.menu = "    (" .. (strings[2] or "") .. ")"
 						return kind
 					end,
 				},
+				experimental = {
+					ghost_text = true,
+				},
 			})
+			require("cmp_git").setup()
 		end,
 	},
 }

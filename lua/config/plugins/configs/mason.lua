@@ -62,7 +62,7 @@ local options = {
 	max_concurrent_installers = 10,
 }
 
-vim.api.nvim_create_user_command("MasonInstallFromConfig", function()
+vim.api.nvim_create_user_command("MasonUpdate", function()
 	vim.cmd("MasonInstall " .. table.concat(options.ensure_installed, " "))
 end, {})
 

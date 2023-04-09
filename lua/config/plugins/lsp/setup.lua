@@ -22,7 +22,6 @@ local servers = {
 	"tsserver",
 	"yamlls",
 	"rnix",
-	"rust_analyzer",
 }
 
 local neoconf_ok, neoconf = pcall(require, "neoconf")
@@ -45,6 +44,34 @@ end
 local neodev_ok, neodev = pcall(require, "neodev")
 if neodev_ok then
 	neodev.setup()
+end
+
+local ok, rust_tools = pcall(require, "rust-tools")
+if ok then
+	rust_tools.setup({
+		server = {
+			on_attach = function(client, bufnr)
+				local keys = require("keys")
+				client.server_capabilities.documentFormattingProvider = false
+				client.server_capabilities.documentRangeFormattingProvider = false
+				keys.lsp_attach(bufnr)
+				local opts = { silent = true, noremap = true, buffer = bufnr }
+				local set = vim.keymap.set
+				set(
+					"n",
+					"K",
+					rust_tools.hover_actions.hover_actions,
+					vim.tbl_deep_extend("force", opts, { desc = "Hover" })
+				)
+				set(
+					"n",
+					"ga",
+					rust_tools.code_action_group.code_action_group,
+					vim.tbl_deep_extend("force", opts, { desc = "code_action" })
+				)
+			end,
+		},
+	})
 end
 
 for _, lsp in ipairs(servers) do

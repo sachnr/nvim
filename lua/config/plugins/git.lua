@@ -4,8 +4,14 @@ return {
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("gitsigns").setup({
-				numhl = false,
+				numhl = true,
 			})
 		end,
+	},
+
+	{
+		"sindrets/diffview.nvim",
+		cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory" },
+		dependencies = "nvim-lua/plenary.nvim",
 	},
 }
