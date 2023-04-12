@@ -89,6 +89,7 @@ return {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
+        enabled = false,
 		lazy = false,
 		config = function()
 			require("indent_blankline").setup({

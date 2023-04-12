@@ -13,7 +13,7 @@ return {
 					shortcut = {
 						{ desc = " Update", group = "DiagnosticHint", action = "Lazy update", key = "u" },
 						{
-							icon = " ",
+							icon = " ",
 							icon_hl = "DiagnosticInfo",
 							desc = "Files",
 							group = "Label",
@@ -24,12 +24,18 @@ return {
 							desc = " pinned projects",
 							group = "Directory",
 							action = "Telescope project",
-							key = "a",
+							key = "p",
+						},
+						{
+							desc = " Old Files",
+							group = "Directory",
+							action = "Telescope oldfiles",
+							key = "o",
 						},
 						{
 							desc = " dotfiles",
-                        group = "DiagnosticWarn",
-							action = ":e $MYVIMRC | :cd %:p:h <CR>",
+							group = "DiagnosticWarn",
+							action = "e $MYVIMRC | cd %:p:h",
 							key = "d",
 						},
 					},

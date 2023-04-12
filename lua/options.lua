@@ -2,6 +2,7 @@ local opt = vim.opt
 local g = vim.g
 
 g.mapleader = " "
+g.maplocalleader = ","
 
 opt.mouse = "a" -- allows use of mouse
 opt.title = false -- let Vim set the title of the windowlet Vim set the title of the window
@@ -42,7 +43,6 @@ opt.undofile = true -- save undo information in a file
 
 -- Tabs/indent
 opt.autoindent = true -- take indent for new line from previous line
-opt.cindent = true --automatic indent for c programs
 opt.tabstop = 4 -- insert 4 spaces for tab
 opt.softtabstop = 4 -- number of spaces that <Tab> uses while editing
 opt.shiftwidth = 4 -- no of spaces for each indent

@@ -4,7 +4,7 @@ return {
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("gitsigns").setup({
-				numhl = true,
+				numhl = false,
 			})
 		end,
 	},

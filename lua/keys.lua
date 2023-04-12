@@ -153,7 +153,7 @@ end
 M.nvim_tree = function()
 	-- set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
 	return {
-		{ "<M-h><M-j>", mode = "n", "<cmd> NeoTreeFocusToggle <CR>", desc = "toggle neotree" },
+		{ "<M-j><M-k>", mode = "n", "<cmd> NeoTreeFocusToggle <CR>", desc = "toggle neotree" },
 	}
 end
 

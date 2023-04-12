@@ -4,8 +4,8 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 neotree.setup({
 	source_selector = {
-		winbar = true,
-		statusline = true,
+		winbar = false,
+		statusline = false,
 		tab_labels = { -- table
 			filesystem = "  File ", -- string | nil
 			git_status = "  Git ", -- string | nil
@@ -49,6 +49,11 @@ neotree.setup({
 	},
 	filesystem = {
 		follow_current_file = true,
+		bind_to_cwd = true,
+		cwd_target = {
+			sidebar = "global", -- sidebar is when position = left or right
+			current = "global", -- current is when position = current
+		},
 		use_libuv_file_watcher = true,
 		components = {
 			name = function(config, node, state)
