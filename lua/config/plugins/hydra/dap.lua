@@ -20,7 +20,7 @@ local dap_hydra = Hydra({
 	},
 	name = "dap",
 	mode = { "n", "x" },
-	body = "<leader>d",
+	body = "<F5>",
 	heads = {
 		{ "<F5>", ":lua require'dap'.continue()<CR>", { silent = true } },
 		{ "<F10>", ":lua require'dap'.step_over()<CR>", { silent = true } },

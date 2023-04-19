@@ -93,4 +93,10 @@ return {
 			require("neogen").setup({ snippet_engine = "luasnip" })
 		end,
 	},
+
+	{
+		"max397574/better-escape.nvim",
+		event = "InsertEnter",
+		config = true,
+	},
 }

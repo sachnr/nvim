@@ -2,7 +2,7 @@ local keys = require("keys")
 
 return {
 	{ "j-hui/fidget.nvim", event = { "BufRead", "BufWinEnter" }, config = true },
-	{ "rcarriga/nvim-notify", event = { "BufRead", "BufWinEnter" }, config = true },
+	{ "rcarriga/nvim-notify", lazy = false, config = true },
 
 	{
 		"b0o/incline.nvim",
@@ -89,7 +89,7 @@ return {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
-        enabled = false,
+		enabled = false,
 		lazy = false,
 		config = function()
 			require("indent_blankline").setup({

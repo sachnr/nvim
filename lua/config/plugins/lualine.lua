@@ -69,12 +69,16 @@ return {
 				lualine_b = { "filetype" },
 				lualine_c = { "branch", "diff" },
 				lualine_x = {
-					"location",
+					{
+						require("auto-session-library").current_session_name,
+						icon = "󰃖",
+					},
 					{
 						require("lazy.status").updates,
 						cond = require("lazy.status").has_updates,
 						color = { fg = "#ff9e64" },
 					},
+					"location",
 				},
 				lualine_y = { "searchcount", "diagnostics", "progress" },
 				lualine_z = { { getLspName } },

@@ -3,13 +3,13 @@ local cmd = require("hydra.keymap-util").cmd
 local pcmd = require("hydra.keymap-util").pcmd
 
 local window_hint = [[
-    Move      ^^  Size   ^^   ^^      Split
- ---------  ^^----------^^   ^^---------------
-  ^ ^ ^ _k_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally 
-  ^ _h_ ^ ^ _l_   _<C-h>_ _<C-l>_   _v_: vertically
-  ^ ^ ^ _j_ ^ ^   ^   _<C-j>_   ^   _d_: close
-  ^ ^     ^^ ^^^  ^^        ^      _z_: maximize
-  ^ _=_: equalize   ^        _o_: remain only
+    Move      ^^  Size   ^^   Tabs  ^^          Split
+ ---------  ^^----------^^  -------------  ^^---------------
+  ^ ^ ^ _k_ ^ ^   ^   _<C-k>_   ^  _tc_: tabclose   _S_: horizontally 
+  ^ _h_ ^ ^ _l_   _<C-h>_ _<C-l>_  _tn_: tabNext    _s_: vertically
+  ^ ^ ^ _j_ ^ ^   ^   _<C-j>_   ^  _tp_: tabPrev    _d_: close
+  ^ ^     ^^ ^^^  ^^        ^     _tt_: tabNew     _z_: maximize
+  ^ _e_: equalize   ^                      _o_: remain only
   ^_<Esc>_, _q_ : exit     
 ]]
 
@@ -26,17 +26,21 @@ Hydra({
 	},
 	body = "<leader>w",
 	heads = {
-		{ "h", "<C-w>h" },
-		{ "j", "<C-w>j" },
-		{ "k", "<C-w>k" },
-		{ "l", "<C-w>l" },
+		{ "h", cmd("wincmd h") },
+		{ "j", cmd("wincmd j") },
+		{ "k", cmd("wincmd k") },
+		{ "l", cmd("wincmd l") },
 		{ "<C-h>", "<C-w>3<" },
 		{ "<C-l>", "<C-w>3>" },
 		{ "<C-k>", "<C-w>2+" },
 		{ "<C-j>", "<C-w>2-" },
-		{ "=", "<C-w>=", { desc = "equalize" } },
-		{ "s", pcmd("split"), { exit = true, desc = "horizontal" } },
-		{ "v", pcmd("vsplit"), { exit = true, desc = "vertical" } },
+		{ "e", "<C-w>=", { desc = "equalize" } },
+		{ "S", pcmd("split"), { exit = true, desc = "horizontal" } },
+		{ "s", pcmd("vsplit"), { exit = true, desc = "vertical" } },
+		{ "tc", cmd("tabclose"), { exit = true, desc = "tabclose" } },
+		{ "tn", cmd("tabNext"), { desc = "tabclose" } },
+		{ "tp", cmd("tabPrev"), { desc = "tabclose" } },
+		{ "tt", cmd("tabNew"), { exit = true, desc = "tabclose" } },
 		{ "z", cmd("WindowsMaximize"), { exit = true, desc = "maximize" } },
 		{ "o", "<C-w>o", { exit = true, desc = "remain only" } },
 		{ "d", pcmd("close", "E444"), { desc = "close window" } },

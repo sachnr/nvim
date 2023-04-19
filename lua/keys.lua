@@ -10,7 +10,6 @@ local merge = function(table1, table2)
 end
 
 M.defaults = function()
-	set("i", "<C-c>", "<ESC>")
 	-- center
 	set("n", "<C-u>", "<C-u>zz", opts)
 	set("n", "<C-d>", "<C-d>zz", opts)
@@ -19,7 +18,7 @@ M.defaults = function()
 	-- remove highlight
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
 	-- save
-	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
+	set("n", "<space>s", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))
@@ -52,7 +51,7 @@ end
 
 M.toggleterm = function()
 	return {
-		{ "<F5>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=100<cr>", desc = "toggleterm" },
+		{ "<M-t>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=90<cr>", desc = "toggleterm" },
 	}
 end
 
@@ -95,17 +94,18 @@ end
 -- lspsaga
 M.lsp_attach = function(bufnr)
 	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
-	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
-	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
+	set("n", "<space>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
+	set("n", "<space>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
 	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
 	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
-	set("n", "gr", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
+	set("n", "gr", function()
+		vim.lsp.buf.rename()
+	end, merge(lsp_opts, { desc = "references" }))
+	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
 	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
 	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
-	set("n", "gD", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
-	set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", merge(lsp_opts, { desc = "peek definition" }))
-	set("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>", merge(lsp_opts, { desc = "peek type definition" }))
+	set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
 	set("n", "gT", "<cmd>Lspsaga goto_type_definition<CR>", merge(lsp_opts, { desc = "goto type definition" }))
 	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
@@ -195,14 +195,14 @@ M.yanky = function()
 	}
 end
 
+M.dap = function()
+	set("n", "<F5>", function()
+		---@diagnostic disable-next-line: undefined-field
+		require("hydra").spawn("dap-hydra")
+	end, merge(opts, { desc = "Spawn Dap Hydra" }))
+end
+
 M.whichKey_n = {
-	d = {
-		function()
-			---@diagnostic disable-next-line: undefined-field
-			require("hydra").spawn("dap-hydra")
-		end,
-		"[Hydra] dap",
-	},
 	-- debugger
 	-- d = {
 	-- 	name = "Debugger",

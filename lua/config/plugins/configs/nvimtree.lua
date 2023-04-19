@@ -1,4 +1,3 @@
-
 local nvimtree = require("nvim-tree")
 
 local options = {

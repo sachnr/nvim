@@ -6,8 +6,8 @@ return {
 		opts = {
 			bold = true,
 			underline = true,
-			italic = true,
-			simple_lualine = true,
 		},
 	},
+
+	{ "sainnhe/gruvbox-material", enabled =false,  lazy = false, priority = 1000 },
 }

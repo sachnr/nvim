@@ -63,8 +63,6 @@ return {
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
-						elseif has_words_before() then
-							cmp.complete()
 						else
 							fallback()
 						end
@@ -76,22 +74,26 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-					["<C-h>"] = cmp.mapping(function()
+					["<M-p>"] = cmp.mapping(function(fallback)
 						if luasnip.jumpable(-1) then
 							luasnip.jump(-1)
+						else
+							fallback()
 						end
 					end, { "i", "s" }),
-					["<C-l>"] = cmp.mapping(function()
+					["<M-n>"] = cmp.mapping(function(fallback)
 						if luasnip.jumpable(1) then
 							luasnip.jump(1)
+						else
+							fallback()
 						end
 					end, { "i", "s" }),
 				}),
 				sources = {
 					{ name = "path" },
-					{ name = "nvim_lsp", priority = 8 },
-					{ name = "luasnip", priority = 7 },
-					{ name = "buffer", keyword_length = 4 },
+					{ name = "nvim_lsp", priority = 6 },
+					{ name = "luasnip", priority = 8 },
+					{ name = "buffer", keyword_length = 5 },
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "crates" },
 					{ name = "git" },

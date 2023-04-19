@@ -30,7 +30,13 @@ local options = {
 			horizontal = {
 				height = 0.9,
 				preview_cutoff = 120,
-				preview_width = 0.6,
+				preview_width = function(_, cols, _)
+					if cols > 200 then
+						return math.floor(cols * 0.4)
+					else
+						return math.floor(cols * 0.6)
+					end
+				end,
 				prompt_position = "top",
 				width = 0.8,
 			},
@@ -40,6 +46,9 @@ local options = {
 			"node_modules",
 			".git/",
 		},
+		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 		path_display = { "truncate" },
 		set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
 		history = {
@@ -59,7 +68,6 @@ local options = {
 	},
 
 	extensions = {
-
 		fzy_native = {
 			override_generic_sorter = true,
 			override_file_sorter = true,
@@ -72,27 +80,6 @@ local options = {
 
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown(),
-		},
-
-		lsp_handlers = {
-			disable = {},
-			location = {
-				telescope = {},
-				no_results_message = "No references found",
-			},
-			symbol = {
-				telescope = {},
-				no_results_message = "No symbols found",
-			},
-			call_hierarchy = {
-				telescope = {},
-				no_results_message = "No calls found",
-			},
-			code_action = {
-				telescope = require("telescope.themes").get_dropdown({}),
-				no_results_message = "No code actions available",
-				prefix = "",
-			},
 		},
 	},
 }

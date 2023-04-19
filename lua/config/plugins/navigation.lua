@@ -23,6 +23,7 @@ return {
 
 	{
 		"nvim-telescope/telescope.nvim",
+		version = "*",
 		cmd = "Telescope",
 		dependencies = {
 			-- "nvim-telescope/telescope-ui-select.nvim",

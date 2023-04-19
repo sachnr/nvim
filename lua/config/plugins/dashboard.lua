@@ -1,11 +1,12 @@
 return {
 	{
 		"glepnir/dashboard-nvim",
+		enabled = false,
 		event = "VimEnter",
 		config = function()
 			require("dashboard").setup({
 				shortcut_type = "letter",
-				change_to_vcs_root = true,
+				change_to_vcs_root = false,
 				config = {
 					week_header = {
 						enable = true,
@@ -48,5 +49,14 @@ return {
 			})
 		end,
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
+	},
+
+	{
+		"goolord/alpha-nvim",
+		lazy = false,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("alpha").setup(require("alpha.themes.startify").config)
+		end,
 	},
 }
