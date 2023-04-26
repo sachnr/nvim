@@ -4,12 +4,17 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 neotree.setup({
 	source_selector = {
-		winbar = false,
+		winbar = true,
 		statusline = false,
-		tab_labels = { -- table
-			filesystem = "  File ", -- string | nil
-			git_status = "  Git ", -- string | nil
-			buffers = "  Buff ",
+		sources = {
+			{
+				source = "filesystem",
+				display_name = "  File ",
+			},
+			{
+				source = "git_status",
+				display_name = "  Git ",
+			},
 		},
 	},
 	popup_border_style = "single",

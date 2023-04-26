@@ -30,9 +30,10 @@ local options = {
 		"java-test",
 		-- "js-debug-adapter",
 		-- "debugpy",
-		-- "cpptools",
+		"cpptools",
 		-- "delve",
 		-- "vscode-go",
+    -- "codelldb",
 	},
 
 	-- - "prepend" (default, Mason's bin location is put first in PATH)

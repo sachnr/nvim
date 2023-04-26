@@ -2,22 +2,23 @@ local keys = require("keys")
 
 return {
 	{ "j-hui/fidget.nvim", event = { "BufRead", "BufWinEnter" }, config = true },
+
 	{ "rcarriga/nvim-notify", lazy = false, config = true },
 
 	{
 		"b0o/incline.nvim",
-		lazy = false,
+		event = "BufReadPre",
 		config = function()
 			require("incline").setup({
 				highlight = {
 					groups = {
 						InclineNormal = {
 							default = false,
-							group = "PmenuSel",
+							group = "lualine_a_normal",
 						},
 						InclineNormalNC = {
 							default = false,
-							group = "Pmenu",
+							group = "lualine_c_normal",
 						},
 					},
 				},
@@ -32,7 +33,7 @@ return {
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 					local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
 					local buffer = {
-						{ ft_icon, guifg = normal, guibg = "NONE" },
+						{ ft_icon, guifg = ft_color, guibg = "NONE" },
 						{ " " },
 						{ filename, gui = modified },
 					}
@@ -112,5 +113,32 @@ return {
 				show_current_context = true,
 			})
 		end,
+	},
+
+	{
+		"anuvyklack/windows.nvim",
+		lazy = false,
+		dependencies = {
+			"anuvyklack/middleclass",
+			{ "anuvyklack/animation.nvim", enabled = false },
+		},
+		keys = keys.windows,
+		config = function()
+			vim.o.winwidth = 5
+			vim.o.equalalways = false
+			require("windows").setup({
+				animation = { enable = false },
+				ignore = {
+					filetype = { "NvimTree", "lspsagaoutline", "undotree", "outline" },
+					buftype = { "Outline" },
+				},
+			})
+		end,
+	},
+
+	{
+		"folke/zen-mode.nvim",
+    keys = keys.zenmode(),
+    config = true
 	},
 }

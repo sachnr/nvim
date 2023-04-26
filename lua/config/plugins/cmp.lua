@@ -49,6 +49,7 @@ return {
 						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
 					end
 				end,
+				preselect = cmp.PreselectMode.None,
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -91,9 +92,9 @@ return {
 				}),
 				sources = {
 					{ name = "path" },
-					{ name = "nvim_lsp", priority = 6 },
-					{ name = "luasnip", priority = 8 },
-					{ name = "buffer", keyword_length = 5 },
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+					{ name = "buffer", keyword_length = 4 },
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "crates" },
 					{ name = "git" },

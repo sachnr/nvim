@@ -19,6 +19,7 @@ M.defaults = function()
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
 	-- save
 	set("n", "<space>s", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
+	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))
@@ -52,6 +53,23 @@ end
 M.toggleterm = function()
 	return {
 		{ "<M-t>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=90<cr>", desc = "toggleterm" },
+	}
+end
+
+M.zenmode = function()
+	return {
+		{
+			"<M-z>",
+			mode = "n",
+			function()
+				require("zen-mode").toggle({
+					window = {
+						width = 0.65,
+					},
+				})
+			end,
+			desc = "zenmode",
+		},
 	}
 end
 

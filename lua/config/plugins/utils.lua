@@ -9,7 +9,7 @@ return {
 			require("peek").setup({
 				syntax = true, -- enable syntax highlighting, affects performance
 				theme = "dark", -- 'dark' or 'light'
-				app = "chromium", -- 'webview', 'browser', string or a table of strings
+				app = "firefox", -- 'webview', 'browser', string or a table of strings
 			})
 		end,
 	},

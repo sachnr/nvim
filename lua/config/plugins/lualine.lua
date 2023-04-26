@@ -4,6 +4,20 @@ return {
 		lazy = false,
 		config = function()
 			local lualine = require("lualine")
+
+			-- colrs
+			local get_hex = function(hlgroup_name, attr)
+				local hlgroup_ID = vim.fn.synIDtrans(vim.fn.hlID(hlgroup_name))
+				local hex = vim.fn.synIDattr(hlgroup_ID, attr)
+				return hex ~= "" and hex or "NONE"
+			end
+			local colors = {
+				error = get_hex("DiagnosticError", "fg"),
+				warn = get_hex("DiagnosticWarn", "fg"),
+				info = get_hex("DiagnosticInfo", "fg"),
+				hint = get_hex("DiagnosticHint", "fg"),
+			}
+
 			local function getLspName()
 				local msg = "No Active Lsp"
 				local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
@@ -69,10 +83,10 @@ return {
 				lualine_b = { "filetype" },
 				lualine_c = { "branch", "diff" },
 				lualine_x = {
-					{
-						require("auto-session-library").current_session_name,
-						icon = "󰃖",
-					},
+					-- {
+					-- 	require("auto-session-library").current_session_name,
+					-- 	icon = "󰃖",
+					-- },
 					{
 						require("lazy.status").updates,
 						cond = require("lazy.status").has_updates,
@@ -80,7 +94,29 @@ return {
 					},
 					"location",
 				},
-				lualine_y = { "searchcount", "diagnostics", "progress" },
+				lualine_y = {
+					"searchcount",
+					{
+						"diagnostics",
+						sources = { "nvim_diagnostic" },
+						separator = "",
+						symbols = {
+							error = " ",
+							warn = " ",
+							info = " ",
+							hint = " ",
+							other = " ",
+						},
+						diagnostics_color = {
+							error = { fg = colors.error, gui = "bold" },
+							warn = { fg = colors.warn, gui = "bold" },
+							info = { fg = colors.info, gui = "bold" },
+							hint = { fg = colors.hint, gui = "bold" },
+						},
+						colored = true,
+					},
+					"progress",
+				},
 				lualine_z = { { getLspName } },
 			}
 			local inactive_sections = {
@@ -98,7 +134,7 @@ return {
 			local tabline = {}
 			local winbar = {}
 			local inactive_winbar = {}
-			local extensions = { "toggleterm", "nvim-dap-ui", "neo-tree" }
+			local extensions = { "toggleterm", "nvim-dap-ui", "neo-tree", "symbols-outline" }
 
 			lualine.setup({
 				options = options,

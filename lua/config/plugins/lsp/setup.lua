@@ -47,6 +47,9 @@ end
 
 local ok, rust_tools = pcall(require, "rust-tools")
 if ok then
+	local mason = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
+	local codelldb_path = mason .. "adapter/codelldb"
+	local liblldb_path = mason .. "lldb/lib/liblldb.so"
 	rust_tools.setup({
 		tools = {
 			hover_actions = {
@@ -81,6 +84,9 @@ if ok then
 				"stable",
 				"rust-analyzer",
 			},
+		},
+		dap = {
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
 		},
 	})
 end
