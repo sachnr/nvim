@@ -138,7 +138,7 @@ return {
 					end,
 				},
 				experimental = {
-					ghost_text = true,
+					ghost_text = false,
 				},
 			})
 			require("cmp_git").setup()
