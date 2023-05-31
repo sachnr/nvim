@@ -14,12 +14,13 @@ M.defaults = function()
 	set("n", "<C-u>", "<C-u>zz", opts)
 	set("n", "<C-d>", "<C-d>zz", opts)
 	-- Don't copy the replaced text after pasting in visual mode
-	-- set("x", "<p>", 'p:let @+=@0<CR>:let @"=@0<CR>', opts)
+	set("x", "<p>", 'p:let @+=@0<CR>:let @"=@0<CR>', opts)
 	-- remove highlight
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
 	-- save
 	set("n", "<space>s", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
+	set("i", "<C-c>", "<ESC>", merge(opts, { desc = "Esc" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))
@@ -42,7 +43,7 @@ end
 M.neogen = function()
 	return {
 		{
-			"<Leader>n",
+			"<Leader>ng",
 			mode = "n",
 			"<cmd> Neogen <CR>",
 			desc = "generate docs",
@@ -52,7 +53,7 @@ end
 
 M.toggleterm = function()
 	return {
-		{ "<M-t>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=90<cr>", desc = "toggleterm" },
+		{ "<F2>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=90<cr>", desc = "toggleterm" },
 	}
 end
 
@@ -112,14 +113,14 @@ end
 -- lspsaga
 M.lsp_attach = function(bufnr)
 	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
-	set("n", "<space>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
-	set("n", "<space>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
+	set("n", "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
+	set("n", "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
 	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
 	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
 	set("n", "gr", function()
 		vim.lsp.buf.rename()
-	end, merge(lsp_opts, { desc = "references" }))
+	end, merge(lsp_opts, { desc = "Lsp Rename" }))
 	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
 	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
 	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
@@ -132,7 +133,7 @@ end
 M.harpoon = function()
 	return {
 		{
-			"<M-h><M-m>",
+			"<M-h><M-h>",
 			mode = "n",
 			function()
 				require("harpoon.mark").add_file()
@@ -140,7 +141,7 @@ M.harpoon = function()
 			desc = "harpoon mark",
 		},
 		{
-			"<M-h><M-l>",
+			"<M-h><M-m>",
 			mode = "n",
 			function()
 				require("harpoon.ui").toggle_quick_menu()
@@ -152,18 +153,33 @@ M.harpoon = function()
 		{ "<space>3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", desc = "goto 3" },
 		{ "<space>4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", desc = "goto 4" },
 		{ "<space>5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>", desc = "goto 5" },
+		{ "<space>6", "<cmd>lua require('harpoon.ui').nav_file(6)<CR>", desc = "goto 6" },
 	}
 end
 
 M.buffer_manager = function()
 	return {
 		{
-			"<M-h><M-b>",
+			"<M-j><M-l>",
 			mode = "n",
 			function()
 				require("buffer_manager.ui").toggle_quick_menu()
 			end,
 			desc = "buffermanager ui",
+		},
+	}
+end
+
+M.oil = function()
+	return {
+		{
+			"<M-j><M-k>",
+			mode = "n",
+			function()
+				local dir = require("oil").get_current_dir()
+				require("oil").toggle_float(dir)
+			end,
+			desc = "oil.nvim",
 		},
 	}
 end
@@ -257,6 +273,9 @@ M.whichKey_n = {
 	-- local server
 	b = {
 		name = "localhost",
+	},
+	n = {
+		name = "neogen",
 	},
 }
 

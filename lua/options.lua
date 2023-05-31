@@ -6,6 +6,7 @@ g.maplocalleader = ","
 
 opt.mouse = "a" -- allows use of mouse
 opt.title = false -- let Vim set the title of the windowlet Vim set the title of the window
+-- opt.guicursor = { "n-c-v:block-nCursor" }
 
 opt.clipboard = "unnamedplus" -- allow neovim to access system clipboard
 opt.termguicolors = true -- Enables 24-bit RGB color in the TUI
@@ -18,7 +19,7 @@ opt.showmode = false -- message on status line to show current mode
 
 opt.shortmess:append("sI") -- list of flags, reduce length of messages
 opt.laststatus = 3 --tells when last window has status lines
-opt.fillchars = { eob = " " } -- characters to use for displaying special items
+opt.fillchars = { stl = " ", eob = " " } -- characters to use for displaying special items
 opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 opt.writebackup = false -- make a backup before overwriting a file
 opt.fileencoding = "utf-8" -- encoding
@@ -68,5 +69,6 @@ opt.relativenumber = true --show relative line number in front of each line
 
 opt.inccommand = "split"
 
+vim.o.timeout = true
 opt.updatetime = 400 -- after this many milliseconds flush swap file, Make updates happen faster
 opt.timeoutlen = 200 -- keypress time out time in milliseconds

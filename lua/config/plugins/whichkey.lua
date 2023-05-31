@@ -5,8 +5,6 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
 			local wk = require("which-key")
 			local keys = require("keys")
 

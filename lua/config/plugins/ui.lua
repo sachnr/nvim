@@ -1,7 +1,7 @@
 local keys = require("keys")
 
 return {
-	{ "j-hui/fidget.nvim", event = { "BufRead", "BufWinEnter" }, config = true },
+	{ "j-hui/fidget.nvim", event = "BufReadPre", config = true },
 
 	{ "rcarriga/nvim-notify", lazy = false, config = true },
 
@@ -14,7 +14,7 @@ return {
 					groups = {
 						InclineNormal = {
 							default = false,
-							group = "lualine_a_normal",
+							group = "lualine_b_normal",
 						},
 						InclineNormalNC = {
 							default = false,
@@ -23,12 +23,7 @@ return {
 					},
 				},
 				render = function(props)
-					local get_hex = function(hlgroup_name, attr)
-						local hlgroup_ID = vim.fn.synIDtrans(vim.fn.hlID(hlgroup_name))
-						local hex = vim.fn.synIDattr(hlgroup_ID, attr)
-						return hex ~= "" and hex or "NONE"
-					end
-					local normal = get_hex("Normal", "bg")
+					local normal = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Normal")), "bg", "gui")
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 					local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
@@ -57,6 +52,14 @@ return {
 					"TelescopePrompt",
 					"noice",
 					"NvimTree",
+					"NeoTree",
+					"alpha",
+					"dashboard",
+					"packer",
+					"lspinfo",
+					"TelescopePrompt",
+					"TelescopeResults",
+					"mason",
 				},
 				handlers = {
 					cursor = false,
@@ -116,8 +119,31 @@ return {
 	},
 
 	{
+		"shellRaining/hlchunk.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("hlchunk").setup({
+				chunk = {
+					style = {
+						{ fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("WinSeparator")), "fg", "gui") },
+					},
+				},
+				indent = {
+					enable = false,
+				},
+				line_num = {
+					enable = false,
+				},
+				blank = {
+					enable = false,
+				},
+			})
+		end,
+	},
+
+	{
 		"anuvyklack/windows.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		dependencies = {
 			"anuvyklack/middleclass",
 			{ "anuvyklack/animation.nvim", enabled = false },
@@ -138,7 +164,13 @@ return {
 
 	{
 		"folke/zen-mode.nvim",
-    keys = keys.zenmode(),
-    config = true
+		keys = keys.zenmode(),
+		config = function()
+			require("zen-mode").setup({
+				window = {
+					backdrop = 0.8,
+				},
+			})
+		end,
 	},
 }

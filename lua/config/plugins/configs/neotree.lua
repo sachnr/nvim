@@ -51,6 +51,10 @@ neotree.setup({
 	window = {
 		position = "left",
 		width = 30,
+		mappings = {
+			["<C-s>"] = "open_split",
+			["<C-v>"] = "open_vsplit",
+		},
 	},
 	filesystem = {
 		follow_current_file = true,

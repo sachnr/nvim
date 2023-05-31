@@ -23,10 +23,10 @@ local options = {
 	diagnostics = {
 		enable = false,
 		icons = {
-			hint = "",
-			info = "",
-			warning = "",
-			error = "",
+			error = " ",
+			warning = " ",
+			info = " ",
+			hint = " ",
 		},
 	},
 	actions = {

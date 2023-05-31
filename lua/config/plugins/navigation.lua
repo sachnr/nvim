@@ -9,6 +9,7 @@ return {
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",
+		enabled = true,
 		lazy = false,
 		keys = keys.nvim_tree(),
 		config = function()
@@ -72,9 +73,62 @@ return {
 						command = "vsplit",
 					},
 					h = {
-						key = "<C-h>",
+						key = "<C-s>",
 						command = "split",
 					},
+				},
+			})
+		end,
+	},
+
+	{
+		"stevearc/oil.nvim",
+		enabled = false,
+		keys = keys.oil,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			local layout = require("oil.layout")
+			require("oil").setup({
+				use_default_keymaps = false,
+				float = {
+					-- Padding around the floating window
+					padding = 3,
+					max_width = 200,
+					max_height = 100,
+					border = "single",
+					win_options = {
+						winblend = 10,
+					},
+				},
+				columns = {
+					"icon",
+					-- "permissions",
+					-- "size",
+					-- "mtime",
+				},
+				keymaps = {
+					["g?"] = "actions.show_help",
+					["<CR>"] = "actions.select",
+					["<C-v>"] = "actions.select_vsplit",
+					["<C-s>"] = "actions.select_split",
+					["<C-t>"] = "actions.select_tab",
+					["<C-p>"] = "actions.preview",
+					["q"] = "actions.close",
+					["<C-l>"] = "actions.refresh",
+					["<BS>"] = "actions.parent",
+					["_"] = "actions.open_cwd",
+					["`"] = "actions.cd",
+					["~"] = "actions.tcd",
+					["g."] = "actions.toggle_hidden",
+				},
+				view_options = {
+					show_hidden = true,
+					is_hidden_file = function(name, bufnr)
+						return vim.startswith(name, ".")
+					end,
+					is_always_hidden = function(name, bufnr)
+						return false
+					end,
 				},
 			})
 		end,

@@ -34,11 +34,20 @@ return {
 				return "  " .. msg
 			end
 
+			local function getIndentInfo()
+				if vim.bo.expandtab then
+					return " Spaces:" .. vim.bo.shiftwidth
+				else
+					return " Tabs:" .. vim.bo.tabstop
+				end
+			end
+
 			local options = {
 				icons_enabled = true,
+        globalstatus = true,
 				theme = "base46",
-				component_separators = { left = "|", right = "|" },
-				section_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = {
 						"packer",
@@ -80,7 +89,22 @@ return {
 						"mode",
 					},
 				},
-				lualine_b = { "filetype" },
+				lualine_b = {
+					{
+						"filename",
+						file_status = true,
+						newfile_status = false,
+						path = 1,
+
+						shorting_target = 40,
+						symbols = {
+							modified = "[+]",
+							readonly = "[-]",
+							unnamed = "[No Name]",
+							newfile = "[New]",
+						},
+					},
+				},
 				lualine_c = { "branch", "diff" },
 				lualine_x = {
 					-- {
@@ -96,6 +120,7 @@ return {
 				},
 				lualine_y = {
 					"searchcount",
+					{ getIndentInfo },
 					{
 						"diagnostics",
 						sources = { "nvim_diagnostic" },
@@ -104,7 +129,7 @@ return {
 							error = " ",
 							warn = " ",
 							info = " ",
-							hint = " ",
+							hint = " ",
 							other = " ",
 						},
 						diagnostics_color = {
@@ -115,9 +140,10 @@ return {
 						},
 						colored = true,
 					},
-					"progress",
 				},
-				lualine_z = { { getLspName } },
+				lualine_z = {
+					{ getLspName },
+				},
 			}
 			local inactive_sections = {
 				lualine_a = { {
@@ -134,7 +160,12 @@ return {
 			local tabline = {}
 			local winbar = {}
 			local inactive_winbar = {}
-			local extensions = { "toggleterm", "nvim-dap-ui", "neo-tree", "symbols-outline" }
+			local extensions = {
+				"toggleterm",
+				"nvim-dap-ui",
+				"neo-tree",
+				"symbols-outline",
+			}
 
 			lualine.setup({
 				options = options,

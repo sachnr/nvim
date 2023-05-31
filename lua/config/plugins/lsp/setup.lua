@@ -20,7 +20,7 @@ local servers = {
 	-- "gopls",
 	"tsserver",
 	"yamlls",
-	"rnix",
+  "nil_ls",
 }
 
 local neoconf_ok, neoconf = pcall(require, "neoconf")
@@ -78,12 +78,12 @@ if ok then
 				)
 			end,
 			capablities = capablities,
-			cmd = {
-				"rustup",
-				"run",
-				"stable",
-				"rust-analyzer",
-			},
+			-- cmd = {
+			-- 	"rustup",
+			-- 	"run",
+			-- 	"stable",
+			-- 	"rust-analyzer",
+			-- },
 		},
 		dap = {
 			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),

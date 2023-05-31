@@ -55,6 +55,6 @@ local function lspSymbol(name, icon)
 end
 lspSymbol("Error", " ")
 lspSymbol("Info", " ")
-lspSymbol("Hint", " ")
+lspSymbol("Hint", " ")
 lspSymbol("Warn", " ")
 lspSymbol("other", " ")

@@ -44,12 +44,8 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		keys = keys.toggleterm(),
-		config = function()
-			require("toggleterm").setup({
-				shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
-				shading_factor = -15,
-			})
-		end,
+		event = "ColorScheme",
+		config = true,
 	},
 
 	{
@@ -95,8 +91,11 @@ return {
 	},
 
 	{
-		"max397574/better-escape.nvim",
-		event = "InsertEnter",
-		config = true,
+		"echasnovski/mini.pairs",
+		enabled = false,
+		event = "VeryLazy",
+		config = function()
+			require("mini.pairs").setup()
+		end,
 	},
 }

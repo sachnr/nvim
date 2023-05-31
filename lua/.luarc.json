@@ -59,5 +59,6 @@
         "/home/sachnr/.local/share/nvim/lazy/neoconf.nvim/types/lua",
         "/home/sachnr/.config/nvim/lua",
         "${3rd}/luv/library"
-    ]
+    ],
+    "workspace.checkThirdParty": false
 }

@@ -18,8 +18,8 @@ return {
 					keys = {
 						jump_to = "d",
 						expand_or_jump = "l",
-						vsplit = "s",
-						split = "S",
+						vsplit = "<C-v>",
+						split = "<C-s>",
 					},
 				},
 				code_action = {
