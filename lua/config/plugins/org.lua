@@ -7,20 +7,26 @@ return {
 			require("neorg").setup({
 				load = {
 					["core.defaults"] = {},
-					["core.norg.concealer"] = {},
-					["core.norg.dirman"] = {
+					["core.concealer"] = {},
+					["core.dirman"] = {
 						config = {
 							workspaces = {
 								notes = "~/Documents/notes",
 							},
+                            index = "index.norg",
 						},
 					},
-					["core.norg.completion"] = {
+					["core.completion"] = {
 						config = {
 							engine = "nvim-cmp",
 						},
 					},
+                    ["core.integrations.treesitter"] = {
+                        configure_parsers = true,
+                        install_parsers = true,
+                    },
 					["core.integrations.nvim-cmp"] = {},
+                    ["core.qol.todo_items"] = {},
 				},
 			})
 		end,

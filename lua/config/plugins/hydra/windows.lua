@@ -3,13 +3,13 @@ local cmd = require("hydra.keymap-util").cmd
 local pcmd = require("hydra.keymap-util").pcmd
 
 local window_hint = [[
-    Move      ^^  Size   ^^   Tabs  ^^          Split
- ---------  ^^----------^^  -------------  ^^---------------
-  ^ ^ ^ _k_ ^ ^   ^   _<C-k>_   ^  _tc_: tabclose   _S_: horizontally 
-  ^ _h_ ^ ^ _l_   _<C-h>_ _<C-l>_  _tn_: tabNext    _s_: vertically
-  ^ ^ ^ _j_ ^ ^   ^   _<C-j>_   ^  _tp_: tabPrev    _d_: close
-  ^ ^     ^^ ^^^  ^^        ^     _tt_: tabNew     _z_: maximize
-  ^ _e_: equalize   ^                      _o_: remain only
+    Move      ^^  Size   ^^  ^^ Shift   ^^   Tabs  ^^          Split
+ ---------  ^^----------^^  ^^---------^^  -------------  ^^---------------
+  ^ ^ ^ _k_ ^ ^   ^   _<C-k>_   ^    ^ ^ ^ _K_ ^ ^    _tc_: tabclose   _S_: horizontally 
+  ^ _h_ ^ ^ _l_   _<C-h>_ _<C-l>_    ^ _H_ ^ ^ _L_    _tn_: tabNext    _s_: vertically
+  ^ ^ ^ _j_ ^ ^   ^   _<C-j>_   ^    ^ ^ ^ _J_ ^ ^    _tp_: tabPrev    _d_: close
+  ^ ^     ^^ ^^^  ^^        ^              
+  ^ _e_: equalize   ^_tt_: tabNew   _z_: maximize   _o_: remain only
   ^_<Esc>_, _q_ : exit     
 ]]
 
@@ -34,6 +34,10 @@ Hydra({
 		{ "<C-l>", "<C-w>3>" },
 		{ "<C-k>", "<C-w>2+" },
 		{ "<C-j>", "<C-w>2-" },
+		{ "H", "<C-w>H" },
+		{ "L", "<C-w>L" },
+		{ "K", "<C-w>K" },
+		{ "J", "<C-w>J" },
 		{ "e", "<C-w>=", { desc = "equalize" } },
 		{ "S", pcmd("split"), { exit = true, desc = "horizontal" } },
 		{ "s", pcmd("vsplit"), { exit = true, desc = "vertical" } },

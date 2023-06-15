@@ -10,7 +10,7 @@ return {
 			"windwp/nvim-autopairs",
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
+			-- "rafamadriz/friendly-snippets",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"petertriho/cmp-git",
 		},
@@ -25,7 +25,7 @@ return {
 			luasnip.config.set_config({
 				history = true,
 			})
-			require("luasnip.loaders.from_vscode").lazy_load()
+			-- require("luasnip.loaders.from_vscode").lazy_load()
 
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 

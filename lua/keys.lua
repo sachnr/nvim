@@ -19,11 +19,15 @@ M.defaults = function()
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
 	-- save
 	set("n", "<space>s", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
-	set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
+	-- set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
+	-- d
 	set("i", "<C-c>", "<ESC>", merge(opts, { desc = "Esc" }))
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))
+	-- move visual chunks
+	set("v", "<M-j>", ":m '>+1<CR>gv=gv")
+	set("v", "<M-k>", ":m '<-2<CR>gv=gv")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = {
 			"help",
@@ -38,6 +42,22 @@ M.defaults = function()
             set nobuflisted 
         ]],
 	})
+end
+
+M.ncmpcpp = function()
+	local Terminal = require("toggleterm.terminal").Terminal
+
+	local ncmpcpp = Terminal:new({
+		cmd = "ncmpcpp",
+		direction = "float",
+		float_opts = {
+			border = "single",
+		},
+	})
+
+	set("n", "<leader>m", function()
+		ncmpcpp:toggle()
+	end, merge(opts, { desc = "Music Player" }))
 end
 
 M.neogen = function()
@@ -113,8 +133,8 @@ end
 -- lspsaga
 M.lsp_attach = function(bufnr)
 	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
-	set("n", "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
-	set("n", "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
+	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
+	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
 	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
 	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
@@ -141,7 +161,7 @@ M.harpoon = function()
 			desc = "harpoon mark",
 		},
 		{
-			"<M-h><M-m>",
+			"<M-h><M-u>",
 			mode = "n",
 			function()
 				require("harpoon.ui").toggle_quick_menu()
@@ -177,7 +197,7 @@ M.oil = function()
 			mode = "n",
 			function()
 				local dir = require("oil").get_current_dir()
-				require("oil").toggle_float(dir)
+				require("oil").open_float(dir)
 			end,
 			desc = "oil.nvim",
 		},

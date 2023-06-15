@@ -9,7 +9,7 @@ return {
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",
-		enabled = true,
+		enabled = false,
 		lazy = false,
 		keys = keys.nvim_tree(),
 		config = function()
@@ -83,21 +83,22 @@ return {
 
 	{
 		"stevearc/oil.nvim",
-		enabled = false,
-		keys = keys.oil,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		enabled = true,
+		keys = keys.oil(),
+		dependencies = { "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
 		config = function()
-			local layout = require("oil.layout")
 			require("oil").setup({
 				use_default_keymaps = false,
+				default_file_explorer = false,
+				skip_confirm_for_simple_edits = true,
 				float = {
 					-- Padding around the floating window
-					padding = 3,
-					max_width = 200,
-					max_height = 100,
+					padding = 2,
+					max_width = 120,
+					max_height = 25,
 					border = "single",
 					win_options = {
-						winblend = 10,
+						winblend = 0,
 					},
 				},
 				columns = {
@@ -107,19 +108,17 @@ return {
 					-- "mtime",
 				},
 				keymaps = {
-					["g?"] = "actions.show_help",
-					["<CR>"] = "actions.select",
-					["<C-v>"] = "actions.select_vsplit",
+					["<C-F5>"] = "actions.refresh",
+					["H"] = "actions.parent",
 					["<C-s>"] = "actions.select_split",
 					["<C-t>"] = "actions.select_tab",
-					["<C-p>"] = "actions.preview",
-					["q"] = "actions.close",
-					["<C-l>"] = "actions.refresh",
-					["<BS>"] = "actions.parent",
-					["_"] = "actions.open_cwd",
-					["`"] = "actions.cd",
-					["~"] = "actions.tcd",
+					["<C-v>"] = "actions.select_vsplit",
+					["<CR>"] = "actions.select",
+					["L"] = "actions.select",
+					["<M-j><M-k>"] = "actions.open_cwd",
 					["g."] = "actions.toggle_hidden",
+					["g?"] = "actions.show_help",
+					["q"] = "actions.close",
 				},
 				view_options = {
 					show_hidden = true,
@@ -132,5 +131,41 @@ return {
 				},
 			})
 		end,
+	},
+
+	{
+		"folke/edgy.nvim",
+		lazy = false,
+		opts = {
+			left = {
+				-- {
+				-- 	ft = "oil",
+				-- 	title = "File System",
+				-- 	size = { width = 30 },
+				-- },
+				{
+					ft = "neotree",
+					title = "File System",
+					size = { width = 30 },
+				},
+			},
+			bottom = {
+				{ ft = "qf", title = "QuickFix" },
+				{
+					ft = "help",
+					size = { height = 20 },
+					-- only show help buffers
+					filter = function(buf)
+						return vim.bo[buf].buftype == "help"
+					end,
+				},
+			},
+			right = {
+				{
+					ft = "symbols-outline",
+					size = { width = 30 },
+				},
+			},
+		},
 	},
 }

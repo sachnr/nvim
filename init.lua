@@ -57,6 +57,7 @@ local opts = {
 
 require("keys").defaults()
 require("lazy").setup("config.plugins", opts)
+require("keys").ncmpcpp()
 
 if bootstrap then
 	vim.cmd("bw | silent! MasonInstallAll")

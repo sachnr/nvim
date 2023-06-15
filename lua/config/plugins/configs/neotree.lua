@@ -3,6 +3,10 @@ local fc = require("neo-tree.sources.filesystem.components")
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 neotree.setup({
+	optional = true,
+	opts = {
+		open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
+	},
 	source_selector = {
 		winbar = true,
 		statusline = false,

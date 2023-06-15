@@ -47,9 +47,10 @@ end
 
 local ok, rust_tools = pcall(require, "rust-tools")
 if ok then
-	local mason = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
-	local codelldb_path = mason .. "adapter/codelldb"
-	local liblldb_path = mason .. "lldb/lib/liblldb.so"
+    local path = vim.fn.expand("$CODE_LLDB_PATH") .. "/share/vscode/extensions/vadimcn.vscode-lldb"
+	local codelldb_path = path .. "/adapter/codelldb"
+	local liblldb_path = path .. "/lldb/lib/liblldb.so"
+    print(codelldb_path)
 	rust_tools.setup({
 		tools = {
 			hover_actions = {

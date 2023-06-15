@@ -3,8 +3,6 @@ local keys = require("keys")
 return {
 	{ "j-hui/fidget.nvim", event = "BufReadPre", config = true },
 
-	{ "rcarriga/nvim-notify", lazy = false, config = true },
-
 	{
 		"b0o/incline.nvim",
 		event = "BufReadPre",
@@ -125,7 +123,7 @@ return {
 			require("hlchunk").setup({
 				chunk = {
 					style = {
-						{ fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("WinSeparator")), "fg", "gui") },
+						{ fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("FloatBorder")), "fg", "gui") },
 					},
 				},
 				indent = {

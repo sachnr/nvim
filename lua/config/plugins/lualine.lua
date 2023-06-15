@@ -11,11 +11,31 @@ return {
 				local hex = vim.fn.synIDattr(hlgroup_ID, attr)
 				return hex ~= "" and hex or "NONE"
 			end
+
 			local colors = {
+				dragonWhite = "#c5c9c5",
+				dragonGray = "#a6a69c",
+				dragonBlack6 = "#282727",
 				error = get_hex("DiagnosticError", "fg"),
 				warn = get_hex("DiagnosticWarn", "fg"),
 				info = get_hex("DiagnosticInfo", "fg"),
 				hint = get_hex("DiagnosticHint", "fg"),
+			}
+			local style_1 = {
+				normal = {
+					a = { fg = colors.dragonWhite, bg = colors.dragonBlack6, gui = "bold" },
+					b = { fg = colors.dragonWhite, bg = colors.dragonBlack6 },
+					c = { fg = colors.dragonGray, bg = colors.dragonBlack6 },
+				},
+				insert = { a = { fg = colors.dragonWhite, bg = colors.dragonBlack6, gui = "bold" } },
+				visual = { a = { fg = colors.dragonWhite, bg = colors.dragonBlack6, gui = "bold" } },
+				command = { a = { fg = colors.dragonWhite, bg = colors.dragonBlack6, gui = "bold" } },
+				replace = { a = { fg = colors.dragonWhite, bg = colors.dragonBlack6, gui = "bold" } },
+				inactive = {
+					a = { fg = colors.dragonGray, bg = colors.dragonBlack6 },
+					b = { fg = colors.dragonGray, bg = colors.dragonBlack6 },
+					c = { fg = colors.dragonGray, bg = colors.dragonBlack6 },
+				},
 			}
 
 			local function getLspName()
@@ -44,8 +64,8 @@ return {
 
 			local options = {
 				icons_enabled = true,
-        globalstatus = true,
-				theme = "base46",
+				globalstatus = true,
+				theme = style_1,
 				section_separators = { left = "", right = "" },
 				component_separators = { left = "", right = "" },
 				disabled_filetypes = {
@@ -76,11 +96,6 @@ return {
 				ignore_focus = {},
 				always_divide_middle = true,
 				globalstatus = false,
-				refresh = {
-					statusline = 1000,
-					tabline = 1000,
-					winbar = 1000,
-				},
 			}
 
 			local sections = {
