@@ -4,6 +4,7 @@ local g = vim.g
 g.mapleader = " "
 g.maplocalleader = ","
 
+opt.inccommand = "nosplit"
 opt.mouse = "a" -- allows use of mouse
 opt.title = false -- let Vim set the title of the windowlet Vim set the title of the window
 -- opt.guicursor = { "n-c-v:block-nCursor" }
@@ -72,3 +73,4 @@ opt.inccommand = "split"
 vim.o.timeout = true
 opt.updatetime = 400 -- after this many milliseconds flush swap file, Make updates happen faster
 opt.timeoutlen = 200 -- keypress time out time in milliseconds
+

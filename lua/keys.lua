@@ -49,6 +49,7 @@ M.ncmpcpp = function()
 
 	local ncmpcpp = Terminal:new({
 		cmd = "ncmpcpp",
+		hidden = true,
 		direction = "float",
 		float_opts = {
 			border = "single",
@@ -67,6 +68,17 @@ M.neogen = function()
 			mode = "n",
 			"<cmd> Neogen <CR>",
 			desc = "generate docs",
+		},
+	}
+end
+
+M.trouble = function()
+	return {
+		{
+			"<Leader>d",
+			mode = "n",
+			"<cmd> Trouble <CR>",
+			desc = "trouble",
 		},
 	}
 end
@@ -114,41 +126,45 @@ M.hlslens = function()
 end
 
 -- -- normal
--- M.lsp_attach = function(bufnr)
--- 	set("n", "<space>e", vim.diagnostic.open_float, merge(opts, { desc = "diagnostic float" }))
--- 	set("n", "[d", vim.diagnostic.goto_prev, merge(opts, { desc = "diagnostic goto prev" }))
--- 	set("n", "]d", vim.diagnostic.goto_next, merge(opts, { desc = "diagnostic goto next" }))
--- 	set("n", "<leader>lq", vim.diagnostic.setloclist, merge(opts, { desc = "diagnostic setlocklist" }))
--- 	local lsp_opts = merge(opts, { buffer = bufnr })
--- 	set("n", "ga", vim.lsp.buf.code_action, merge(lsp_opts, { desc = "code_action" }))
--- 	set("n", "gr", vim.lsp.buf.references, merge(lsp_opts, { desc = "goto references" }))
--- 	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
--- 	set("n", "gD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "goto declaration" }))
--- 	set("n", "gd", vim.lsp.buf.definition, merge(lsp_opts, { desc = "goto definition" }))
--- 	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
--- 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
--- 	set("n", "<leader>ld", vim.lsp.buf.type_definition, merge(lsp_opts, { desc = "Type Definition" }))
--- end
-
--- lspsaga
 M.lsp_attach = function(bufnr)
-	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
-	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
-	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
-	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
+	set("n", "<space>e", vim.diagnostic.open_float, merge(opts, { desc = "diagnostic float" }))
+	set("n", "[d", vim.diagnostic.goto_prev, merge(opts, { desc = "diagnostic goto prev" }))
+	set("n", "]d", vim.diagnostic.goto_next, merge(opts, { desc = "diagnostic goto next" }))
+	-- set("n", "<leader>lq", vim.diagnostic.setloclist, merge(opts, { desc = "diagnostic setlocklist" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
-	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
-	set("n", "gr", function()
-		vim.lsp.buf.rename()
-	end, merge(lsp_opts, { desc = "Lsp Rename" }))
-	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
-	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
-	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
-	set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
-	set("n", "gT", "<cmd>Lspsaga goto_type_definition<CR>", merge(lsp_opts, { desc = "goto type definition" }))
+	-- set("n", "ga", vim.lsp.buf.code_action, merge(lsp_opts, { desc = "code_action" }))
+	set("n", "ga", '<cmd>lua require("cosmic-ui").code_actions()<cr>', merge(lsp_opts, { desc = "code_action" }))
+	set("v", "ga", '<cmd>lua require("cosmic-ui").range_code_actions()<cr>', merge(lsp_opts, { desc = "code_action" }))
+	set("n", "gh", vim.lsp.buf.references, merge(lsp_opts, { desc = "goto references" }))
+	-- set("n", "gr", vim.lsp.buf.rename, merge(lsp_opts, { desc = "lsp rename" }))
+	set("n", "gr", '<cmd>lua require("cosmic-ui").rename()<cr>', merge(lsp_opts, { desc = "lsp rename" }))
+	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
+	set("n", "gD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "goto declaration" }))
+	set("n", "gd", vim.lsp.buf.definition, merge(lsp_opts, { desc = "goto definition" }))
 	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
+	set("n", "<leader>ld", vim.lsp.buf.type_definition, merge(lsp_opts, { desc = "Type Definition" }))
 end
+
+-- lspsaga
+-- M.lsp_attach = function(bufnr)
+-- 	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
+-- 	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
+-- 	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
+-- 	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
+-- 	local lsp_opts = merge(opts, { buffer = bufnr })
+-- 	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
+-- 	set("n", "gr", function()
+-- 		vim.lsp.buf.rename()
+-- 	end, merge(lsp_opts, { desc = "Lsp Rename" }))
+-- 	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
+-- 	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
+-- 	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
+-- 	set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
+-- 	set("n", "gT", "<cmd>Lspsaga goto_type_definition<CR>", merge(lsp_opts, { desc = "goto type definition" }))
+-- 	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
+-- 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
+-- end
 
 M.harpoon = function()
 	return {
@@ -180,7 +196,7 @@ end
 M.buffer_manager = function()
 	return {
 		{
-			"<M-j><M-l>",
+			"<M-j><M-j>",
 			mode = "n",
 			function()
 				require("buffer_manager.ui").toggle_quick_menu()

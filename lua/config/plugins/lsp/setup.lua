@@ -20,7 +20,7 @@ local servers = {
 	-- "gopls",
 	"tsserver",
 	"yamlls",
-  "nil_ls",
+	"nil_ls",
 }
 
 local neoconf_ok, neoconf = pcall(require, "neoconf")
@@ -47,10 +47,9 @@ end
 
 local ok, rust_tools = pcall(require, "rust-tools")
 if ok then
-    local path = vim.fn.expand("$CODE_LLDB_PATH") .. "/share/vscode/extensions/vadimcn.vscode-lldb"
-	local codelldb_path = path .. "/adapter/codelldb"
-	local liblldb_path = path .. "/lldb/lib/liblldb.so"
-    print(codelldb_path)
+	local codelldb = vim.fn.getenv("HOME") .. "/.local/share/nvim/mason/packages/codelldb/adapter/codelldb"
+	local nix_path = vim.fn.expand("$CODE_LLDB_PATH") .. "/share/vscode/extensions/vadimcn.vscode-lldb"
+	local liblldb = nix_path .. "/lldb/lib/liblldb.so"
 	rust_tools.setup({
 		tools = {
 			hover_actions = {
@@ -87,7 +86,7 @@ if ok then
 			-- },
 		},
 		dap = {
-			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb, liblldb),
 		},
 	})
 end

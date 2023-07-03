@@ -172,6 +172,12 @@ return {
 				lualine_y = {},
 				lualine_z = {},
 			}
+
+			local function get_cwd()
+				vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+			end
+			local oil_nvim = { sections = { lualine_a = { get_cwd() } }, filetypes = { "oil" } }
+
 			local tabline = {}
 			local winbar = {}
 			local inactive_winbar = {}
@@ -180,6 +186,7 @@ return {
 				"nvim-dap-ui",
 				"neo-tree",
 				"symbols-outline",
+				oil_nvim,
 			}
 
 			lualine.setup({

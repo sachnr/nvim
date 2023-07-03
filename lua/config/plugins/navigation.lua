@@ -96,7 +96,7 @@ return {
 					padding = 2,
 					max_width = 120,
 					max_height = 25,
-					border = "single",
+					border = "none",
 					win_options = {
 						winblend = 0,
 					},
@@ -137,12 +137,25 @@ return {
 		"folke/edgy.nvim",
 		lazy = false,
 		opts = {
+			animate = {
+				enabled = false,
+			},
+			wo = {
+				-- Setting to `true`, will add an edgy winbar.
+				-- Setting to `false`, won't set any winbar.
+				-- Setting to a string, will set the winbar to that string.
+				winbar = false,
+				winfixwidth = true,
+				winfixheight = false,
+				winhighlight = "WinBar:EdgyWinBar,Normal:EdgyNormal",
+				spell = false,
+				signcolumn = "no",
+			},
 			left = {
-				-- {
-				-- 	ft = "oil",
-				-- 	title = "File System",
-				-- 	size = { width = 30 },
-				-- },
+				{
+					ft = "oil",
+					size = { width = 15 },
+				},
 				{
 					ft = "neotree",
 					title = "File System",
@@ -150,6 +163,7 @@ return {
 				},
 			},
 			bottom = {
+				"Trouble",
 				{ ft = "qf", title = "QuickFix" },
 				{
 					ft = "help",

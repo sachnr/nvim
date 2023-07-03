@@ -13,7 +13,7 @@ return {
 							workspaces = {
 								notes = "~/Documents/notes",
 							},
-                            index = "index.norg",
+							index = "index.norg",
 						},
 					},
 					["core.completion"] = {
@@ -21,14 +21,19 @@ return {
 							engine = "nvim-cmp",
 						},
 					},
-                    ["core.integrations.treesitter"] = {
-                        configure_parsers = true,
-                        install_parsers = true,
-                    },
+					["core.integrations.treesitter"] = {
+						configure_parsers = true,
+						install_parsers = true,
+					},
 					["core.integrations.nvim-cmp"] = {},
-                    ["core.qol.todo_items"] = {},
+					["core.qol.todo_items"] = {},
 				},
 			})
 		end,
+	},
+
+	{
+		"lervag/vimtex",
+        lazy = false,
 	},
 }

@@ -98,4 +98,24 @@ return {
 			require("mini.pairs").setup()
 		end,
 	},
+
+	{
+		"mbbill/undotree",
+		cmd = "UndotreeToggle",
+	},
+
+	{
+		"folke/trouble.nvim",
+		keys = keys.trouble(),
+		cmd = "Trouble",
+		config = true,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+
+	{
+		"m4xshen/hardtime.nvim",
+        enabled = false,
+		event = "VeryLazy",
+		opts = {},
+	},
 }
