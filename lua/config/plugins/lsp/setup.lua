@@ -20,7 +20,7 @@ local servers = {
 	-- "gopls",
 	"tsserver",
 	"yamlls",
-	"nil_ls",
+	-- "nil_ls",
 }
 
 local neoconf_ok, neoconf = pcall(require, "neoconf")

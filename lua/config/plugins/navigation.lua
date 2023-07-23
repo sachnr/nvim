@@ -42,26 +42,6 @@ return {
 	},
 
 	{
-		"nvim-telescope/telescope.nvim",
-		-- version = "*",
-		cmd = "Telescope",
-		dependencies = {
-			-- "nvim-telescope/telescope-ui-select.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
-			"kkharji/sqlite.lua",
-			"nvim-telescope/telescope-project.nvim",
-			-- "gbrlsnchs/telescope-lsp-handlers.nvim",
-			{ "nvim-lua/plenary.nvim" },
-		},
-		config = function()
-			require("config.plugins.configs.telescope")
-		end,
-	},
-
-	{
 		"j-morano/buffer_manager.nvim",
 		keys = keys.buffer_manager,
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -152,10 +132,6 @@ return {
 				signcolumn = "no",
 			},
 			left = {
-				{
-					ft = "oil",
-					size = { width = 15 },
-				},
 				{
 					ft = "neotree",
 					title = "File System",

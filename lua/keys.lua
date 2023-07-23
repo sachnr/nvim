@@ -75,7 +75,7 @@ end
 M.trouble = function()
 	return {
 		{
-			"<Leader>d",
+			"<Leader>E",
 			mode = "n",
 			"<cmd> Trouble <CR>",
 			desc = "trouble",
@@ -208,15 +208,8 @@ end
 
 M.oil = function()
 	return {
-		{
-			"<M-j><M-k>",
-			mode = "n",
-			function()
-				local dir = require("oil").get_current_dir()
-				require("oil").open_float(dir)
-			end,
-			desc = "oil.nvim",
-		},
+		{ "<M-j><M-k>", mode = "n", "<Cmd> :Oil %:h <CR>", desc = "Open Oil" },
+		{ "<M-j><M-s>", mode = "n", "<Cmd> :vsplit | Oil %:h <CR>", desc = "Open Oil in a vsplit" },
 	}
 end
 

@@ -28,14 +28,4 @@ return {
 			require("config.plugins.configs.mason")
 		end,
 	},
-
-	{
-		"mhartington/formatter.nvim",
-		keys = {
-			{ "<leader>f", "<cmd>Format<cr>", desc = "Format" },
-		},
-		config = function()
-			require("config.plugins.configs.formatter")
-		end,
-	},
 }
