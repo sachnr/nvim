@@ -1,3 +1,4 @@
+---@diagnostic disable: inject-field
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -118,6 +119,7 @@ return {
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 					require("keys").lsp_attach(buffer)
+					vim.g.inlay_hints_enabled = true
 					vim.lsp.inlay_hint(buffer, true)
 				end,
 				capabilities = capabilities,
@@ -198,6 +200,7 @@ return {
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 					keys.lsp_attach(buffer)
+					vim.g.inlay_hints_enabled = true
 					vim.lsp.inlay_hint(buffer, true)
 				end,
 				settings = {
@@ -213,6 +216,20 @@ return {
 					},
 				},
 			})
+
+			local function toggle_inlay_hints()
+				local current_buffer = vim.api.nvim_get_current_buf()
+				if not vim.g.inlay_hints_enabled then
+					vim.g.inlay_hints_enabled = true
+					vim.lsp.inlay_hint(current_buffer, true)
+				else
+					vim.g.inlay_hints_enabled = false
+					vim.lsp.inlay_hint(current_buffer, false)
+				end
+			end
+			vim.api.nvim_create_user_command("ToggleInlayHints", function()
+				toggle_inlay_hints()
+			end, { nargs = 0 })
 		end,
 	},
 }
