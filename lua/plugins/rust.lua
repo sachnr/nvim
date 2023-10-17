@@ -5,6 +5,4 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		config = true,
 	},
-
-	"simrat39/rust-tools.nvim",
 }

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -64,8 +65,7 @@ return {
 
 			local options = {
 				icons_enabled = true,
-				globalstatus = true,
-				theme = style_1,
+				-- theme = style_1,
 				section_separators = { left = "", right = "" },
 				component_separators = { left = "", right = "" },
 				disabled_filetypes = {
@@ -95,7 +95,7 @@ return {
 				},
 				ignore_focus = {},
 				always_divide_middle = true,
-				globalstatus = false,
+				globalstatus = true,
 			}
 
 			local sections = {

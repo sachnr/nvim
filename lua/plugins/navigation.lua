@@ -8,40 +8,6 @@ return {
 	},
 
 	{
-		"nvim-neo-tree/neo-tree.nvim",
-		enabled = false,
-		lazy = false,
-		keys = keys.nvim_tree(),
-		config = function()
-			require("config.plugins.configs.neotree")
-		end,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim",
-			{
-				"s1n7ax/nvim-window-picker",
-				config = function()
-					require("window-picker").setup({
-						autoselect_one = true,
-						include_current = false,
-						filter_rules = {
-							-- filter using buffer options
-							bo = {
-								-- if the file type is one of following, the window will be ignored
-								filetype = { "neo-tree", "neo-tree-popup", "notify" },
-								-- if the buffer type is one of following, the window will be ignored
-								buftype = { "terminal", "quickfix" },
-							},
-						},
-						other_win_hl_color = "#e35e4f",
-					})
-				end,
-			},
-		},
-	},
-
-	{
 		"j-morano/buffer_manager.nvim",
 		keys = keys.buffer_manager,
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -62,12 +28,37 @@ return {
 	},
 
 	{
+		"echasnovski/mini.files",
+		keys = keys.files(),
+		enabled = false,
+		version = false,
+		config = function()
+			require("mini.files").setup({
+				mappings = {
+					close = "q",
+					go_in = "L",
+					go_in_plus = "<CR>",
+					go_out = "H",
+					go_out_plus = "",
+					reset = "<BS>",
+					reveal_cwd = "@",
+					show_help = "g?",
+					synchronize = "<leader>s",
+					trim_left = "<",
+					trim_right = ">",
+				},
+			})
+		end,
+	},
+
+	{
 		"stevearc/oil.nvim",
 		enabled = true,
 		keys = keys.oil(),
 		dependencies = { "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
 		config = function()
-			require("oil").setup({
+			local oil = require("oil")
+			oil.setup({
 				use_default_keymaps = false,
 				default_file_explorer = false,
 				skip_confirm_for_simple_edits = true,
@@ -90,9 +81,15 @@ return {
 				keymaps = {
 					["<C-F5>"] = "actions.refresh",
 					["H"] = "actions.parent",
-					["<C-s>"] = "actions.select_split",
-					["<C-t>"] = "actions.select_tab",
-					["<C-v>"] = "actions.select_vsplit",
+					["<C-s>"] = function()
+						oil.select({ horizontal = true, close = true })
+					end,
+					["<C-t>"] = function()
+						oil.select({ tab = true, close = true })
+					end,
+					["<C-v>"] = function()
+						oil.select({ vertical = true, close = true })
+					end,
 					["<CR>"] = "actions.select",
 					["L"] = "actions.select",
 					["<M-j><M-k>"] = "actions.open_cwd",
@@ -115,6 +112,7 @@ return {
 
 	{
 		"folke/edgy.nvim",
+		enabled = false,
 		lazy = false,
 		opts = {
 			animate = {

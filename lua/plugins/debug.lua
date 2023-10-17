@@ -7,27 +7,24 @@ return {
 			local plugin_folder = vim.fn.stdpath("data")
 			local mason = plugin_folder .. "/mason/packages"
 
-			for _, language in ipairs({ "typescript", "javascript" }) do
-				dap.configurations[language] = {
-					{
-						{
-							type = "pwa-node",
-							request = "launch",
-							name = "Debug Jest Tests",
-							-- trace = true, -- include debugger info
-							runtimeExecutable = "node",
-							runtimeArgs = {
-								"./node_modules/jest/bin/jest.js",
-								"--runInBand",
-							},
-							rootPath = "${workspaceFolder}",
-							cwd = "${workspaceFolder}",
-							console = "integratedTerminal",
-							internalConsoleOptions = "neverOpen",
-						},
-					},
-				}
-			end
+			dap.adapters.go = {
+				type = "executable",
+				command = "node",
+				args = {
+					os.getenv("HOME")
+						.. "/.local/share/nvim/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js",
+				},
+			}
+			dap.configurations.go = {
+				{
+					type = "go",
+					name = "Debug",
+					request = "launch",
+					showLog = false,
+					program = "${file}",
+					dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
+				},
+			}
 
 			dap.adapters.lldb = {
 				type = "executable",
@@ -73,6 +70,7 @@ return {
 			{
 				"mxsdev/nvim-dap-vscode-js",
 				config = function()
+					---@diagnostic disable-next-line: missing-fields
 					require("dap-vscode-js").setup({
 						debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
 						adapters = { "pwa-node" }, -- which adapters to register in nvim-dap
@@ -82,8 +80,11 @@ return {
 		},
 	},
 
+    "mfussenegger/nvim-jdtls",
+
 	{
 		"microsoft/vscode-js-debug",
+        enabled = false,
 		build = "npm install --legacy-peer-deps && npm run compile",
 	},
 }

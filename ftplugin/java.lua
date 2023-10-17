@@ -3,8 +3,16 @@ if not present then
 	return
 end
 
-local capabilities = require("config.plugins.lsp.settings").capabilities
-local on_attach = require("config.plugins.lsp.settings").on_attach
+local keys = require("keys")
+local on_attach = function(client, buffer)
+	client.server_capabilities.documentFormattingProvider = false
+	client.server_capabilities.documentRangeFormattingProvider = false
+	-- client.server_capabilities.semanticTokensProvider = nil
+	keys.lsp_attach(buffer)
+	vim.lsp.log.set_level(vim.log.levels.OFF)
+end
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 local plugin_folder = vim.fn.stdpath("data")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = plugin_folder .. "/workspace/" .. project_name

@@ -2,8 +2,10 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		lazy = false,
+		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.configs").setup({
+			local configs = require("nvim-treesitter.configs")
+			configs.setup({
 				ensure_installed = {
 					"bash",
 					"c",
@@ -21,11 +23,12 @@ return {
 					"java",
 					"javascript",
 					"json",
-                    "jsonc",
+					"jsonc",
+					"jsdoc",
 					"lua",
 					"markdown",
 					"markdown_inline",
-                    "make",
+					"make",
 					"norg",
 					"nix",
 					"python",
@@ -38,9 +41,11 @@ return {
 					"yaml",
 					"yuck",
 				},
+				sync_install = true,
+				auto_install = false,
+				ignore_install = {},
 				highlight = {
 					enable = true,
-					use_languagetree = true,
 				},
 			})
 		end,

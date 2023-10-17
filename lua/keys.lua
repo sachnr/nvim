@@ -209,7 +209,21 @@ end
 M.oil = function()
 	return {
 		{ "<M-j><M-k>", mode = "n", "<Cmd> :Oil %:h <CR>", desc = "Open Oil" },
-		{ "<M-j><M-s>", mode = "n", "<Cmd> :vsplit | Oil %:h <CR>", desc = "Open Oil in a vsplit" },
+		{ "<M-j><M-l>", mode = "n", "<Cmd> :vsplit | Oil %:h <CR>", desc = "Open Oil in a vsplit" },
+	}
+end
+
+M.files = function()
+	return {
+		{
+			"<M-j><M-k>",
+			mode = "n",
+			function()
+				local files = require("mini.files")
+				files.open()
+			end,
+			desc = "Open Oil",
+		},
 	}
 end
 
@@ -265,64 +279,23 @@ M.dap = function()
 	end, merge(opts, { desc = "Spawn Dap Hydra" }))
 end
 
-M.whichKey_n = {
-	-- debugger
-	-- d = {
-	-- 	name = "Debugger",
-	-- 	b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-	-- 	B = { "<cmd> lua require'telescope'.extensions.dap.list_breakpoints{}<cr>", "List Breakpoints" },
-	-- 	c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
-	-- 	i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
-	-- 	o = { "<cmd>lua require'dap'.step_over()<cr>", "Step over" },
-	-- 	O = { "<cmd>lua require'dap'.step_out()<cr>", "Step out" },
-	-- 	r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Repl Toggle" },
-	-- 	l = { "<cmd>lua require'dap'.run_last()<cr>", "Run Last" },
-	-- 	u = { "<cmd>lua require'dapui'.toggle()<cr>", "Dap UI Toggle" },
-	-- 	t = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
-	-- 	s = { "<cmd>lua require('osv').launch({ port = 8086 })<cr>", "Launch Lua Debugger Server" },
-	-- 	d = { "<cmd>lua require('osv').run_this()<cr>", "Launch Lua Debugger" },
-	-- },
-	-- java lsp
-	j = {
-		name = "Java nvim-jdtls extra",
-		o = { "<cmd> lua require'jdtls'.organize_imports() <cr>", "Organize Imports" },
-		v = { "<cmd>  lua require('jdtls').extract_variable() <cr>", "Extract Variable" },
-		c = { "<cmd> lua require('jdtls').extract_constant() <cr>", "Extract Constant" },
-		t = { "<cmd> lua require'jdtls'.test_nearest_method() <cr>", "Test Nearest Method" },
-		T = { "<cmd> lua require'jdtls'.test_class() <cr>", "Test Class" },
-		u = { "<cmd> JdtUpdateConfig <cr>", "Update Config" },
-	},
-	-- comment box
-	c = {
-		name = "Comment Box",
-		l = { "<Cmd>lua require('comment-box').llbox(2)<CR>", "left aligned fixed size" },
-		c = { "<Cmd>lua require('comment-box').lcbox(2)<CR>", "centered adapted box" },
-		v = { "<Cmd>lua require('comment-box').cline(8)<CR>", "centered line" },
-	},
-	-- local server
-	b = {
-		name = "localhost",
-	},
-	n = {
-		name = "neogen",
-	},
-}
-
-M.whichKey_v = {
-	j = {
-		name = "Java nvim-jdtls extra",
-		v = { "<cmd> lua require('jdtls').extract_variable(true) <cr>", "Extract Variable" },
-		c = { "<cmd> lua require('jdtls').extract_constant(true) <cr>", "Extract Constant" },
-		m = { "<cmd> lua require('jdtls').extract_method(true) <cr>", "Extract Method" },
-	},
-	-- comment box
-	c = {
-		name = "Comment Box",
-		l = { "<Cmd>lua require('comment-box').lbox(7)<CR>", "left aligned fixed size" },
-		c = { "<Cmd>lua require('comment-box').accbox(3)<CR>", "centered adapted box" },
-		v = { "<Cmd>lua require('comment-box').cline(7)<CR>", "centered line" },
-	},
-}
+M.comment_box = function()
+	return {
+		{
+			"<leader>cl",
+			mode = { "n", "x" },
+			"<Cmd>lua require('comment-box').lbox(7)<CR>",
+			desc = "left aligned centered box",
+		},
+		{
+			"<leader>cc",
+			mode = { "n", "x" },
+			"<Cmd>lua require('comment-box').accbox(3)<CR>",
+			desc = "centered adapted box",
+		},
+		{ "<leader>cv", mode = { "n", "x" }, "<Cmd>lua require('comment-box').cline(7)<CR>", desc = "centered line" },
+	}
+end
 
 M.gitsigns = function(gitsigns)
 	set("n", "]c", function()

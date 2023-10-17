@@ -2,7 +2,7 @@ return {
 	{
 		"rmagatti/auto-session",
 		lazy = false,
-    enabled = false,
+		enabled = false,
 		-- cmd = { "SaveSession", "RestoreSession", "DeleteSession", "Autosession", "RestoreSessionFromFile" },
 		config = function()
 			vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

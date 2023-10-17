@@ -8,32 +8,46 @@ return {
 			local formatter = require("formatter")
 			local util = require("formatter.util")
 
+			local prettier = function(parser)
+				if not parser then
+					return {
+						exe = "prettier",
+						args = {
+							"--tab-width 4",
+							"--stdin-filepath",
+							util.escape_path(util.get_current_buffer_file_path()),
+						},
+						stdin = true,
+						try_node_modules = true,
+					}
+				end
+
+				return {
+					exe = "prettier",
+					args = {
+						"--tab-width 4",
+						"--stdin-filepath",
+						util.escape_path(util.get_current_buffer_file_path()),
+						"--parser",
+						parser,
+					},
+					stdin = true,
+					try_node_modules = true,
+				}
+			end
+
 			local filetypes = {
 				css = require("formatter.filetypes.css").prettier,
 				html = require("formatter.filetypes.html").prettier,
-				scss = {
-					function()
-						return {
-							exe = "prettier",
-							args = {
-								"--stdin-filepath",
-								util.escape_path(util.get_current_buffer_file_path()),
-								"--parser",
-								"scss",
-							},
-							stdin = true,
-							try_node_modules = true,
-						}
-					end,
-				},
+				scss = prettier,
 				yaml = require("formatter.filetypes.yaml").prettier,
 				markdown = require("formatter.filetypes.markdown").prettier,
 				json = require("formatter.filetypes.json").jq,
 				jsonc = require("formatter.filetypes.json").jq,
-				typescriptreact = require("formatter.filetypes.typescriptreact").prettier,
-				typescript = require("formatter.filetypes.typescript").prettier,
-				javascript = require("formatter.filetypes.javascript").prettier,
-				javascriptreact = require("formatter.filetypes.javascriptreact").prettier,
+				typescriptreact = prettier,
+				typescript = prettier,
+				javascript = prettier,
+				javascriptreact = prettier,
 				java = {
 					function()
 						return {
@@ -52,6 +66,7 @@ return {
 				nix = require("formatter.filetypes.nix").alejandra,
 				rust = require("formatter.filetypes.rust").rustfmt,
 				sql = require("formatter.filetypes.sql").pgformat,
+				go = require("formatter.filetypes.go").gofmt,
 			}
 
 			formatter.setup({

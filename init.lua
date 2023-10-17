@@ -1,7 +1,6 @@
 require("options")
 local bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local plugins = require("config.plugins")
 
 if not vim.loop.fs_stat(lazypath) then
 	bootstrap = vim.fn.system({
@@ -56,7 +55,7 @@ local opts = {
 }
 
 require("keys").defaults()
-require("lazy").setup("config.plugins", opts)
+require("lazy").setup("plugins", opts)
 require("keys").ncmpcpp()
 
 if bootstrap then

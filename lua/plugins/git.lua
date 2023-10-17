@@ -29,4 +29,20 @@ return {
 		},
 		dependencies = "nvim-lua/plenary.nvim",
 	},
+
+	{
+		"akinsho/git-conflict.nvim",
+		event = "VeryLazy",
+		opts = {
+			default_mappings = {
+				none = "<leader>g0",
+				ours = "<leader>g1",
+				theirs = "<leader>g2",
+				both = "<leader>g3",
+				prev = "[x",
+				next = "]x",
+			},
+			disable_diagnostics = true,
+		},
+	},
 }

@@ -3,10 +3,6 @@ return {
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
 		dependencies = {
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
 			-- "kkharji/sqlite.lua",
 			{ "nvim-lua/plenary.nvim" },
 		},
@@ -53,9 +49,6 @@ return {
 						"node_modules",
 						".git/",
 					},
-					file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-					grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-					qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 					path_display = { "truncate" },
 					set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
 					-- history = {
@@ -67,22 +60,6 @@ return {
 							["<C-j>"] = require("telescope.actions").move_selection_next,
 							["<C-k>"] = require("telescope.actions").move_selection_previous,
 						},
-					},
-				},
-
-				extensions = {
-					fzy_native = {
-						override_generic_sorter = true,
-						override_file_sorter = true,
-					},
-
-					fzf_writer = {
-						use_highlighter = false,
-						minimum_grep_characters = 6,
-					},
-
-					["ui-select"] = {
-						require("telescope.themes").get_dropdown(),
 					},
 				},
 			}

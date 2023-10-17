@@ -16,7 +16,6 @@ return {
 	{
 		"rebelot/kanagawa.nvim",
 		enabled = true,
-		lazy = false,
 		priority = 1000,
 		config = function()
 			require("kanagawa").setup({
@@ -85,6 +84,120 @@ return {
 				},
 			})
 			vim.cmd("colorscheme rose-pine")
+		end,
+	},
+
+	{
+		"savq/melange-nvim",
+		enabled = false,
+		lazy = false,
+	},
+
+	{
+		"ribru17/bamboo.nvim",
+		enabled = false,
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("bamboo").setup({
+				-- optional configuration here
+			})
+			require("bamboo").load()
+		end,
+	},
+
+	{
+		"ellisonleao/gruvbox.nvim",
+		enabled = false,
+		event = "VeryLazy",
+		priority = 1000,
+		config = function()
+			require("gruvbox").setup({
+				undercurl = true,
+				underline = true,
+				bold = true,
+				italic = {
+					strings = true,
+					comments = true,
+					operators = false,
+					folds = true,
+				},
+				strikethrough = true,
+				invert_selection = false,
+				invert_signs = false,
+				invert_tabline = false,
+				invert_intend_guides = false,
+				inverse = true, -- invert background for search, diffs, statuslines and errors
+				contrast = "", -- can be "hard", "soft" or empty string
+				palette_overrides = {},
+				overrides = {},
+				dim_inactive = false,
+				transparent_mode = false,
+			})
+		end,
+	},
+
+	{
+		"sainnhe/everforest",
+		enabled = false,
+		config = function()
+			vim.g.everforest_background = "hard"
+			vim.g.everforest_better_performance = 1
+		end,
+	},
+
+	{
+		"neanias/everforest-nvim",
+		enabled = false,
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("everforest").setup({
+				-- Your config here
+				background = "hard",
+			})
+			vim.cmd("colorscheme everforest")
+		end,
+	},
+
+	{
+		"EdenEast/nightfox.nvim",
+		enabled = false,
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("nightfox").setup({
+				options = {
+					transparent = false, -- Disable setting background
+					terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+					dim_inactive = false, -- Non focused panes set to alternative background
+					styles = { -- Style to be applied to different syntax groups
+						comments = "italic", -- Value is any valid attr-list value `:help attr-list`
+						conditionals = "NONE",
+						constants = "NONE",
+						functions = "bold",
+						keywords = "NONE",
+						numbers = "NONE",
+						operators = "NONE",
+						strings = "NONE",
+						types = "NONE",
+						variables = "NONE",
+					},
+					inverse = { -- Inverse highlight for different types
+						match_paren = false,
+						visual = false,
+						search = false,
+					},
+					modules = { -- List of various plugins and additional options
+						-- ...
+					},
+				},
+				palettes = {},
+				specs = {},
+				groups = {},
+			})
+
+			vim.cmd("colorscheme terafox")
 		end,
 	},
 }

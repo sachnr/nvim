@@ -8,8 +8,8 @@ local window_hint = [[
   ^ ^ ^ _k_ ^ ^   ^   _<C-k>_   ^    ^ ^ ^ _K_ ^ ^    _tc_: tabclose   _S_: horizontally 
   ^ _h_ ^ ^ _l_   _<C-h>_ _<C-l>_    ^ _H_ ^ ^ _L_    _tn_: tabNext    _s_: vertically
   ^ ^ ^ _j_ ^ ^   ^   _<C-j>_   ^    ^ ^ ^ _J_ ^ ^    _tp_: tabPrev    _d_: close
-  ^ ^     ^^ ^^^  ^^        ^              
-  ^ _e_: equalize   ^_tt_: tabNew   _z_: maximize   _o_: remain only
+  ^ ^     ^^ ^^^  ^^        ^  ^      ^     ^    _tt_: tabNew
+  ^ _e_: equalize   _z_: maximize   _o_: remain only
   ^_<Esc>_, _q_ : exit     
 ]]
 

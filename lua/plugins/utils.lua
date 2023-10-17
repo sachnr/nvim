@@ -1,6 +1,10 @@
 local keys = require("keys")
 
 return {
+	"nvim-lua/plenary.nvim",
+
+	"nvim-tree/nvim-web-devicons",
+
 	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
@@ -9,7 +13,7 @@ return {
 			require("peek").setup({
 				syntax = true, -- enable syntax highlighting, affects performance
 				theme = "dark", -- 'dark' or 'light'
-				app = "firefox", -- 'webview', 'browser', string or a table of strings
+				app = "brave", -- 'webview', 'browser', string or a table of strings
 			})
 		end,
 	},
@@ -19,17 +23,12 @@ return {
 		keys = keys.yanky(),
 		config = function()
 			require("yanky").setup({
+				storage = "shada",
 				system_clipboard = {
 					sync_with_ring = true,
 				},
-				highlight = {
-					timer = 150,
-				},
 			})
 		end,
-		dependencies = {
-			{ "kkharji/sqlite.lua" },
-		},
 	},
 
 	{
@@ -42,6 +41,11 @@ return {
 	},
 
 	{
+		"LudoPinelli/comment-box.nvim",
+		keys = keys.comment_box(),
+	},
+
+	{
 		"akinsho/toggleterm.nvim",
 		keys = keys.toggleterm(),
 		event = "ColorScheme",
@@ -50,6 +54,7 @@ return {
 
 	{
 		"chentoast/marks.nvim",
+		enabled = false,
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = true,
 	},
@@ -114,8 +119,16 @@ return {
 
 	{
 		"m4xshen/hardtime.nvim",
-        enabled = false,
+		enabled = false,
 		event = "VeryLazy",
 		opts = {},
 	},
+
+	{
+		"kevinhwang91/nvim-bqf",
+		ft = "qf",
+		config = true,
+	},
+
+	"famiu/bufdelete.nvim",
 }

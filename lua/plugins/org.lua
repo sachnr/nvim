@@ -1,7 +1,8 @@
 return {
 	{
 		"nvim-neorg/neorg",
-		ft = "norg",
+		-- ft = "norg",
+        lazy = false,
 		run = ":Neorg sync-parsers",
 		config = function()
 			require("neorg").setup({
@@ -22,8 +23,10 @@ return {
 						},
 					},
 					["core.integrations.treesitter"] = {
-						configure_parsers = true,
-						install_parsers = true,
+						config = {
+							configure_parsers = true,
+							install_parsers = true,
+						},
 					},
 					["core.integrations.nvim-cmp"] = {},
 					["core.qol.todo_items"] = {},
@@ -34,7 +37,7 @@ return {
 
 	{
 		"lervag/vimtex",
-        enabled = false,
-        lazy = false,
+		ft = "norg",
+		enabled = true,
 	},
 }

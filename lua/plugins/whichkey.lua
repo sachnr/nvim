@@ -2,6 +2,7 @@ return {
 	{
 		"folke/which-key.nvim",
 		-- keys = { "<leader>", '"', "'", "`", "@" },
+        enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()

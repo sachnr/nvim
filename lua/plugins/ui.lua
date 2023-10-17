@@ -1,13 +1,42 @@
 local keys = require("keys")
 
 return {
-	{ "j-hui/fidget.nvim", event = "BufReadPre", config = true },
+	{ "j-hui/fidget.nvim", tag = "legacy", event = "BufReadPre", config = true },
+
+	{
+		"CosmicNvim/cosmic-ui",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		config = function()
+			require("cosmic-ui").setup({
+				opts = {
+					border_style = "single",
+					rename = {
+						border = {
+							highlight = "FloatBorder",
+							style = "single",
+							title = "Rename",
+							title_align = "center",
+							title_hl = "FloatTitle",
+						},
+						prompt = "> ",
+						prompt_hl = "Comment",
+					},
+				},
+			})
+		end,
+	},
 
 	{
 		"b0o/incline.nvim",
 		event = "BufReadPre",
 		config = function()
 			require("incline").setup({
+				window = {
+					placement = {
+						horizontal = "right",
+						vertical = "bottom",
+					},
+				},
 				highlight = {
 					groups = {
 						InclineNormal = {
@@ -38,6 +67,7 @@ return {
 
 	{
 		"petertriho/nvim-scrollbar",
+		enabled = false,
 		lazy = false,
 		config = function()
 			require("scrollbar").setup({
