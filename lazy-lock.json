@@ -21,7 +21,6 @@
   "hlchunk.nvim": { "branch": "main", "commit": "130da2983519ed83beb513de64d16f22228b764a" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "incline.nvim": { "branch": "main", "commit": "fdd7e08a6e3d0dd8d9aa02428861fa30c37ba306" },
-  "inlay-hints.nvim": { "branch": "main", "commit": "006b0898f5d3874e8e528352103733142e705834" },
   "kanagawa.nvim": { "branch": "master", "commit": "c19b9023842697ec92caf72cd3599f7dd7be4456" },
   "lazy.nvim": { "branch": "main", "commit": "daab5fe2807c55867d5f7cfb6ef0944783361be2" },
   "lspkind-nvim": { "branch": "master", "commit": "57610d5ab560c073c465d6faf0c19f200cb67e6e" },

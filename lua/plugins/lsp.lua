@@ -9,7 +9,6 @@ return {
 				-- "folke/neoconf.nvim",
 				"nvim-lua/plenary.nvim",
 				"simrat39/rust-tools.nvim",
-				"simrat39/inlay-hints.nvim",
 			},
 		},
 		config = function()
@@ -106,7 +105,6 @@ return {
 			local lspconfig = require("lspconfig")
 			local ts_tools = require("typescript-tools")
 			local rust_tools = require("rust-tools")
-			local inlay_hints = require("inlay-hints")
 
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
@@ -115,36 +113,12 @@ return {
 				})
 			end
 
-			inlay_hints.setup({
-				renderer = "inlay-hints/render/eol",
-				hints = {
-					parameter = {
-						show = false,
-					},
-				},
-				eol = {
-					parameter = {
-						separator = ", ",
-						format = function(hints)
-							return string.format(" <- %s", hints)
-						end,
-					},
-
-					type = {
-						separator = ", ",
-						format = function(hints)
-							return string.format(" » %s", hints)
-						end,
-					},
-				},
-			})
-
 			lspconfig.gopls.setup({
 				on_attach = function(client, buffer)
-					require("inlay-hints").on_attach(client, buffer)
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 					require("keys").lsp_attach(buffer)
+					vim.lsp.inlay_hint(buffer, true)
 				end,
 				capabilities = capabilities,
 				settings = {
@@ -224,13 +198,18 @@ return {
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 					keys.lsp_attach(buffer)
+					vim.lsp.inlay_hint(buffer, true)
 				end,
 				settings = {
+					separate_diagnostic_server = true,
 					tsserver_file_preferences = {
-						includeInlayVariableTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
 						includeInlayFunctionLikeReturnTypeHints = true,
 						includeInlayFunctionParameterTypeHints = true,
-						includeInlayParameterNameHints = "literals", -- 'none' | 'literals' | 'all';
+						includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayVariableTypeHints = true,
 					},
 				},
 			})
