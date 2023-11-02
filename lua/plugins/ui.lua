@@ -29,6 +29,7 @@ return {
 	{
 		"b0o/incline.nvim",
 		event = "BufReadPre",
+        enabled = false,
 		config = function()
 			require("incline").setup({
 				window = {
@@ -193,12 +194,6 @@ return {
 	{
 		"folke/zen-mode.nvim",
 		keys = keys.zenmode(),
-		config = function()
-			require("zen-mode").setup({
-				window = {
-					backdrop = 0.8,
-				},
-			})
-		end,
+		config = true,
 	},
 }

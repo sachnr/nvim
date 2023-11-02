@@ -61,6 +61,16 @@ M.ncmpcpp = function()
 	end, merge(opts, { desc = "Music Player" }))
 end
 
+M.telescope = function()
+	return {
+		{ "<Leader>tf", mode = "n", "<cmd> Telescope find_files <CR>", desc = "find files" },
+		{ "<Leader>tg", mode = "n", "<cmd> Telescope live_grep <CR>", desc = "live grep" },
+		{ "<Leader>to", mode = "n", "<cmd> Telescope oldfiles <CR>", desc = "live grep" },
+		{ "<Leader>tu", mode = "n", "<cmd> silent! %foldopen! | UndotreeToggle <CR>", desc = "UndotreeToggle" },
+		{ "<Leader>t/", mode = "n", "<cmd> Telescope current_buffer_fuzzy_find <CR>", desc = "search in file" },
+	}
+end
+
 M.neogen = function()
 	return {
 		{
@@ -270,13 +280,6 @@ M.yanky = function()
 		{ "<c-p>", mode = "n", "<Plug>(YankyCycleBackward)", desc = "Yanky Cycle Back" },
 		{ "<leader>p", mode = { "n", "x" }, "<cmd> Telescope yank_history <CR>", desc = "Paste from Yanky" },
 	}
-end
-
-M.dap = function()
-	set("n", "<F5>", function()
-		---@diagnostic disable-next-line: undefined-field
-		require("hydra").spawn("dap-hydra")
-	end, merge(opts, { desc = "Spawn Dap Hydra" }))
 end
 
 M.comment_box = function()

@@ -1,9 +1,9 @@
 return {
 	{
 		"anuvyklack/hydra.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		lazy = false,
+		keys = require("keys").hydra,
 		config = function()
-			require("plugins.hydra.telescope")
 			require("plugins.hydra.git")
 			require("plugins.hydra.windows")
 			require("plugins.hydra.dap")

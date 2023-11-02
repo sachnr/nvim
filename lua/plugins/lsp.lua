@@ -10,17 +10,47 @@ return {
 				-- "folke/neoconf.nvim",
 				"nvim-lua/plenary.nvim",
 				"simrat39/rust-tools.nvim",
+				"ray-x/lsp_signature.nvim",
+				"simrat39/inlay-hints.nvim",
 			},
 		},
 		config = function()
 			local keys = require("keys")
+			local lspconfig = require("lspconfig")
+			local ts_tools = require("typescript-tools")
+			local rust_tools = require("rust-tools")
+			local lsp_signature = require("lsp_signature")
+			local inlay_hints = require("inlay-hints")
+
+			inlay_hints.setup({
+				renderer = "inlay-hints/render/eol",
+				eol = {
+					parameter = {
+						format = function(hints)
+							return string.format(" <- (%s)", hints)
+						end,
+					},
+
+					type = {
+						separator = ", ",
+						format = function(hints)
+							return string.format(" => %s", hints)
+						end,
+					},
+				},
+			})
 
 			local on_attach = function(client, buffer)
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
 				-- client.server_capabilities.semanticTokensProvider = nil
 				keys.lsp_attach(buffer)
-				vim.lsp.log.set_level(vim.log.levels.OFF)
+				lsp_signature.on_attach({
+					handler_opts = {
+						border = "single",
+					},
+					hint_enable = false,
+				}, buffer)
 			end
 
 			--lsp signs
@@ -80,11 +110,13 @@ return {
 				severity_sort = true,
 			})
 
-			lspSymbol("Error", " ")
-			lspSymbol("Info", " ")
-			lspSymbol("Hint", " ")
-			lspSymbol("Warn", " ")
-			lspSymbol("other", " ")
+			local icons = require("icons").diagnostics
+
+			lspSymbol("Error", icons.error)
+			lspSymbol("Info", icons.info)
+			lspSymbol("Hint", icons.hint)
+			lspSymbol("Warn", icons.warn)
+			lspSymbol("other", icons.other)
 
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -96,16 +128,13 @@ return {
 				"ccls",
 				-- "vuels",
 				"pylsp",
-				"sqlls",
 				-- "gopls",
 				-- "tsserver",
 				"yamlls",
 				-- "nil_ls",
+				"tailwindcss",
+				"eslint",
 			}
-
-			local lspconfig = require("lspconfig")
-			local ts_tools = require("typescript-tools")
-			local rust_tools = require("rust-tools")
 
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
@@ -120,7 +149,14 @@ return {
 					client.server_capabilities.documentRangeFormattingProvider = false
 					require("keys").lsp_attach(buffer)
 					vim.g.inlay_hints_enabled = true
-					vim.lsp.inlay_hint(buffer, true)
+					-- vim.lsp.inlay_hint(buffer, true)
+					inlay_hints.on_attach(client, buffer)
+					lsp_signature.on_attach({
+						handler_opts = {
+							border = "single",
+						},
+						hint_enable = false,
+					}, buffer)
 				end,
 				capabilities = capabilities,
 				settings = {
@@ -184,14 +220,15 @@ return {
 							rust_tools.code_action_group.code_action_group,
 							vim.tbl_deep_extend("force", opt, { desc = "code_action" })
 						)
+						vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 					end,
 					capabilities = capabilities,
-					cmd = {
-						"rustup",
-						"run",
-						"stable",
-						"rust-analyzer",
-					},
+					-- cmd = {
+					-- 	"rustup",
+					-- 	"run",
+					-- 	"stable",
+					-- 	"rust-analyzer",
+					-- },
 				},
 			})
 
@@ -201,7 +238,15 @@ return {
 					client.server_capabilities.documentRangeFormattingProvider = false
 					keys.lsp_attach(buffer)
 					vim.g.inlay_hints_enabled = true
-					vim.lsp.inlay_hint(buffer, true)
+					-- vim.lsp.inlay_hint(buffer, true)
+					inlay_hints.on_attach(client, buffer)
+					lsp_signature.on_attach({
+						handler_opts = {
+							border = "single",
+						},
+						hint_enable = false,
+					}, buffer)
+					vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 				end,
 				settings = {
 					separate_diagnostic_server = true,
@@ -209,7 +254,7 @@ return {
 						includeInlayEnumMemberValueHints = true,
 						includeInlayFunctionLikeReturnTypeHints = true,
 						includeInlayFunctionParameterTypeHints = true,
-						includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+						includeInlayParameterNameHints = "literals", -- 'none' | 'literals' | 'all';
 						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
 						includeInlayPropertyDeclarationTypeHints = true,
 						includeInlayVariableTypeHints = true,

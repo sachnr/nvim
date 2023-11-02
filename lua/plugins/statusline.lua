@@ -1,8 +1,15 @@
 ---@diagnostic disable: undefined-field
 return {
 	{
+		"echasnovski/mini.statusline",
+		lazy = false,
+		config = true,
+	},
+
+	{
 		"nvim-lualine/lualine.nvim",
 		lazy = false,
+		enabled = false,
 		config = function()
 			local lualine = require("lualine")
 

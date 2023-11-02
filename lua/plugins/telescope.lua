@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
+		keys = require("keys").telescope,
 		dependencies = {
 			-- "kkharji/sqlite.lua",
 			{ "nvim-lua/plenary.nvim" },

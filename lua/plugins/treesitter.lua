@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -5,6 +6,7 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local configs = require("nvim-treesitter.configs")
+			local list = require("nvim-treesitter.parsers").get_parser_configs()
 			configs.setup({
 				ensure_installed = {
 					"bash",
@@ -25,6 +27,7 @@ return {
 					"json",
 					"jsonc",
 					"jsdoc",
+                    "latex",
 					"lua",
 					"markdown",
 					"markdown_inline",
@@ -36,6 +39,7 @@ return {
 					"scss",
 					"sql",
 					"toml",
+					"tsx",
 					"typescript",
 					"vue",
 					"yaml",
@@ -51,6 +55,4 @@ return {
 		end,
 		-- dependencies = { "nvim-treesitter/nvim-treesitter-context" },
 	},
-
-	{ "nvim-treesitter/playground", cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" } },
 }

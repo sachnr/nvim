@@ -11,7 +11,7 @@ return {
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
 			-- "rafamadriz/friendly-snippets",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
+			-- "hrsh7th/cmp-nvim-lsp-signature-help",
 			"petertriho/cmp-git",
 		},
 		config = function()
@@ -95,7 +95,6 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "buffer", keyword_length = 4 },
-					{ name = "nvim_lsp_signature_help" },
 					{ name = "crates" },
 					{ name = "git" },
 					{ name = "neorg" },

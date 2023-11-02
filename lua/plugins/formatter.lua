@@ -13,6 +13,16 @@ return {
 					return {
 						exe = "prettier",
 						args = {
+							"--config-precedence",
+							"prefer-file",
+							"--single-quote",
+							"--no-bracket-spacing",
+							"--prose-wrap",
+							"always",
+							"--arrow-parens",
+							"always",
+							"--trailing-comma",
+							"all",
 							"--tab-width 4",
 							"--stdin-filepath",
 							util.escape_path(util.get_current_buffer_file_path()),
