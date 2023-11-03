@@ -20,6 +20,7 @@ M.separators = {
 
 M.misc = {
 	gear = "  ",
+    branch = " "
 }
 
 return M

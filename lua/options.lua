@@ -71,6 +71,6 @@ opt.relativenumber = true --show relative line number in front of each line
 opt.inccommand = "split"
 
 vim.o.timeout = true
-opt.updatetime = 400 -- after this many milliseconds flush swap file, Make updates happen faster
-opt.timeoutlen = 200 -- keypress time out time in milliseconds
+opt.updatetime = 600 -- after this many milliseconds flush swap file, Make updates happen faster
+opt.timeoutlen = 400 -- keypress time out time in milliseconds
 
