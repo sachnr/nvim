@@ -74,7 +74,7 @@ end
 M.neogen = function()
 	return {
 		{
-			"<Leader>ng",
+			"<Leader>N",
 			mode = "n",
 			"<cmd> Neogen <CR>",
 			desc = "generate docs",
@@ -293,7 +293,7 @@ M.comment_box = function()
 		{
 			"<leader>cc",
 			mode = { "n", "x" },
-			"<Cmd>lua require('comment-box').accbox(3)<CR>",
+			"<Cmd>lua require('comment-box').lcbox(3)<CR>",
 			desc = "centered adapted box",
 		},
 		{ "<leader>cv", mode = { "n", "x" }, "<Cmd>lua require('comment-box').cline(7)<CR>", desc = "centered line" },

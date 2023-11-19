@@ -11,11 +11,21 @@ return {
 		},
 	},
 
+	{
+		"catppuccin/nvim",
+        enabled = false,
+		name = "catppuccin",
+		priority = 1000,
+		init = function()
+			vim.cmd.colorscheme("catppuccin-mocha")
+		end,
+	},
+
 	{ "sainnhe/gruvbox-material", enabled = false, lazy = false, priority = 1000 },
 
 	{
 		"rebelot/kanagawa.nvim",
-		enabled = true,
+		enabled = false,
 		priority = 1000,
 		config = function()
 			require("kanagawa").setup({
@@ -69,7 +79,7 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		enabled = false,
+		enabled = true,
 		lazy = false,
 		priority = 1000,
 		config = function()
@@ -83,7 +93,7 @@ return {
 					IndentBlanklineSpaceCharBlankline = { fg = "surface" },
 				},
 			})
-			vim.cmd("colorscheme rose-pine")
+			vim.cmd("colorscheme rose-pine-main")
 		end,
 	},
 
@@ -134,6 +144,7 @@ return {
 				dim_inactive = false,
 				transparent_mode = false,
 			})
+			vim.cmd("colorscheme gruvbox")
 		end,
 	},
 

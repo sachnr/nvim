@@ -1,12 +1,32 @@
 return {
+
 	{
 		"mhartington/formatter.nvim",
 		keys = {
-			{ "<leader>f", "<cmd>Format<cr>", desc = "Format" },
+			{ "<leader>f", "<cmd> :Format <CR>", desc = "Format" },
 		},
 		config = function()
 			local formatter = require("formatter")
 			local util = require("formatter.util")
+
+			local embedded_sql_format = function()
+				require("format_embedded")(
+					"pg_format",
+					{ "-" },
+					"rust",
+					[[
+                    (macro_invocation
+                     (scoped_identifier
+                        path: (identifier) @path (#eq? @path "sqlx")
+                        name: (identifier) @name (#eq? @name "query"))
+                    
+                     (token_tree
+                       (raw_string_literal) @sql_query) 
+                       (#offset! @sql_query 1 0 -1 0))
+                ]],
+					"sql_query"
+				)
+			end
 
 			local prettier = function(parser)
 				if not parser then
@@ -30,34 +50,29 @@ return {
 						stdin = true,
 						try_node_modules = true,
 					}
+				else
+					return {
+						exe = "prettier",
+						args = {
+							"--tab-width 4",
+							"--stdin-filepath",
+							util.escape_path(util.get_current_buffer_file_path()),
+							"--parser",
+							parser,
+						},
+						stdin = true,
+						try_node_modules = true,
+					}
 				end
-
-				return {
-					exe = "prettier",
-					args = {
-						"--tab-width 4",
-						"--stdin-filepath",
-						util.escape_path(util.get_current_buffer_file_path()),
-						"--parser",
-						parser,
-					},
-					stdin = true,
-					try_node_modules = true,
-				}
 			end
 
 			local filetypes = {
+				c = require("formatter.filetypes.c").astyle,
+				cpp = require("formatter.filetypes.cpp").astyle,
+				cs = require("formatter.filetypes.cs").astyle,
 				css = require("formatter.filetypes.css").prettier,
+				go = require("formatter.filetypes.go").gofmt,
 				html = require("formatter.filetypes.html").prettier,
-				scss = prettier,
-				yaml = require("formatter.filetypes.yaml").prettier,
-				markdown = require("formatter.filetypes.markdown").prettier,
-				json = require("formatter.filetypes.json").jq,
-				jsonc = require("formatter.filetypes.json").jq,
-				typescriptreact = prettier,
-				typescript = prettier,
-				javascript = prettier,
-				javascriptreact = prettier,
 				java = {
 					function()
 						return {
@@ -67,16 +82,29 @@ return {
 						}
 					end,
 				},
-				c = require("formatter.filetypes.c").astyle,
-				cpp = require("formatter.filetypes.cpp").astyle,
-				cs = require("formatter.filetypes.cs").astyle,
+				javascript = prettier,
+				javascriptreact = prettier,
+				json = require("formatter.filetypes.json").jq,
+				jsonc = require("formatter.filetypes.json").jq,
 				lua = require("formatter.filetypes.lua").stylua,
-				sh = require("formatter.filetypes.sh").shfmt,
-				python = require("formatter.filetypes.python").black,
+				markdown = require("formatter.filetypes.markdown").prettier,
 				nix = require("formatter.filetypes.nix").alejandra,
-				rust = require("formatter.filetypes.rust").rustfmt,
+				python = require("formatter.filetypes.python").black,
+				rust = function()
+					embedded_sql_format()
+					return {
+						exe = "rustfmt",
+						args = { "--edition 2021" },
+						stdin = true,
+					}
+				end,
+				scss = prettier,
+				sh = require("formatter.filetypes.sh").shfmt,
 				sql = require("formatter.filetypes.sql").pgformat,
-				go = require("formatter.filetypes.go").gofmt,
+				toml = require("formatter.filetypes.toml").taplo,
+				typescript = prettier,
+				typescriptreact = prettier,
+				yaml = require("formatter.filetypes.yaml").prettier,
 			}
 
 			formatter.setup({

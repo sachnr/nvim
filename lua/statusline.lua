@@ -78,7 +78,7 @@ end
 function highlights:apply()
 	self:set_default_hl("StatusLineBackground", { bg = self.bg, fg = self.gray })
 
-	self:set_default_hl("StatusLineSeparator", { fg = self.bg_alt })
+	self:set_default_hl("StatusLineSeparator", { fg = self.bg_alt, bg = self.bg })
 	self:set_default_hl("StatusLineNormal", { bg = self.bg_alt, fg = self.white, bold = true })
 	self:set_default_hl("StatusLineInsert", { bg = self.bg_alt, fg = self.blue, bold = true })
 	self:set_default_hl("StatusLineVisual", { bg = self.bg_alt, fg = self.purple, bold = true })
@@ -134,7 +134,7 @@ components.filepath = function()
 
 	if vim.bo.buftype == "terminal" then
 		return "%#StatusLineBackground#%t"
-	elseif width > 90 then
+	elseif width > 110 then
 		return "%#StatusLineBackground#%F%m%r"
 	else
 		local buf_name = vim.api.nvim_buf_get_name(0)
@@ -167,11 +167,12 @@ components.lsp_progress = function()
 end
 
 components.git = function()
-	local git_status = vim.b.gitsigns_status_dict
-	if not git_status or not vim.b.gitsigns_head then
+	local head = vim.b.gitsigns_head
+	if not head then
 		return ""
 	end
 
+	local git_status = vim.b.gitsigns_status_dict
 	local added = (git_status.added and git_status.added ~= 0) and (string.format("+%s", git_status.added)) or ""
 	local changed = (git_status.changed and git_status.changed ~= 0) and (string.format("~%s", git_status.changed))
 		or ""
@@ -192,7 +193,9 @@ components.file_icon = function()
 		return ""
 	end
 	local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
-	return devicons.get_icon(file_name, file_ext, { default = true })
+	local ft_icon, ft_color = devicons.get_icon_color(file_name)
+	highlights:set_default_hl("StatusLine" .. file_ext, { fg = ft_color, bg = highlights.bg })
+	return string.format("%%#StatusLine%s#%s", file_ext, ft_icon)
 end
 
 components.indent_info = function()

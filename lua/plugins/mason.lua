@@ -10,7 +10,7 @@ return {
 					-- "lua-language-server",
 					-- "python-lsp-server",
 					-- "clangd",
-					"jdtls",
+					-- "jdtls",
 					-- "html-lsp",
 					-- "json-lsp",
 					-- "efm",
@@ -31,11 +31,11 @@ return {
 
 					-- debuggers
 					-- "firefox-debug-adapter",
-					"java-debug-adapter",
-					"java-test",
+					-- "java-debug-adapter",
+					-- "java-test",
 					-- "js-debug-adapter",
 					-- "debugpy",
-					"cpptools",
+					-- "cpptools",
 					-- "delve",
 					-- "vscode-go",
 					-- "codelldb",

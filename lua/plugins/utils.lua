@@ -126,9 +126,27 @@ return {
 	},
 
 	{
-		"kevinhwang91/nvim-bqf",
-		ft = "qf",
-		config = true,
+		"yorickpeterse/nvim-pqf",
+		event = "VeryLazy",
+		config = function()
+			local icons = require("icons")
+			require("pqf").setup({
+				signs = {
+					error = icons.diagnostics.error,
+					warning = icons.diagnostics.warn,
+					info = icons.diagnostics.info,
+					hint = icons.diagnostics.hint,
+				},
+
+				-- By default, only the first line of a multi line message will be shown.
+				-- When this is true, multiple lines will be shown for an entry, separated by a space
+				show_multiple_lines = false,
+
+				-- How long filenames in the quickfix are allowed to be. 0 means no limit.
+				-- Filenames above this limit will be truncated from the beginning with [...]
+				max_filename_length = 0,
+			})
+		end,
 	},
 
 	"famiu/bufdelete.nvim",

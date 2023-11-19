@@ -5,11 +5,11 @@ return {
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		dependencies = {
 			{
-				"pmizio/typescript-tools.nvim",
+				-- "pmizio/typescript-tools.nvim",
 				-- "folke/neodev.nvim",
 				-- "folke/neoconf.nvim",
 				"nvim-lua/plenary.nvim",
-				"simrat39/rust-tools.nvim",
+				-- "simrat39/rust-tools.nvim",
 				"ray-x/lsp_signature.nvim",
 				"simrat39/inlay-hints.nvim",
 			},
@@ -17,8 +17,6 @@ return {
 		config = function()
 			local keys = require("keys")
 			local lspconfig = require("lspconfig")
-			local ts_tools = require("typescript-tools")
-			local rust_tools = require("rust-tools")
 			local lsp_signature = require("lsp_signature")
 			local inlay_hints = require("inlay-hints")
 
@@ -131,8 +129,7 @@ return {
 				-- "gopls",
 				-- "tsserver",
 				"yamlls",
-				-- "nil_ls",
-				"tailwindcss",
+				"nil_ls",
 				"eslint",
 			}
 
@@ -195,50 +192,11 @@ return {
 				},
 			})
 
-			rust_tools.setup({
-				tools = {
-					hover_actions = {
-						border = "single",
-					},
-				},
-				server = {
-					on_attach = function(client, bufnr)
-						client.server_capabilities.documentFormattingProvider = false
-						client.server_capabilities.documentRangeFormattingProvider = false
-						keys.lsp_attach(bufnr)
-						local opt = { silent = true, noremap = true, buffer = bufnr }
-						local set = vim.keymap.set
-						set(
-							"n",
-							"K",
-							rust_tools.hover_actions.hover_actions,
-							vim.tbl_deep_extend("force", opt, { desc = "Hover" })
-						)
-						set(
-							"n",
-							"ga",
-							rust_tools.code_action_group.code_action_group,
-							vim.tbl_deep_extend("force", opt, { desc = "code_action" })
-						)
-						vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
-					end,
-					capabilities = capabilities,
-					-- cmd = {
-					-- 	"rustup",
-					-- 	"run",
-					-- 	"stable",
-					-- 	"rust-analyzer",
-					-- },
-				},
-			})
-
-			ts_tools.setup({
+			lspconfig.rust_analyzer.setup({
 				on_attach = function(client, buffer)
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 					keys.lsp_attach(buffer)
-					vim.g.inlay_hints_enabled = true
-					-- vim.lsp.inlay_hint(buffer, true)
 					inlay_hints.on_attach(client, buffer)
 					lsp_signature.on_attach({
 						handler_opts = {
@@ -246,8 +204,44 @@ return {
 						},
 						hint_enable = false,
 					}, buffer)
-					vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 				end,
+				capabilities = capabilities,
+				settings = {
+					["rust-analyzer"] = {
+						procMacro = {
+							enable = true,
+						},
+						experimental = {
+							procAttrMacros = true,
+						},
+						checkOnSave = {
+							command = "clippy",
+						},
+						inlayHints = {
+							lifetimeElisionHints = {
+								enable = true,
+								useParameterNames = true,
+							},
+						},
+					},
+				},
+			})
+
+			lspconfig.tsserver.setup({
+				on_attach = function(client, buffer)
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+					keys.lsp_attach(buffer)
+					vim.g.inlay_hints_enabled = true
+					inlay_hints.on_attach(client, buffer)
+					lsp_signature.on_attach({
+						handler_opts = {
+							border = "single",
+						},
+						hint_enable = false,
+					}, buffer)
+				end,
+				capabilities = capabilities,
 				settings = {
 					separate_diagnostic_server = true,
 					tsserver_file_preferences = {
@@ -258,6 +252,39 @@ return {
 						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
 						includeInlayPropertyDeclarationTypeHints = true,
 						includeInlayVariableTypeHints = true,
+					},
+				},
+			})
+
+			lspconfig.tailwindcss.setup({
+				on_attach = function(client, buffer)
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+					keys.lsp_attach(buffer)
+					inlay_hints.on_attach(client, buffer)
+				end,
+				capabilities = capabilities,
+				filetypes = {
+					"css",
+					"django-html",
+					"gohtml",
+					"gohtmltmpl",
+					"html",
+					"htmldjango",
+					"javascript",
+					"javascriptreact",
+					"postcss",
+					"rust",
+					"sass",
+					"scss",
+					"svelte",
+					"typescript",
+					"typescriptreact",
+					"vue",
+				},
+				init_options = {
+					userLanguages = {
+						rust = "html",
 					},
 				},
 			})

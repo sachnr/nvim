@@ -21,6 +21,10 @@ local opts = {
 	ui = {
 		border = "single",
 	},
+	change_detection = {
+		enabled = false,
+		notify = false,
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
