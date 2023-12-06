@@ -2,13 +2,24 @@ return {
 	{
 		"nvim-neorg/neorg",
 		-- ft = "norg",
-        lazy = false,
+		lazy = false,
 		run = ":Neorg sync-parsers",
 		config = function()
 			require("neorg").setup({
 				load = {
 					["core.defaults"] = {},
-					["core.concealer"] = {},
+					["core.keybinds"] = {
+						config = {
+							hook = function(keybinds)
+								keybinds.remap_event("norg", "n", "<localleader>nc", "core.looking-glass.magnify-code-block")
+							end,
+						},
+					},
+					["core.concealer"] = {
+						config = {
+							icon_preset = "diamond",
+						},
+					},
 					["core.dirman"] = {
 						config = {
 							workspaces = {
@@ -28,8 +39,6 @@ return {
 							install_parsers = true,
 						},
 					},
-					["core.integrations.nvim-cmp"] = {},
-					["core.qol.todo_items"] = {},
 				},
 			})
 		end,

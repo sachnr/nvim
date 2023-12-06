@@ -176,33 +176,6 @@ end
 -- 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
 -- end
 
-M.harpoon = function()
-	return {
-		{
-			"<M-h><M-h>",
-			mode = "n",
-			function()
-				require("harpoon.mark").add_file()
-			end,
-			desc = "harpoon mark",
-		},
-		{
-			"<M-h><M-u>",
-			mode = "n",
-			function()
-				require("harpoon.ui").toggle_quick_menu()
-			end,
-			desc = "harpoon ui",
-		},
-		{ "<space>1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", desc = "goto 1" },
-		{ "<space>2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", desc = "goto 2" },
-		{ "<space>3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", desc = "goto 3" },
-		{ "<space>4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", desc = "goto 4" },
-		{ "<space>5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>", desc = "goto 5" },
-		{ "<space>6", "<cmd>lua require('harpoon.ui').nav_file(6)<CR>", desc = "goto 6" },
-	}
-end
-
 M.buffer_manager = function()
 	return {
 		{

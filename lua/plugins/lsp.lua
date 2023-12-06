@@ -10,6 +10,7 @@ return {
 				-- "folke/neoconf.nvim",
 				"nvim-lua/plenary.nvim",
 				-- "simrat39/rust-tools.nvim",
+				"mrcjkb/rustaceanvim",
 				"ray-x/lsp_signature.nvim",
 				"simrat39/inlay-hints.nvim",
 			},
@@ -192,40 +193,54 @@ return {
 				},
 			})
 
-			lspconfig.rust_analyzer.setup({
-				on_attach = function(client, buffer)
-					client.server_capabilities.documentFormattingProvider = false
-					client.server_capabilities.documentRangeFormattingProvider = false
-					keys.lsp_attach(buffer)
-					inlay_hints.on_attach(client, buffer)
-					lsp_signature.on_attach({
-						handler_opts = {
-							border = "single",
-						},
-						hint_enable = false,
-					}, buffer)
-				end,
-				capabilities = capabilities,
-				settings = {
-					["rust-analyzer"] = {
-						procMacro = {
-							enable = true,
-						},
-						experimental = {
-							procAttrMacros = true,
-						},
-						checkOnSave = {
-							command = "clippy",
-						},
-						inlayHints = {
-							lifetimeElisionHints = {
-								enable = true,
-								useParameterNames = true,
+			vim.g.rustaceanvim = function()
+				return {
+					tools = {},
+					server = {
+						on_attach = function(client, bufnr)
+							client.server_capabilities.documentFormattingProvider = false
+							client.server_capabilities.documentRangeFormattingProvider = false
+							keys.lsp_attach(bufnr)
+							inlay_hints.on_attach(client, bufnr)
+							lsp_signature.on_attach({
+								handler_opts = {
+									border = "single",
+								},
+								hint_enable = false,
+							}, bufnr)
+
+							local opts = {
+								silent = true,
+								noremap = true,
+								buffer = bufnr,
+							}
+							vim.keymap.set("n", "ga", function()
+								vim.cmd.RustLsp("codeAction")
+							end, opts)
+						end,
+						capabilities = capabilities,
+						settings = {
+							["rust-analyzer"] = {
+								procMacro = {
+									enable = true,
+								},
+								experimental = {
+									procAttrMacros = true,
+								},
+								checkOnSave = {
+									command = "clippy",
+								},
+								inlayHints = {
+									lifetimeElisionHints = {
+										enable = true,
+										useParameterNames = true,
+									},
+								},
 							},
 						},
 					},
-				},
-			})
+				}
+			end
 
 			lspconfig.tsserver.setup({
 				on_attach = function(client, buffer)
@@ -282,6 +297,14 @@ return {
 					"typescriptreact",
 					"vue",
 				},
+				root_dir = function(fname)
+					local root_pattern = require("lspconfig").util.root_pattern(
+						"tailwind.config.cjs",
+						"tailwind.config.js",
+						"postcss.config.js"
+					)
+					return root_pattern(fname)
+				end,
 				init_options = {
 					userLanguages = {
 						rust = "html",
@@ -289,14 +312,22 @@ return {
 				},
 			})
 
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if client.progress then
+						client.progress = vim.ringbuf(10000)
+						client.progress.pending = {}
+					end
+				end,
+			})
+
 			local function toggle_inlay_hints()
 				local current_buffer = vim.api.nvim_get_current_buf()
-				if not vim.g.inlay_hints_enabled then
-					vim.g.inlay_hints_enabled = true
-					vim.lsp.inlay_hint(current_buffer, true)
-				else
-					vim.g.inlay_hints_enabled = false
+				if vim.lsp.inlay_hint.is_enabled() then
 					vim.lsp.inlay_hint(current_buffer, false)
+				else
+					vim.lsp.inlay_hint(current_buffer, true)
 				end
 			end
 			vim.api.nvim_create_user_command("ToggleInlayHints", function()

@@ -11,13 +11,7 @@ local function run_formatter(text, exe, args)
 	return job:sync()
 end
 
---- async formatting using treesitter
----@param exe string the formatter
----@param args table args for the formatter
----@param query_lang string filetype 'go', 'lua' etc
----@param query string treesitter query
----@param treesitter_capture_name string
-local function format_embedded_stuff(exe, args, query_lang, query, treesitter_capture_name)
+local function format_embedded_stuff(exe, args, query, query_lang, treesitter_capture_name)
 	local bufnr = vim.api.nvim_get_current_buf()
 	local parser = vim.treesitter.get_parser(bufnr, query_lang, {})
 	local tree = parser:parse()[1]
@@ -51,4 +45,33 @@ local function format_embedded_stuff(exe, args, query_lang, query, treesitter_ca
 	end
 end
 
-return format_embedded_stuff
+---@class Query
+---@field exe string
+---@field args table
+---@field ts_query string
+---@field ts_query_lang string
+---@field ts_cap_name string
+local Query = {}
+
+--- Constructor for Query
+---@param object table
+---@return Query
+function Query:builder(object)
+	object = object or {
+		exe = "",
+		args = {},
+		ts_query = "",
+		ts_query_lang = "",
+		ts_cap_name = "",
+	}
+	setmetatable(object, self)
+	self.__index = self
+	return object
+end
+
+--- Run method for Query
+function Query:run()
+	format_embedded_stuff(self.exe, self.args, self.ts_query, self.ts_query_lang, self.ts_cap_name)
+end
+
+return Query

@@ -3,7 +3,8 @@ local keys = require("keys")
 return {
 	{
 		"ThePrimeagen/harpoon",
-		keys = keys.harpoon(),
+		lazy = false,
+		branch = "harpoon2",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
@@ -103,7 +104,7 @@ return {
 						return vim.startswith(name, ".")
 					end,
 					is_always_hidden = function(name, bufnr)
-                        return name == ".."
+						return name == ".."
 					end,
 				},
 			})

@@ -57,9 +57,11 @@ opt.breakindent = true -- Every wrapped line will continue visually indented
 opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
 opt.linebreak = true --wrap long lines at a character in 'breakat' rather than at the last character that fits on the screen
 -- fold
+opt.foldlevelstart = 99
 opt.foldmethod = "marker"
 opt.foldlevel = 0
 opt.modelines = 1
+opt.conceallevel = 2
 
 opt.belloff = "all"
 
@@ -73,4 +75,3 @@ opt.inccommand = "split"
 vim.o.timeout = true
 opt.updatetime = 600 -- after this many milliseconds flush swap file, Make updates happen faster
 opt.timeoutlen = 400 -- keypress time out time in milliseconds
-

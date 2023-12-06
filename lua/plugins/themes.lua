@@ -13,7 +13,7 @@ return {
 
 	{
 		"catppuccin/nvim",
-        enabled = false,
+		enabled = false,
 		name = "catppuccin",
 		priority = 1000,
 		init = function()
@@ -79,7 +79,7 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		enabled = true,
+		enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()
@@ -209,6 +209,21 @@ return {
 			})
 
 			vim.cmd("colorscheme terafox")
+		end,
+	},
+
+	{
+		"Yazeed1s/oh-lucy.nvim",
+		enabled = true,
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.cmd([[colorscheme oh-lucy]])
+			vim.api.nvim_set_hl(0, "PmenuSel", { fg = "#E0828D" })
+			vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = "#E0828D" })
+			vim.api.nvim_set_hl(0, "TabLineSel", { bg = "#322F32", fg = "#DED7D0" })
+			vim.api.nvim_set_hl(0, "TabLineFill", { bg = "#29292E", fg = "#DED7D0" })
+			vim.api.nvim_set_hl(0, "Conceal", { fg = "#1E1D23" })
 		end,
 	},
 }

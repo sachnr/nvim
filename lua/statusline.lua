@@ -45,62 +45,56 @@ end
 
 local highlights = {}
 
-function highlights:get_highlights()
+function highlights:load()
+	-- bg
 	self.bg_dark = get_highlight("TabLine").bg
 	self.bg = get_highlight("TabLineFill").bg
 	self.bg_alt = get_highlight("TabLineSel").bg
 
-	self.white = get_highlight("Normal").fg
-	self.red = get_highlight("DiagnosticError").fg
+	-- active/inactive
+	self.fg = get_highlight("Normal").fg
+	self.active = get_highlight("PmenuSel").fg
+	self.gray = get_highlight("NonText").fg
+
+	-- misc
+	self.blue = get_highlight("Function").fg
+	self.orange = get_highlight("Constant").fg
 	self.green = get_highlight("DiagnosticOk").fg
 	self.yellow = get_highlight("DiagnosticWarn").fg
-	self.blue = get_highlight("Function").fg
-	self.gray = get_highlight("NonText").fg
-	self.orange = get_highlight("Constant").fg
-	self.purple = get_highlight("Statement").fg
-	self.cyan = get_highlight("Special").fg
-
-	self.diag_warn = get_highlight("DiagnosticWarn").fg
-	self.diag_error = get_highlight("DiagnosticError").fg
-	self.diag_hint = get_highlight("DiagnosticHint").fg
-	self.diag_info = get_highlight("DiagnosticInfo").fg
-
-	self.git_del = get_highlight("GitSignsDelete").fg
-	self.git_add = get_highlight("GitSignsAdd").fg
-	self.git_change = get_highlight("GitSignsChange").fg
+	self.red = get_highlight("DiagnosticError").fg
+	self.purple = get_highlight("DiagnosticHint").fg
+	self.cyan = get_highlight("DiagnosticInfo").fg
 end
 
-function highlights:set_default_hl(name, data)
-	data.default = true
-	vim.api.nvim_set_hl(0, name, data)
+local function set_default_hl(name, t)
+	t.default = true
+	vim.api.nvim_set_hl(0, name, t)
 end
 
 function highlights:apply()
-	self:set_default_hl("StatusLineBackground", { bg = self.bg, fg = self.gray })
+	set_default_hl("StatusLineBackground", { bg = highlights.bg, fg = highlights.gray })
 
-	self:set_default_hl("StatusLineSeparator", { fg = self.bg_alt, bg = self.bg })
-	self:set_default_hl("StatusLineNormal", { bg = self.bg_alt, fg = self.white, bold = true })
-	self:set_default_hl("StatusLineInsert", { bg = self.bg_alt, fg = self.blue, bold = true })
-	self:set_default_hl("StatusLineVisual", { bg = self.bg_alt, fg = self.purple, bold = true })
-	self:set_default_hl("StatusLineCommand", { bg = self.bg_alt, fg = self.green, bold = true })
-	self:set_default_hl("StatusLineReplace", { bg = self.bg_alt, fg = self.orange, bold = true })
-	self:set_default_hl("StatusLineOther", { bg = self.bg_alt, fg = self.yellow, bold = true })
+	set_default_hl("StatusLineSep", { fg = highlights.bg_alt, bg = highlights.bg })
+	set_default_hl("StatusLineNormal", { bg = highlights.bg_alt, fg = highlights.fg, bold = true })
+	set_default_hl("StatusLineInsert", { bg = highlights.bg_alt, fg = highlights.blue, bold = true })
+	set_default_hl("StatusLineVisual", { bg = highlights.bg_alt, fg = highlights.purple, bold = true })
+	set_default_hl("StatusLineCommand", { bg = highlights.bg_alt, fg = highlights.green, bold = true })
+	set_default_hl("StatusLineReplace", { bg = highlights.bg_alt, fg = highlights.orange, bold = true })
+	set_default_hl("StatusLineOther", { bg = highlights.bg_alt, fg = highlights.yellow, bold = true })
 
-	self:set_default_hl("StatusLineLspSymbol", { bg = self.bg_alt, fg = self.blue, bold = true })
-	self:set_default_hl("StatusLineLspName", { bg = self.bg_alt, fg = self.white, bold = true })
+	set_default_hl("StatusLineLspSymbol", { bg = highlights.bg_alt, fg = highlights.active, bold = true })
+	set_default_hl("StatusLineLspName", { bg = highlights.bg_alt, fg = highlights.fg, bold = true })
 
-	self:set_default_hl("StatusLineDiagError", { bg = self.bg, fg = self.diag_error })
-	self:set_default_hl("StatusLineDiagHint", { bg = self.bg, fg = self.diag_hint })
-	self:set_default_hl("StatusLineDiagInfo", { bg = self.bg, fg = self.diag_info })
-	self:set_default_hl("StatusLineDiagWarn", { bg = self.bg, fg = self.diag_warn })
-
-	self:set_default_hl("StatusLineBranch", { fg = self.white, bg = self.bg })
-	self:set_default_hl("StatusLineGitDel", { fg = self.git_del, bg = self.bg })
-	self:set_default_hl("StatusLineGitAdd", { fg = self.git_add, bg = self.bg })
-	self:set_default_hl("StatusLineGitChange", { fg = self.git_change, bg = self.bg })
+	set_default_hl("StatusLineDiagError", { bg = highlights.bg, fg = highlights.red })
+	set_default_hl("StatusLineDiagHint", { bg = highlights.bg, fg = highlights.purple })
+	set_default_hl("StatusLineDiagInfo", { bg = highlights.bg, fg = highlights.cyan })
+	set_default_hl("StatusLineDiagWarn", { bg = highlights.bg, fg = highlights.yellow })
+	set_default_hl("StatusLineDiagOk", { bg = highlights.bg, fg = highlights.green })
+	set_default_hl("StatusLineGitBranch", { bg = highlights.bg, fg = highlights.fg })
+	set_default_hl("StatusLineHarpoonActive", { bg = highlights.bg, fg = highlights.active, bold = true })
 end
 
-highlights:get_highlights()
+highlights:load()
 highlights:apply()
 
 local components = {}
@@ -123,9 +117,9 @@ components.mode = function()
 	end
 
 	return table.concat({
-		string.format("%%#StatusLineSeparator#%s", icons.separators.left_rounded),
+		string.format("%%#StatusLineSep#%s", icons.separators.left_rounded),
 		string.format("%%#%s#%s", hl, mode),
-		string.format("%%#StatusLineSeparator#%s", icons.separators.right_rounded),
+		string.format("%%#StatusLineSep#%s", icons.separators.right_rounded),
 	})
 end
 
@@ -135,11 +129,10 @@ components.filepath = function()
 	if vim.bo.buftype == "terminal" then
 		return "%#StatusLineBackground#%t"
 	elseif width > 110 then
-		return "%#StatusLineBackground#%F%m%r"
+		return "%#StatusLineBackground#%t"
 	else
-		local buf_name = vim.api.nvim_buf_get_name(0)
-		local name = vim.fn.fnamemodify(buf_name, ":t")
-		return string.format("%%#StatusLineBackground#%s", name)
+		local buf_fname = vim.fn.expand("%:t")
+		return string.format("%%#StatusLineBackground#%s", buf_fname)
 	end
 end
 
@@ -152,16 +145,16 @@ components.lsp_progress = function()
 		return ""
 	else
 		local names = {}
-		for i, server in pairs(vim.lsp.get_clients({ bufnr = current_buffer })) do
+		for _, server in pairs(vim.lsp.get_clients({ bufnr = current_buffer })) do
 			table.insert(names, server.name)
 		end
 		local names = table.concat(names, " ")
 		return table.concat({
-			string.format("%%#StatusLineSeparator#%s", icons.separators.left_rounded),
+			string.format("%%#StatusLineSep#%s", icons.separators.left_rounded),
 			string.format("%%#StatusLineLspSymbol# ["),
 			string.format("%%#StatusLineLspName#%s", names),
 			string.format("%%#StatusLineLspSymbol#]"),
-			string.format("%%#StatusLineSeparator#%s", icons.separators.right_rounded),
+			string.format("%%#StatusLineSep#%s", icons.separators.right_rounded),
 		})
 	end
 end
@@ -180,10 +173,10 @@ components.git = function()
 		or ""
 
 	return table.concat({
-		string.format("%%#StatusLineBranch#%s%s", icons.misc.branch, git_status.head),
-		string.format("%%#StatusLineGitAdd# %s", added),
-		string.format("%%#StatusLineGitChange# %s", changed),
-		string.format("%%#StatusLineGitDel# %s", removed),
+		string.format("%%#StatusLineGitBranch#%s%s", icons.misc.branch, git_status.head),
+		string.format("%%#StatusLineDiagOk# %s", added),
+		string.format("%%#StatusLineDiagWarn# %s", changed),
+		string.format("%%#StatusLineDiagError# %s", removed),
 	})
 end
 
@@ -194,7 +187,10 @@ components.file_icon = function()
 	end
 	local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
 	local ft_icon, ft_color = devicons.get_icon_color(file_name)
-	highlights:set_default_hl("StatusLine" .. file_ext, { fg = ft_color, bg = highlights.bg })
+	if not ft_icon then
+		return ""
+	end
+	set_default_hl("StatusLine" .. file_ext, { fg = ft_color, bg = highlights.bg })
 	return string.format("%%#StatusLine%s#%s", file_ext, ft_icon)
 end
 
@@ -230,11 +226,36 @@ components.diagnostics = function()
 	})
 end
 
+components.harpoon = function()
+	local ok, harpoon = pcall(require, "harpoon")
+	if not ok then
+		return ""
+	end
+	local width = vim.api.nvim_win_get_width(0)
+	if width < 110 then
+		return ""
+	end
+
+	local items = harpoon:list().items
+	local paths = {}
+	for i, item in ipairs(items) do
+		local fname = item.value
+		local fname_short = vim.fn.fnamemodify(fname, ":t")
+		local component = string.format("%%#StatusLineBackground#%s", fname_short)
+		if fname == vim.fn.expand("%:p:.") then
+			component = string.format("%%#StatusLineHarpoonActive#%s", fname_short)
+		end
+		table.insert(paths, component)
+	end
+	local list = table.concat(paths, " ")
+	return string.format("󱡀 [%s]", list)
+end
+
 local statusline = {}
 
 function statusline.active()
-	local function concat_components(components)
-		return vim.iter(components):skip(1):fold(components[1], function(acc, component)
+	local function concat_components(comps)
+		return vim.iter(comps):skip(1):fold(comps[1], function(acc, component)
 			return #component > 0 and string.format("%s  %s", acc, component) or acc
 		end)
 	end
@@ -248,6 +269,7 @@ function statusline.active()
 		}),
 		"%#StatusLineBackground#%=",
 		concat_components({
+			components.harpoon(),
 			components.diagnostics(),
 			components.indent_info(),
 			components.lsp_progress(),
@@ -279,7 +301,7 @@ end
 au({ "WinLeave", "BufLeave" }, "*", set_inactive, "Set inactive statusline")
 
 local reload = function()
-	highlights:get_highlights()
+	highlights:load()
 	highlights:apply()
 end
 au("colorscheme", "*", reload, "reload statusline")

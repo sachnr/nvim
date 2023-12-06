@@ -1,7 +1,7 @@
 local keys = require("keys")
 
 return {
-	{ "j-hui/fidget.nvim", tag = "legacy", event = "BufReadPre", config = true },
+	{ "j-hui/fidget.nvim", event = "BufReadPre", config = true },
 
 	{
 		"CosmicNvim/cosmic-ui",
@@ -29,7 +29,7 @@ return {
 	{
 		"b0o/incline.nvim",
 		event = "BufReadPre",
-        enabled = false,
+		enabled = false,
 		config = function()
 			require("incline").setup({
 				window = {

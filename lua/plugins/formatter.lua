@@ -10,23 +10,43 @@ return {
 			local util = require("formatter.util")
 
 			local embedded_sql_format = function()
-				require("format_embedded")(
-					"pg_format",
-					{ "-" },
-					"rust",
-					[[
-                    (macro_invocation
-                     (scoped_identifier
-                        path: (identifier) @path (#eq? @path "sqlx")
-                        name: (identifier) @name (#eq? @name "query"))
-                    
-                     (token_tree
-                       (raw_string_literal) @sql_query) 
-                       (#offset! @sql_query 1 0 -1 0))
-                ]],
-					"sql_query"
-				)
+				require("format_embedded")
+					:builder({
+						exe = "pg_format",
+						args = { "-" },
+						ts_query_lang = "rust",
+						ts_query = [[
+                        (macro_invocation
+                          (scoped_identifier
+                            path: (identifier) @path (#eq? @path "sqlx")
+                            name: (identifier) @name (#eq? @name "query"))
+       
+                          (token_tree
+                            (raw_string_literal) @sql_query) 
+                            (#offset! @sql_query 1 0 -1 0))
+                        ]],
+						ts_cap_name = "sql_query",
+					})
+					:run()
 			end
+
+			-- local embedded_json_format = function()
+			-- 	require("format_embedded")
+			-- 		:builder({
+			-- 			exe = "jq",
+			-- 			args = { "." },
+			-- 			ts_query_lang = "rust",
+			-- 			ts_query = [[
+   --                        (macro_invocation
+   --                          (identifier) @macro (#eq? @macro "json")
+   --                          (token_tree
+   --                            (token_tree) @json_query)
+   --                            (#offset! @json_query 0 1 0 -1))
+   --                      ]],
+			-- 			ts_cap_name = "json_query",
+			-- 		})
+			-- 		:run()
+			-- end
 
 			local prettier = function(parser)
 				if not parser then
@@ -92,6 +112,7 @@ return {
 				python = require("formatter.filetypes.python").black,
 				rust = function()
 					embedded_sql_format()
+					-- embedded_json_format()
 					return {
 						exe = "rustfmt",
 						args = { "--edition 2021" },
