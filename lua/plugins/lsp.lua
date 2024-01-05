@@ -1,4 +1,4 @@
----@diagnostic disable: inject-field
+---@diagnostic disable: inject-field, need-check-nil
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -11,16 +11,14 @@ return {
 				"nvim-lua/plenary.nvim",
 				-- "simrat39/rust-tools.nvim",
 				"mrcjkb/rustaceanvim",
-				"ray-x/lsp_signature.nvim",
 				"simrat39/inlay-hints.nvim",
+				"folke/neodev.nvim",
 			},
 		},
 		config = function()
 			local keys = require("keys")
 			local lspconfig = require("lspconfig")
-			local lsp_signature = require("lsp_signature")
 			local inlay_hints = require("inlay-hints")
-
 			inlay_hints.setup({
 				renderer = "inlay-hints/render/eol",
 				eol = {
@@ -39,17 +37,11 @@ return {
 				},
 			})
 
-			local on_attach = function(client, buffer)
+			local on_attach_common = function(client, buffer)
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
 				-- client.server_capabilities.semanticTokensProvider = nil
 				keys.lsp_attach(buffer)
-				lsp_signature.on_attach({
-					handler_opts = {
-						border = "single",
-					},
-					hint_enable = false,
-				}, buffer)
 			end
 
 			--lsp signs
@@ -124,7 +116,7 @@ return {
 				"bashls",
 				"jsonls",
 				"cssls",
-				"ccls",
+				-- "ccls",
 				-- "vuels",
 				"pylsp",
 				-- "gopls",
@@ -136,25 +128,33 @@ return {
 
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
-					on_attach = on_attach,
+					on_attach = on_attach_common,
 					capabilities = capabilities,
 				})
 			end
 
+			lspconfig.clangd.setup({
+				cmd = {
+					"clangd",
+					"--background-index",
+					"--clang-tidy",
+					"--all-scopes-completion",
+					"--cross-file-rename",
+					"--completion-style=detailed",
+					"--header-insertion-decorators",
+					"--header-insertion=iwyu",
+					"--pch-storage=memory",
+					"--pretty",
+				},
+				on_attach = on_attach_common,
+				capabilities = capabilities,
+				-- settings = {},
+			})
+
 			lspconfig.gopls.setup({
 				on_attach = function(client, buffer)
-					client.server_capabilities.documentFormattingProvider = false
-					client.server_capabilities.documentRangeFormattingProvider = false
-					require("keys").lsp_attach(buffer)
-					vim.g.inlay_hints_enabled = true
-					-- vim.lsp.inlay_hint(buffer, true)
+					on_attach_common(client, buffer)
 					inlay_hints.on_attach(client, buffer)
-					lsp_signature.on_attach({
-						handler_opts = {
-							border = "single",
-						},
-						hint_enable = false,
-					}, buffer)
 				end,
 				capabilities = capabilities,
 				settings = {
@@ -172,8 +172,10 @@ return {
 				},
 			})
 
+			require("neodev").setup()
+
 			lspconfig.lua_ls.setup({
-				on_attach = on_attach,
+				on_attach = on_attach_common,
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -194,26 +196,19 @@ return {
 			})
 
 			vim.g.rustaceanvim = function()
+				local exepath = ""
+				local libpath = ""
+				local cfg = require("rustaceanvim.config")
 				return {
+					dap = {
+						adapter = cfg.get_codelldb_adapter(exepath, libpath),
+					},
 					tools = {},
 					server = {
 						on_attach = function(client, bufnr)
-							client.server_capabilities.documentFormattingProvider = false
-							client.server_capabilities.documentRangeFormattingProvider = false
-							keys.lsp_attach(bufnr)
+							on_attach_common(client, bufnr)
 							inlay_hints.on_attach(client, bufnr)
-							lsp_signature.on_attach({
-								handler_opts = {
-									border = "single",
-								},
-								hint_enable = false,
-							}, bufnr)
-
-							local opts = {
-								silent = true,
-								noremap = true,
-								buffer = bufnr,
-							}
+							local opts = { silent = true, noremap = true, buffer = bufnr }
 							vim.keymap.set("n", "ga", function()
 								vim.cmd.RustLsp("codeAction")
 							end, opts)
@@ -243,18 +238,9 @@ return {
 			end
 
 			lspconfig.tsserver.setup({
-				on_attach = function(client, buffer)
-					client.server_capabilities.documentFormattingProvider = false
-					client.server_capabilities.documentRangeFormattingProvider = false
-					keys.lsp_attach(buffer)
-					vim.g.inlay_hints_enabled = true
-					inlay_hints.on_attach(client, buffer)
-					lsp_signature.on_attach({
-						handler_opts = {
-							border = "single",
-						},
-						hint_enable = false,
-					}, buffer)
+				on_attach = function(client, bufnr)
+					on_attach_common(client, bufnr)
+					inlay_hints.on_attach(client, bufnr)
 				end,
 				capabilities = capabilities,
 				settings = {
@@ -312,6 +298,14 @@ return {
 				},
 			})
 
+			lspconfig.zls.setup({
+				on_attach = function(client, bufnr)
+					on_attach_common(client, bufnr)
+					inlay_hints.on_attach(client, bufnr)
+				end,
+				capabilities = capabilities,
+			})
+
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -321,18 +315,6 @@ return {
 					end
 				end,
 			})
-
-			local function toggle_inlay_hints()
-				local current_buffer = vim.api.nvim_get_current_buf()
-				if vim.lsp.inlay_hint.is_enabled() then
-					vim.lsp.inlay_hint(current_buffer, false)
-				else
-					vim.lsp.inlay_hint(current_buffer, true)
-				end
-			end
-			vim.api.nvim_create_user_command("ToggleInlayHints", function()
-				toggle_inlay_hints()
-			end, { nargs = 0 })
 		end,
 	},
 }

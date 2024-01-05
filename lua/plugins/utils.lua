@@ -53,14 +53,8 @@ return {
 	},
 
 	{
-		"chentoast/marks.nvim",
-		enabled = false,
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = true,
-	},
-
-	{
 		"brenoprata10/nvim-highlight-colors",
+		enabled = false,
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("nvim-highlight-colors").setup({
@@ -73,20 +67,18 @@ return {
 
 	{
 		"danymat/neogen",
-		keys = keys.neogen(),
+		keys = {
+			{
+				"<Leader>N",
+				mode = "n",
+				"<cmd> Neogen <CR>",
+				desc = "generate docs",
+			},
+		},
 		cmd = "Neogen",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = function()
-			require("neogen").setup({ snippet_engine = "luasnip" })
-		end,
-	},
-
-	{
-		"echasnovski/mini.pairs",
-		enabled = false,
-		event = "VeryLazy",
-		config = function()
-			require("mini.pairs").setup()
+			require("neogen").setup({ snippet_engine = "neovim" })
 		end,
 	},
 
@@ -97,8 +89,15 @@ return {
 
 	{
 		"folke/trouble.nvim",
-		keys = keys.trouble(),
-		cmd = "Trouble",
+		keys = {
+			{
+				"<Leader>E",
+				mode = "n",
+				"<cmd> TroubleToggle <CR>",
+				desc = "trouble",
+			},
+		},
+		cmd = "TroubleToggle",
 		config = true,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
@@ -111,28 +110,21 @@ return {
 	},
 
 	{
-		"yorickpeterse/nvim-pqf",
-		event = "VeryLazy",
+		"folke/which-key.nvim",
+		-- keys = { "<leader>", '"', "'", "`", "@" },
+		enabled = true,
+		lazy = false,
+		priority = 1000,
 		config = function()
-			local icons = require("icons")
-			require("pqf").setup({
-				signs = {
-					error = icons.diagnostics.error,
-					warning = icons.diagnostics.warn,
-					info = icons.diagnostics.info,
-					hint = icons.diagnostics.hint,
+			local wk = require("which-key")
+
+			local options = {
+				window = {
+					border = "single", -- none, single, double, shadow
 				},
+			}
 
-				-- By default, only the first line of a multi line message will be shown.
-				-- When this is true, multiple lines will be shown for an entry, separated by a space
-				show_multiple_lines = false,
-
-				-- How long filenames in the quickfix are allowed to be. 0 means no limit.
-				-- Filenames above this limit will be truncated from the beginning with [...]
-				max_filename_length = 0,
-			})
+			wk.setup(options)
 		end,
 	},
-
-	"famiu/bufdelete.nvim",
 }

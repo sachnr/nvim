@@ -8,6 +8,13 @@ return {
 			"nvim-treesitter/playground",
 		},
 		config = function()
+			require("nvim-treesitter.parsers").get_parser_configs().asm = {
+				install_info = {
+					url = "https://github.com/rush-rs/tree-sitter-asm.git",
+					files = { "src/parser.c" },
+					branch = "main",
+				},
+			}
 			local configs = require("nvim-treesitter.configs")
 			local list = require("nvim-treesitter.parsers").get_parser_configs()
 			configs.setup({
@@ -45,8 +52,10 @@ return {
 					"tsx",
 					"typescript",
 					"vue",
+					"vimdoc",
 					"yaml",
 					"yuck",
+                    "zig",
 				},
 				sync_install = true,
 				auto_install = false,

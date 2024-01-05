@@ -33,6 +33,7 @@ return {
 	{
 		"akinsho/git-conflict.nvim",
 		event = "VeryLazy",
+		keys = require("keys").git(),
 		opts = {
 			default_mappings = {
 				none = "<leader>g0",

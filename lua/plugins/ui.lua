@@ -1,148 +1,13 @@
+---@diagnostic disable: missing-fields
 local keys = require("keys")
 
 return {
-	{ "j-hui/fidget.nvim", event = "BufReadPre", config = true },
-
 	{
-		"CosmicNvim/cosmic-ui",
-		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		config = function()
-			require("cosmic-ui").setup({
-				opts = {
-					border_style = "single",
-					rename = {
-						border = {
-							highlight = "FloatBorder",
-							style = "single",
-							title = "Rename",
-							title_align = "center",
-							title_hl = "FloatTitle",
-						},
-						prompt = "> ",
-						prompt_hl = "Comment",
-					},
-				},
-			})
-		end,
-	},
-
-	{
-		"b0o/incline.nvim",
-		event = "BufReadPre",
-		enabled = false,
-		config = function()
-			require("incline").setup({
-				window = {
-					placement = {
-						horizontal = "right",
-						vertical = "bottom",
-					},
-				},
-				highlight = {
-					groups = {
-						InclineNormal = {
-							default = false,
-							group = "lualine_b_normal",
-						},
-						InclineNormalNC = {
-							default = false,
-							group = "lualine_c_normal",
-						},
-					},
-				},
-				render = function(props)
-					local normal = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Normal")), "bg", "gui")
-					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-					local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
-					local buffer = {
-						{ ft_icon, guifg = ft_color, guibg = "NONE" },
-						{ " " },
-						{ filename, gui = modified },
-					}
-					return buffer
-				end,
-			})
-		end,
-	},
-
-	{
-		"petertriho/nvim-scrollbar",
-		enabled = false,
+		"smjonas/inc-rename.nvim",
 		lazy = false,
 		config = function()
-			require("scrollbar").setup({
-				set_highlights = false,
-				handle = {
-					hide_if_all_visible = true, -- Hides handle if all lines are visible
-				},
-				excluded_filetypes = {
-					"prompt",
-					"TelescopePrompt",
-					"noice",
-					"NvimTree",
-					"NeoTree",
-					"alpha",
-					"dashboard",
-					"packer",
-					"lspinfo",
-					"TelescopePrompt",
-					"TelescopeResults",
-					"mason",
-				},
-				handlers = {
-					cursor = false,
-					diagnostic = true,
-					gitsigns = false, -- Requires gitsigns
-					handle = true,
-					search = true, -- Requires hlslens
-				},
-				marks = {
-					Search = {
-						text = { "" },
-					},
-					Error = {
-						text = { "" },
-					},
-				},
-			})
-		end,
-		dependencies = {
-			{
-				"kevinhwang91/nvim-hlslens",
-				config = function()
-					require("scrollbar.handlers.search").setup({
-						calm_down = true,
-					})
-					keys.hlslens()
-				end,
-			},
-		},
-	},
-
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		enabled = false,
-		lazy = false,
-		config = function()
-			require("indent_blankline").setup({
-				char = "▎",
-				use_treesitter = true,
-				filetype_exclude = {
-					"help",
-					"terminal",
-					"alpha",
-					"dashboard",
-					"packer",
-					"lspinfo",
-					"TelescopePrompt",
-					"TelescopeResults",
-					"mason",
-					"",
-				},
-				buftype_exclude = { "terminal" },
-				show_first_indent_level = false,
-				show_current_context = true,
+			require("inc_rename").setup({
+				hl_group = "Substitute",
 			})
 		end,
 	},
@@ -195,5 +60,45 @@ return {
 		"folke/zen-mode.nvim",
 		keys = keys.zenmode(),
 		config = true,
+	},
+
+	{ "eandrju/cellular-automaton.nvim", event = "VeryLazy" },
+
+	{ "kevinhwang91/nvim-bqf", ft = "qf" },
+
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+				},
+				-- you can enable a preset for easier configuration
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu togetherc
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = true, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = true, -- add a border to hover docs and signature help
+				},
+			})
+		end,
 	},
 }

@@ -29,30 +29,6 @@ return {
 	},
 
 	{
-		"echasnovski/mini.files",
-		keys = keys.files(),
-		enabled = false,
-		version = false,
-		config = function()
-			require("mini.files").setup({
-				mappings = {
-					close = "q",
-					go_in = "L",
-					go_in_plus = "<CR>",
-					go_out = "H",
-					go_out_plus = "",
-					reset = "<BS>",
-					reveal_cwd = "@",
-					show_help = "g?",
-					synchronize = "<leader>s",
-					trim_left = "<",
-					trim_right = ">",
-				},
-			})
-		end,
-	},
-
-	{
 		"stevearc/oil.nvim",
 		enabled = true,
 		keys = keys.oil(),
@@ -92,6 +68,15 @@ return {
 						oil.select({ vertical = true, close = true })
 					end,
 					["<CR>"] = "actions.select",
+					["<M-o>"] = function()
+						local entry = oil.get_cursor_entry()
+						local dir = oil.get_current_dir()
+						if not entry or not dir then
+							return
+						end
+						local path = dir .. entry.name
+						vim.cmd("!xdg-open '" .. path .. "'")
+					end,
 					["L"] = "actions.select",
 					["<M-j><M-k>"] = "actions.open_cwd",
 					["g."] = "actions.toggle_hidden",
@@ -109,52 +94,5 @@ return {
 				},
 			})
 		end,
-	},
-
-	{
-		"folke/edgy.nvim",
-		enabled = false,
-		lazy = false,
-		opts = {
-			animate = {
-				enabled = false,
-			},
-			wo = {
-				-- Setting to `true`, will add an edgy winbar.
-				-- Setting to `false`, won't set any winbar.
-				-- Setting to a string, will set the winbar to that string.
-				winbar = false,
-				winfixwidth = true,
-				winfixheight = false,
-				winhighlight = "WinBar:EdgyWinBar,Normal:EdgyNormal",
-				spell = false,
-				signcolumn = "no",
-			},
-			left = {
-				{
-					ft = "neotree",
-					title = "File System",
-					size = { width = 30 },
-				},
-			},
-			bottom = {
-				"Trouble",
-				{ ft = "qf", title = "QuickFix" },
-				{
-					ft = "help",
-					size = { height = 20 },
-					-- only show help buffers
-					filter = function(buf)
-						return vim.bo[buf].buftype == "help"
-					end,
-				},
-			},
-			right = {
-				{
-					ft = "symbols-outline",
-					size = { width = 30 },
-				},
-			},
-		},
 	},
 }

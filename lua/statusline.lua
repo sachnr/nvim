@@ -53,7 +53,7 @@ function highlights:load()
 
 	-- active/inactive
 	self.fg = get_highlight("Normal").fg
-	self.active = get_highlight("PmenuSel").fg
+	self.active = get_highlight("PmenuSel").bg
 	self.gray = get_highlight("NonText").fg
 
 	-- misc
@@ -75,7 +75,7 @@ function highlights:apply()
 	set_default_hl("StatusLineBackground", { bg = highlights.bg, fg = highlights.gray })
 
 	set_default_hl("StatusLineSep", { fg = highlights.bg_alt, bg = highlights.bg })
-	set_default_hl("StatusLineNormal", { bg = highlights.bg_alt, fg = highlights.fg, bold = true })
+	set_default_hl("StatusLineNormal", { bg = highlights.bg_alt, fg = highlights.active, bold = true })
 	set_default_hl("StatusLineInsert", { bg = highlights.bg_alt, fg = highlights.blue, bold = true })
 	set_default_hl("StatusLineVisual", { bg = highlights.bg_alt, fg = highlights.purple, bold = true })
 	set_default_hl("StatusLineCommand", { bg = highlights.bg_alt, fg = highlights.green, bold = true })
@@ -133,6 +133,28 @@ components.filepath = function()
 	else
 		local buf_fname = vim.fn.expand("%:t")
 		return string.format("%%#StatusLineBackground#%s", buf_fname)
+	end
+end
+
+components.current_signature = function()
+	local width = vim.api.nvim_win_get_width(0)
+	if not pcall(require, "lsp_signature") then
+		return
+	end
+	if width < 110 then
+		require("")
+	end
+	local sig = require("lsp_signature").status_line(width - width / 2)
+	local label = sig.label:gsub("%s+", " ")
+	return string.format("%%#StatusLineDiagWarn#%s", label)
+end
+
+components.lines = function()
+	local width = vim.api.nvim_win_get_width(0)
+	if width < 110 then
+		return ""
+	else
+		return string.format("%%#StatusLineBackground#Loc[%s]", vim.fn.line("$"))
 	end
 end
 
@@ -238,7 +260,7 @@ components.harpoon = function()
 
 	local items = harpoon:list().items
 	local paths = {}
-	for i, item in ipairs(items) do
+	for _, item in ipairs(items) do
 		local fname = item.value
 		local fname_short = vim.fn.fnamemodify(fname, ":t")
 		local component = string.format("%%#StatusLineBackground#%s", fname_short)
@@ -248,7 +270,7 @@ components.harpoon = function()
 		table.insert(paths, component)
 	end
 	local list = table.concat(paths, " ")
-	return string.format("󱡀 [%s]", list)
+	return string.format("󰐃 [%s]", list)
 end
 
 local statusline = {}
@@ -266,12 +288,14 @@ function statusline.active()
 			components.git(),
 			components.file_icon(),
 			components.filepath(),
+			-- components.current_signature(),
 		}),
 		"%#StatusLineBackground#%=",
 		concat_components({
 			components.harpoon(),
 			components.diagnostics(),
 			components.indent_info(),
+			components.lines(),
 			components.lsp_progress(),
 		}),
 		" ",
@@ -291,7 +315,12 @@ local au = function(event, pattern, callback, desc)
 end
 
 local set_active = function()
-	vim.wo.statusline = "%!v:lua.require'statusline'.active()"
+	local filetype = vim.bo.filetype
+	if filetype == "dapui" or filetype == "[dap-repl]" then
+		vim.wo.statusline = ""
+	else
+		vim.wo.statusline = "%!v:lua.require'statusline'.active()"
+	end
 end
 au({ "WinEnter", "BufEnter" }, "*", set_active, "Set active statusline")
 

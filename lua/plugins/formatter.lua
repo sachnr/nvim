@@ -37,12 +37,12 @@ return {
 			-- 			args = { "." },
 			-- 			ts_query_lang = "rust",
 			-- 			ts_query = [[
-   --                        (macro_invocation
-   --                          (identifier) @macro (#eq? @macro "json")
-   --                          (token_tree
-   --                            (token_tree) @json_query)
-   --                            (#offset! @json_query 0 1 0 -1))
-   --                      ]],
+			--                        (macro_invocation
+			--                          (identifier) @macro (#eq? @macro "json")
+			--                          (token_tree
+			--                            (token_tree) @json_query)
+			--                            (#offset! @json_query 0 1 0 -1))
+			--                      ]],
 			-- 			ts_cap_name = "json_query",
 			-- 		})
 			-- 		:run()
@@ -86,9 +86,24 @@ return {
 				end
 			end
 
+			local clang = function()
+				local style =
+					[[ -style="{ BasedOnStyle: LLVM, IndentWidth: 4, AllowShortFunctionsOnASingleLine: None, ColumnLimit: 100, AlignAfterOpenBracket: AlwaysBreak }" ]]
+				return {
+					exe = "clang-format",
+					args = {
+						style,
+						"-assume-filename",
+						util.escape_path(util.get_current_buffer_file_name()),
+					},
+					stdin = true,
+					try_node_modules = true,
+				}
+			end
+
 			local filetypes = {
-				c = require("formatter.filetypes.c").astyle,
-				cpp = require("formatter.filetypes.cpp").astyle,
+				c = clang,
+				cpp = clang,
 				cs = require("formatter.filetypes.cs").astyle,
 				css = require("formatter.filetypes.css").prettier,
 				go = require("formatter.filetypes.go").gofmt,
@@ -126,6 +141,7 @@ return {
 				typescript = prettier,
 				typescriptreact = prettier,
 				yaml = require("formatter.filetypes.yaml").prettier,
+				zig = require("formatter.filetypes.zig").zigfmt,
 			}
 
 			formatter.setup({

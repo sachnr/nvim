@@ -44,23 +44,6 @@ M.defaults = function()
 	})
 end
 
-M.ncmpcpp = function()
-	local Terminal = require("toggleterm.terminal").Terminal
-
-	local ncmpcpp = Terminal:new({
-		cmd = "ncmpcpp",
-		hidden = true,
-		direction = "float",
-		float_opts = {
-			border = "single",
-		},
-	})
-
-	set("n", "<leader>m", function()
-		ncmpcpp:toggle()
-	end, merge(opts, { desc = "Music Player" }))
-end
-
 M.telescope = function()
 	return {
 		{ "<Leader>tf", mode = "n", "<cmd> Telescope find_files <CR>", desc = "find files" },
@@ -68,28 +51,6 @@ M.telescope = function()
 		{ "<Leader>to", mode = "n", "<cmd> Telescope oldfiles <CR>", desc = "live grep" },
 		{ "<Leader>tu", mode = "n", "<cmd> silent! %foldopen! | UndotreeToggle <CR>", desc = "UndotreeToggle" },
 		{ "<Leader>t/", mode = "n", "<cmd> Telescope current_buffer_fuzzy_find <CR>", desc = "search in file" },
-	}
-end
-
-M.neogen = function()
-	return {
-		{
-			"<Leader>N",
-			mode = "n",
-			"<cmd> Neogen <CR>",
-			desc = "generate docs",
-		},
-	}
-end
-
-M.trouble = function()
-	return {
-		{
-			"<Leader>E",
-			mode = "n",
-			"<cmd> Trouble <CR>",
-			desc = "trouble",
-		},
 	}
 end
 
@@ -147,7 +108,9 @@ M.lsp_attach = function(bufnr)
 	set("v", "ga", '<cmd>lua require("cosmic-ui").range_code_actions()<cr>', merge(lsp_opts, { desc = "code_action" }))
 	set("n", "gh", vim.lsp.buf.references, merge(lsp_opts, { desc = "goto references" }))
 	-- set("n", "gr", vim.lsp.buf.rename, merge(lsp_opts, { desc = "lsp rename" }))
-	set("n", "gr", '<cmd>lua require("cosmic-ui").rename()<cr>', merge(lsp_opts, { desc = "lsp rename" }))
+	set("n", "gr", function()
+		return ":IncRename " .. vim.fn.expand("<cword>")
+	end, merge(lsp_opts, { desc = "lsp rename", expr = true }))
 	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
 	set("n", "gD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "goto declaration" }))
 	set("n", "gd", vim.lsp.buf.definition, merge(lsp_opts, { desc = "goto definition" }))
@@ -155,26 +118,6 @@ M.lsp_attach = function(bufnr)
 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
 	set("n", "<leader>ld", vim.lsp.buf.type_definition, merge(lsp_opts, { desc = "Type Definition" }))
 end
-
--- lspsaga
--- M.lsp_attach = function(bufnr)
--- 	set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", merge(opts, { desc = "diagnostic float" }))
--- 	set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", merge(opts, { desc = "diagnostic goto prev" }))
--- 	set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", merge(opts, { desc = "diagnostic goto next" }))
--- 	set("n", "<leader>l", "<cmd>Lspsaga show_buf_diagnostics<CR>", merge(opts, { desc = "diagnostic buffer" }))
--- 	local lsp_opts = merge(opts, { buffer = bufnr })
--- 	set("n", "ga", "<cmd>Lspsaga code_action<CR>", merge(lsp_opts, { desc = "code_action" }))
--- 	set("n", "gr", function()
--- 		vim.lsp.buf.rename()
--- 	end, merge(lsp_opts, { desc = "Lsp Rename" }))
--- 	set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", merge(lsp_opts, { desc = "references" }))
--- 	set("n", "K", "<cmd>Lspsaga hover_doc<CR>", merge(lsp_opts, { desc = "hover doc" }))
--- 	set("n", "go", "<cmd>Lspsaga outline<CR>", merge(lsp_opts, { desc = "toggle outline" }))
--- 	set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", merge(lsp_opts, { desc = "goto definition" }))
--- 	set("n", "gT", "<cmd>Lspsaga goto_type_definition<CR>", merge(lsp_opts, { desc = "goto type definition" }))
--- 	set("n", "gi", vim.lsp.buf.implementation, merge(lsp_opts, { desc = "goto implementation" }))
--- 	set("n", "<C-k>", vim.lsp.buf.signature_help, merge(lsp_opts, { desc = "signature_help" }))
--- end
 
 M.buffer_manager = function()
 	return {
@@ -186,34 +129,6 @@ M.buffer_manager = function()
 			end,
 			desc = "buffermanager ui",
 		},
-	}
-end
-
-M.oil = function()
-	return {
-		{ "<M-j><M-k>", mode = "n", "<Cmd> :Oil %:h <CR>", desc = "Open Oil" },
-		{ "<M-j><M-l>", mode = "n", "<Cmd> :vsplit | Oil %:h <CR>", desc = "Open Oil in a vsplit" },
-	}
-end
-
-M.files = function()
-	return {
-		{
-			"<M-j><M-k>",
-			mode = "n",
-			function()
-				local files = require("mini.files")
-				files.open()
-			end,
-			desc = "Open Oil",
-		},
-	}
-end
-
-M.nvim_tree = function()
-	-- set("n", "<leader>1", "<cmd> NvimTreeFocus <CR>", opts)
-	return {
-		{ "<M-j><M-k>", mode = "n", "<cmd> NeoTreeFocusToggle <CR>", desc = "toggle neotree" },
 	}
 end
 
@@ -273,41 +188,40 @@ M.comment_box = function()
 	}
 end
 
-M.gitsigns = function(gitsigns)
-	set("n", "]c", function()
-		if vim.wo.diff then
-			return "]c"
-		end
-		vim.schedule(function()
-			gitsigns.next_hunk()
-		end)
-		return "<Ignore>"
-	end, { expr = true, desc = "Next hunk" })
-	set("n", "[c", function()
-		if vim.wo.diff then
-			return "[c"
-		end
-		vim.schedule(function()
-			gitsigns.prev_hunk()
-		end)
-		return "<Ignore>"
-	end, { expr = true, desc = "prev hunk" })
-	set({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage Hunk" })
-	set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "reset Hunk" })
-	set("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
-	set("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Undo Stage Hunk" })
-	set("n", "<leader>gR", gitsigns.reset_buffer, { desc = "reset buffer" })
-	set("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
-	set("n", "<leader>gb", function()
-		gitsigns.blame_line({ full = true }, { desc = "Blame line" })
-	end)
-	set("n", "<leader>gB", gitsigns.toggle_current_line_blame, { desc = "Toggle current line blame" })
-	set("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
-	set("n", "<leader>gD", function()
-		gitsigns.diffthis("~")
-	end, { desc = "diff this ~" })
-	set("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle Deleted" })
-	set({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
+M.oil = function()
+	return {
+		{
+			"<M-j><M-k>",
+			mode = "n",
+			"<cmd> Oil <CR>",
+			desc = "Open Oil",
+		},
+	}
+end
+
+M.git = function()
+	return {
+		{
+			"<leader>gg",
+			function()
+				local Terminal = require("toggleterm.terminal").Terminal
+				local lazygit = Terminal:new({
+					cmd = "lazygit",
+					dir = "git_dir",
+					hidden = true,
+					direction = "float",
+					float_opts = {
+						border = "single",
+					},
+				})
+				lazygit:toggle()
+			end,
+			{ desc = "lazygit" },
+		},
+		{ "<leader>gb", "<cmd> lua require('gitsigns').blame_line <cr>", { desc = "git blame" } },
+		{ "<leader>gd", "<cmd> DiffviewOpen <CR>", { desc = "git diff" } },
+		{ "<leader>gh", "<cmd> DiffviewFileHistory<CR>", { desc = "git history" } },
+	}
 end
 
 return M

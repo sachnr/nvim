@@ -7,40 +7,17 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"onsails/lspkind-nvim",
-			"windwp/nvim-autopairs",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-			-- "rafamadriz/friendly-snippets",
-			-- "hrsh7th/cmp-nvim-lsp-signature-help",
 			"petertriho/cmp-git",
 		},
 		config = function()
 			local cmp = require("cmp")
-			local luasnip = require("luasnip")
 			local lspkind = require("lspkind")
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-
-			-- luasnip
-
-			luasnip.config.set_config({
-				history = true,
-			})
-			-- require("luasnip.loaders.from_vscode").lazy_load()
-
-			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
-			local has_words_before = function()
-				unpack = unpack or table.unpack
-				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-				return col ~= 0
-					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-			end
 
 			cmp.setup({
 				enabled = function()
 					-- disable completion in comments
 					local context = require("cmp.config.context")
-					local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+					local buftype = vim.bo.buftype
 					if vim.api.nvim_get_mode().mode == "c" then
 						return true
 					elseif buftype == "prompt" then
@@ -52,7 +29,7 @@ return {
 				preselect = cmp.PreselectMode.None,
 				snippet = {
 					expand = function(args)
-						luasnip.lsp_expand(args.body) -- For `luasnip` users.
+						vim.snippet.expand(args.body)
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
@@ -76,15 +53,15 @@ return {
 						end
 					end, { "i", "s" }),
 					["<M-p>"] = cmp.mapping(function(fallback)
-						if luasnip.jumpable(-1) then
-							luasnip.jump(-1)
+						if vim.snippet.jumpable(-1) then
+							vim.snippet.jump(-1)
 						else
 							fallback()
 						end
 					end, { "i", "s" }),
 					["<M-n>"] = cmp.mapping(function(fallback)
-						if luasnip.jumpable(1) then
-							luasnip.jump(1)
+						if vim.snippet.jumpable(1) then
+							vim.snippet.jump(1)
 						else
 							fallback()
 						end
@@ -100,6 +77,7 @@ return {
 					{ name = "neorg" },
 				},
 				sorting = {
+					priority_weight = 1,
 					comparators = {
 						cmp.config.compare.offset,
 						cmp.config.compare.exact,
@@ -124,6 +102,7 @@ return {
 					},
 				},
 				formatting = {
+					expandable_indicator = true,
 					fields = { "kind", "abbr", "menu" },
 					format = function(entry, vim_item)
 						local kind = lspkind.cmp_format({

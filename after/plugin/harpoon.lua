@@ -1,8 +1,8 @@
 local harpoon = require("harpoon")
 harpoon:setup({
 	settings = {
-		ui_fallback_width = 40,
-		ui_width_ratio = 0.40,
+		-- ui_fallback_width = 40,
+		ui_width_ratio = 0.50,
 	},
 })
 
@@ -34,9 +34,9 @@ end)
 vim.keymap.set("n", "<leader>5", function()
 	harpoon:list():select(5)
 end)
-vim.keymap.set("n", "<M-n>", function()
+vim.keymap.set("n", "<M-]>", function()
 	harpoon:list():next()
 end)
-vim.keymap.set("n", "<M-p>", function()
+vim.keymap.set("n", "<M-[>", function()
 	harpoon:list():prev()
 end)

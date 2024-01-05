@@ -47,6 +47,7 @@ return {
 					},
 					results_title = "results",
 					file_ignore_patterns = {
+                        "libs",
 						"node_modules",
 						".git/",
 					},

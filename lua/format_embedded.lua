@@ -6,7 +6,7 @@ local function run_formatter(text, exe, args)
 	local job = require("plenary.job"):new({
 		command = exe,
 		args = args,
-		writer = { result },
+		writer = result,
 	})
 	return job:sync()
 end

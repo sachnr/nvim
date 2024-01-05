@@ -1,90 +1,119 @@
+---@diagnostic disable: missing-fields
 return {
 	{
 		"mfussenegger/nvim-dap",
 		event = "VeryLazy",
+		keys = {
+			{ "<F5>", ":lua require('dap').continue()<CR>", { silent = true, desc = "continue" } },
+			{ "<F7>", ":lua require('dap').step_over()<CR>", { silent = true } },
+			{ "<F8>", ":lua require('dap').step_into()<CR>", { silent = true } },
+			{ "<F9>", ":lua require('dap').step_out()<CR>", { silent = true } },
+			{ "<leader>db", ":lua require('dap').toggle_breakpoint()<CR>", { silent = true } },
+			{ "<leader>dr", ":lua require('dap').repl.open()<CR>", { silent = true } },
+			{ "<leader>dR", ":lua require('dap').run_last()<CR>", { silent = true } },
+			{ "<F6>", ":lua require('dap').terminate()<CR>", { silent = true } },
+			{ "<leader>du", ":lua require('dapui').toggle()<CR>", { silent = true } },
+			{ "<leader>dK", ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
+		},
 		config = function()
+			vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+			vim.fn.sign_define("DapStopped", { text = "", texthl = "", linehl = "", numhl = "" })
+
 			local dap = require("dap")
-			local plugin_folder = vim.fn.stdpath("data")
-			local mason = plugin_folder .. "/mason/packages"
 
-			dap.adapters.go = {
+			dap.adapters.gdb = {
 				type = "executable",
-				command = "node",
-				args = {
-					os.getenv("HOME")
-						.. "/.local/share/nvim/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js",
-				},
+				command = "gdb",
+				args = { "-i", "dap" },
 			}
-			dap.configurations.go = {
+			dap.adapters.cppdbg = {
+				id = "cppdbg",
+				type = "executable",
+				command = os.getenv("HOME") .. "/links/cpp_debug",
+			}
+
+			dap.configurations.zig = {
 				{
-					type = "go",
-					name = "Debug",
+					name = "(gdb) launch",
+					type = "cppdbg",
 					request = "launch",
-					showLog = false,
-					program = "${file}",
-					dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/zig-out/bin/", "file")
+					end,
+					cwd = "${workspaceFolder}",
 				},
 			}
-
-			dap.adapters.lldb = {
-				type = "executable",
-				command = "/etc/profiles/per-user/sachnr/bin/lldb-vscode", -- adjust as needed, must be absolute path
-				name = "lldb",
+			dap.configurations.cpp = {
+				{
+					name = "cpp c Debug",
+					type = "cppdbg",
+					request = "launch",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/build", "file")
+					end,
+					cwd = "${workspaceFolder}",
+					stopAtEntry = true,
+				},
 			}
 			dap.configurations.rust = {
 				{
-					name = "Launch",
-					type = "lldb",
+					name = "gdb",
+					type = "rustdbg",
 					request = "launch",
 					program = function()
-						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target", "file")
 					end,
 					cwd = "${workspaceFolder}",
-					stopOnEntry = false,
-					args = {},
-
-					-- 💀
-					-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-					--
-					--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-					--
-					-- Otherwise you might get the following error:
-					--
-					--    Error on launch: Failed to attach to the target process
-					--
-					-- But you should be aware of the implications:
-					-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-					-- runInTerminal = false,
+					stopAtEntry = true,
 				},
 			}
+
+			dap.configurations.c = dap.configurations.cpp
 		end,
 		dependencies = {
 			{
-				"theHamsta/nvim-dap-virtual-text",
-				config = true,
-			},
-			{
 				"rcarriga/nvim-dap-ui",
-				config = true,
-			},
-			{
-				"mxsdev/nvim-dap-vscode-js",
 				config = function()
-					---@diagnostic disable-next-line: missing-fields
-					require("dap-vscode-js").setup({
-						debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-						adapters = { "pwa-node" }, -- which adapters to register in nvim-dap
+					require("dapui").setup({
+						layouts = {
+							{
+								elements = {
+									{ id = "scopes", size = 0.35 },
+									{ id = "breakpoints", size = 0.15 },
+									{ id = "stacks", size = 0.20 },
+									{ id = "watches", size = 0.30 },
+								},
+								position = "left",
+								size = 50,
+							},
+							{ elements = { { id = "repl", size = 1 } }, position = "right", size = 65 },
+						},
 					})
 				end,
 			},
 		},
 	},
 
-    "mfussenegger/nvim-jdtls",
+	{
+		"mxsdev/nvim-dap-vscode-js",
+		enabled = false,
+		config = function()
+			---@diagnostic disable-next-line: missing-fields
+			require("dap-vscode-js").setup({
+				debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
+				adapters = { "pwa-node" }, -- which adapters to register in nvim-dap
+			})
+		end,
+		dependencies = {
+			{
+				"microsoft/vscode-js-debug",
+				build = "npm install --legacy-peer-deps && npm run compile",
+			},
+		},
+	},
 
 	{
-		"microsoft/vscode-js-debug",
-        enabled = false,
-		build = "npm install --legacy-peer-deps && npm run compile",
+		"mfussenegger/nvim-jdtls",
+		enabled = false,
 	},
 }
