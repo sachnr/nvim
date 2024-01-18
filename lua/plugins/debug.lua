@@ -58,10 +58,10 @@ return {
 			dap.configurations.rust = {
 				{
 					name = "gdb",
-					type = "rustdbg",
+					type = "cppdbg",
 					request = "launch",
 					program = function()
-						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target", "file")
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug", "file")
 					end,
 					cwd = "${workspaceFolder}",
 					stopAtEntry = true,
@@ -84,9 +84,9 @@ return {
 									{ id = "watches", size = 0.30 },
 								},
 								position = "left",
-								size = 50,
+								size = 40,
 							},
-							{ elements = { { id = "repl", size = 1 } }, position = "right", size = 65 },
+							{ elements = { { id = "repl", size = 1 } }, position = "right", size = 40 },
 						},
 					})
 				end,

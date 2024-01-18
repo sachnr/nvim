@@ -316,7 +316,8 @@ end
 
 local set_active = function()
 	local filetype = vim.bo.filetype
-	if filetype == "dapui" or filetype == "[dap-repl]" then
+	local found = string.find(filetype, "dapui")
+	if found or filetype == "dap-repl" then
 		vim.wo.statusline = ""
 	else
 		vim.wo.statusline = "%!v:lua.require'statusline'.active()"

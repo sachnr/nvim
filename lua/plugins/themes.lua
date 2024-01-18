@@ -12,7 +12,7 @@ return {
 
 	{
 		"rebelot/kanagawa.nvim",
-		enabled = false,
+		enabled = true,
 		priority = 1000,
 		init = function()
 			vim.cmd("colorscheme kanagawa-dragon")
@@ -89,7 +89,7 @@ return {
 
 	{
 		"EdenEast/nightfox.nvim",
-		enabled = true,
+		enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()

@@ -13,25 +13,21 @@ return {
 	},
 
 	{
-		"shellRaining/hlchunk.nvim",
+		"echasnovski/mini.indentscope",
+		version = false,
 		event = "VeryLazy",
 		config = function()
-			require("hlchunk").setup({
-				chunk = {
-					style = {
-						{ fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("FloatBorder")), "fg", "gui") },
-					},
+			require("mini.indentscope").setup({
+				draw = {
+					delay = 0,
+					animation = require("mini.indentscope").gen_animation.quadratic({
+						easing = "in",
+						duration = 10,
+					}),
 				},
-				indent = {
-					enable = false,
-				},
-				line_num = {
-					enable = false,
-				},
-				blank = {
-					enable = false,
-				},
+				symbol = "│",
 			})
+			vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { link = "Comment" })
 		end,
 	},
 
@@ -49,7 +45,17 @@ return {
 			require("windows").setup({
 				animation = { enable = false },
 				ignore = {
-					filetype = { "NvimTree", "lspsagaoutline", "undotree", "outline" },
+					filetype = {
+						"NvimTree",
+						"lspsagaoutline",
+						"undotree",
+						"outline",
+						"dapui_watches",
+						"dapui_stacks",
+						"dapui_scopes",
+						"dapui_breakpoints",
+						"dap-repl",
+					},
 					buftype = { "Outline" },
 				},
 			})
@@ -69,16 +75,17 @@ return {
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = {
-			-- add any options here
-		},
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
+			{
+				"echasnovski/mini.notify",
+				version = false,
+				opts = {
+					lsp_progress = {
+						enable = false,
+					},
+				},
+			},
 		},
 		config = function()
 			require("noice").setup({
@@ -88,6 +95,9 @@ return {
 						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 						["vim.lsp.util.stylize_markdown"] = true,
 						["cmp.entry.get_documentation"] = true,
+					},
+					signature = {
+						enabled = true,
 					},
 				},
 				-- you can enable a preset for easier configuration

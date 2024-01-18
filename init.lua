@@ -79,6 +79,12 @@ vim.api.nvim_create_user_command("ClearFloats", function()
 	CloseAllFloatingWindows()
 end, { nargs = 0 })
 
+vim.api.nvim_create_user_command("GetBufType", function()
+	local buftype = vim.bo.buftype
+	local filetype = vim.bo.filetype
+	print("buftype: " .. buftype .. " | filetype: " .. filetype)
+end, { nargs = 0 })
+
 if bootstrap then
 	vim.cmd("bw | silent! MasonInstallAll")
 	vim.cmd("Lazy load nvim-treesitter")

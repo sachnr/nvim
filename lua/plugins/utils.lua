@@ -78,7 +78,7 @@ return {
 		cmd = "Neogen",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = function()
-			require("neogen").setup({ snippet_engine = "neovim" })
+			require("neogen").setup({ snippet_engine = "nvim" })
 		end,
 	},
 
