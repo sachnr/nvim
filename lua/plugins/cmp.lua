@@ -8,10 +8,16 @@ return {
 			"hrsh7th/cmp-path",
 			"onsails/lspkind-nvim",
 			"petertriho/cmp-git",
+			"L3MON4D3/LuaSnip",
 		},
 		config = function()
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
+			local luasnip = require("luasnip")
+
+			luasnip.config.set_config({
+				history = true,
+			})
 
 			cmp.setup({
 				enabled = function()
@@ -29,7 +35,7 @@ return {
 				preselect = cmp.PreselectMode.None,
 				snippet = {
 					expand = function(args)
-						vim.snippet.expand(args.body)
+						luasnip.lsp_expand(args.body) -- For `luasnip` users.
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
@@ -37,7 +43,7 @@ return {
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-e>"] = cmp.mapping.abort(),
 					["<C-space>"] = cmp.mapping.complete(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -53,15 +59,15 @@ return {
 						end
 					end, { "i", "s" }),
 					["<M-p>"] = cmp.mapping(function(fallback)
-						if vim.snippet.jumpable(-1) then
-							vim.snippet.jump(-1)
+						if luasnip.jumpable(-1) then
+							luasnip.jump(-1)
 						else
 							fallback()
 						end
 					end, { "i", "s" }),
 					["<M-n>"] = cmp.mapping(function(fallback)
-						if vim.snippet.jumpable(1) then
-							vim.snippet.jump(1)
+						if luasnip.jumpable(1) then
+							luasnip.jump(1)
 						else
 							fallback()
 						end
@@ -97,7 +103,6 @@ return {
 						winhighlight = "Normal:Pmenu,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
 					},
 					documentation = {
-						border = "single",
 						winhighlight = "Normal:CmpDocumentation,FloatBorder:CmpDocumentationBorder",
 					},
 				},

@@ -5,7 +5,7 @@ return {
 		lazy = false,
 		build = ":TSUpdate",
 		dependencies = {
-			"nvim-treesitter/playground",
+			-- "nvim-treesitter/playground",
 		},
 		config = function()
 			require("nvim-treesitter.parsers").get_parser_configs().asm = {
@@ -55,7 +55,7 @@ return {
 					"vimdoc",
 					"yaml",
 					"yuck",
-                    "zig",
+					"zig",
 				},
 				sync_install = true,
 				auto_install = false,
@@ -64,7 +64,7 @@ return {
 					enable = true,
 				},
 				playground = {
-					enable = true,
+					enable = false,
 					disable = {},
 					updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
 					persist_queries = false, -- Whether the query persists across vim sessions

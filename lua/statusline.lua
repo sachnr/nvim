@@ -1,44 +1,5 @@
 local icons = require("icons")
 
-local modes = {
-	["n"] = "NORMAL",
-	["no"] = "OP-PENDING",
-	["nov"] = "OP-PENDING",
-	["noV"] = "OP-PENDING",
-	["no\22"] = "OP-PENDING",
-	["niI"] = "NORMAL",
-	["niR"] = "NORMAL",
-	["niV"] = "NORMAL",
-	["nt"] = "NORMAL",
-	["ntT"] = "NORMAL",
-	["v"] = "VISUAL",
-	["vs"] = "VISUAL",
-	["V"] = "VISUAL",
-	["Vs"] = "VISUAL",
-	["\22"] = "VISUAL",
-	["\22s"] = "VISUAL",
-	["s"] = "SELECT",
-	["S"] = "SELECT",
-	["\19"] = "SELECT",
-	["i"] = "INSERT",
-	["ic"] = "INSERT",
-	["ix"] = "INSERT",
-	["R"] = "REPLACE",
-	["Rc"] = "REPLACE",
-	["Rx"] = "REPLACE",
-	["Rv"] = "VIRT REPLACE",
-	["Rvc"] = "VIRT REPLACE",
-	["Rvx"] = "VIRT REPLACE",
-	["c"] = "COMMAND",
-	["cv"] = "VIM EX",
-	["ce"] = "EX",
-	["r"] = "PROMPT",
-	["rm"] = "MORE",
-	["r?"] = "CONFIRM",
-	["!"] = "SHELL",
-	["t"] = "TERMINAL",
-}
-
 local function get_highlight(name)
 	return vim.api.nvim_get_hl(0, { name = name, link = false })
 end
@@ -73,25 +34,16 @@ end
 
 function highlights:apply()
 	set_default_hl("StatusLineBackground", { bg = highlights.bg, fg = highlights.gray })
+	set_default_hl("StatusLineNormal", { bg = highlights.bg, fg = highlights.fg })
 
-	set_default_hl("StatusLineSep", { fg = highlights.bg_alt, bg = highlights.bg })
-	set_default_hl("StatusLineNormal", { bg = highlights.bg_alt, fg = highlights.active, bold = true })
-	set_default_hl("StatusLineInsert", { bg = highlights.bg_alt, fg = highlights.blue, bold = true })
-	set_default_hl("StatusLineVisual", { bg = highlights.bg_alt, fg = highlights.purple, bold = true })
-	set_default_hl("StatusLineCommand", { bg = highlights.bg_alt, fg = highlights.green, bold = true })
-	set_default_hl("StatusLineReplace", { bg = highlights.bg_alt, fg = highlights.orange, bold = true })
-	set_default_hl("StatusLineOther", { bg = highlights.bg_alt, fg = highlights.yellow, bold = true })
-
-	set_default_hl("StatusLineLspSymbol", { bg = highlights.bg_alt, fg = highlights.active, bold = true })
-	set_default_hl("StatusLineLspName", { bg = highlights.bg_alt, fg = highlights.fg, bold = true })
+	set_default_hl("StatusLineActive", { bg = highlights.bg, fg = highlights.active, bold = true })
+	set_default_hl("StatusLineLspName", { bg = highlights.bg, fg = highlights.fg, bold = true })
 
 	set_default_hl("StatusLineDiagError", { bg = highlights.bg, fg = highlights.red })
 	set_default_hl("StatusLineDiagHint", { bg = highlights.bg, fg = highlights.purple })
 	set_default_hl("StatusLineDiagInfo", { bg = highlights.bg, fg = highlights.cyan })
 	set_default_hl("StatusLineDiagWarn", { bg = highlights.bg, fg = highlights.yellow })
 	set_default_hl("StatusLineDiagOk", { bg = highlights.bg, fg = highlights.green })
-	set_default_hl("StatusLineGitBranch", { bg = highlights.bg, fg = highlights.fg })
-	set_default_hl("StatusLineHarpoonActive", { bg = highlights.bg, fg = highlights.active, bold = true })
 end
 
 highlights:load()
@@ -99,54 +51,17 @@ highlights:apply()
 
 local components = {}
 
-components.mode = function()
-	local current_mode = vim.api.nvim_get_mode().mode
-	local mode = string.format(" %s ", modes[current_mode]):upper()
-
-	local hl = "StatusLineOther"
-	if current_mode == "n" then
-		hl = "StatusLineNormal"
-	elseif current_mode == "i" or current_mode == "ic" then
-		hl = "StatusLineInsert"
-	elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
-		hl = "StatusLineVisual"
-	elseif current_mode == "R" then
-		hl = "StatusLineReplace"
-	elseif current_mode == "c" then
-		hl = "StatusLineCommand"
-	end
-
-	return table.concat({
-		string.format("%%#StatusLineSep#%s", icons.separators.left_rounded),
-		string.format("%%#%s#%s", hl, mode),
-		string.format("%%#StatusLineSep#%s", icons.separators.right_rounded),
-	})
-end
-
 components.filepath = function()
 	local width = vim.api.nvim_win_get_width(0)
 
 	if vim.bo.buftype == "terminal" then
-		return "%#StatusLineBackground#%t"
+		return "%#StatusLineNormal#%t"
 	elseif width > 110 then
-		return "%#StatusLineBackground#%t"
+		return "%#StatusLineNormal#%t"
 	else
 		local buf_fname = vim.fn.expand("%:t")
 		return string.format("%%#StatusLineBackground#%s", buf_fname)
 	end
-end
-
-components.current_signature = function()
-	local width = vim.api.nvim_win_get_width(0)
-	if not pcall(require, "lsp_signature") then
-		return
-	end
-	if width < 110 then
-		require("")
-	end
-	local sig = require("lsp_signature").status_line(width - width / 2)
-	local label = sig.label:gsub("%s+", " ")
-	return string.format("%%#StatusLineDiagWarn#%s", label)
 end
 
 components.lines = function()
@@ -172,11 +87,9 @@ components.lsp_progress = function()
 		end
 		local names = table.concat(names, " ")
 		return table.concat({
-			string.format("%%#StatusLineSep#%s", icons.separators.left_rounded),
-			string.format("%%#StatusLineLspSymbol# ["),
+			string.format("%%#StatusLineActive# ["),
 			string.format("%%#StatusLineLspName#%s", names),
-			string.format("%%#StatusLineLspSymbol#]"),
-			string.format("%%#StatusLineSep#%s", icons.separators.right_rounded),
+			string.format("%%#StatusLineActive#]"),
 		})
 	end
 end
@@ -195,7 +108,7 @@ components.git = function()
 		or ""
 
 	return table.concat({
-		string.format("%%#StatusLineGitBranch#%s%s", icons.misc.branch, git_status.head),
+		string.format("%%#StatusLineBackground#%s%s", icons.misc.branch, git_status.head),
 		string.format("%%#StatusLineDiagOk# %s", added),
 		string.format("%%#StatusLineDiagWarn# %s", changed),
 		string.format("%%#StatusLineDiagError# %s", removed),
@@ -212,7 +125,7 @@ components.file_icon = function()
 	if not ft_icon then
 		return ""
 	end
-	set_default_hl("StatusLine" .. file_ext, { fg = ft_color, bg = highlights.bg })
+	vim.api.nvim_set_hl(0, "StatusLine" .. file_ext, { fg = ft_color, bg = highlights.bg })
 	return string.format("%%#StatusLine%s#%s", file_ext, ft_icon)
 end
 
@@ -249,10 +162,7 @@ components.diagnostics = function()
 end
 
 components.harpoon = function()
-	local ok, harpoon = pcall(require, "harpoon")
-	if not ok then
-		return ""
-	end
+	local harpoon = require("harpoon")
 	local width = vim.api.nvim_win_get_width(0)
 	if width < 110 then
 		return ""
@@ -265,7 +175,7 @@ components.harpoon = function()
 		local fname_short = vim.fn.fnamemodify(fname, ":t")
 		local component = string.format("%%#StatusLineBackground#%s", fname_short)
 		if fname == vim.fn.expand("%:p:.") then
-			component = string.format("%%#StatusLineHarpoonActive#%s", fname_short)
+			component = string.format("%%#StatusLineActive#%s", fname_short)
 		end
 		table.insert(paths, component)
 	end
@@ -284,17 +194,16 @@ function statusline.active()
 
 	return table.concat({
 		concat_components({
-			components.mode(),
-			components.git(),
-			components.file_icon(),
+			-- components.mode(),
+			-- components.file_icon(),
 			components.filepath(),
-			-- components.current_signature(),
+			components.git(),
 		}),
 		"%#StatusLineBackground#%=",
 		concat_components({
 			components.harpoon(),
 			components.diagnostics(),
-			components.indent_info(),
+			-- components.indent_info(),
 			components.lines(),
 			components.lsp_progress(),
 		}),

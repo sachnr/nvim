@@ -3,16 +3,6 @@ local keys = require("keys")
 
 return {
 	{
-		"smjonas/inc-rename.nvim",
-		lazy = false,
-		config = function()
-			require("inc_rename").setup({
-				hl_group = "Substitute",
-			})
-		end,
-	},
-
-	{
 		"echasnovski/mini.indentscope",
 		version = false,
 		event = "VeryLazy",
@@ -20,10 +10,7 @@ return {
 			require("mini.indentscope").setup({
 				draw = {
 					delay = 0,
-					animation = require("mini.indentscope").gen_animation.quadratic({
-						easing = "in",
-						duration = 10,
-					}),
+					animation = require("mini.indentscope").gen_animation.none()
 				},
 				symbol = "│",
 			})
@@ -32,34 +19,63 @@ return {
 	},
 
 	{
-		"anuvyklack/windows.nvim",
+		"nvim-focus/focus.nvim",
+		version = false,
 		event = "VeryLazy",
-		dependencies = {
-			"anuvyklack/middleclass",
-			{ "anuvyklack/animation.nvim", enabled = false },
-		},
-		keys = keys.windows,
 		config = function()
-			vim.o.winwidth = 5
-			vim.o.equalalways = false
-			require("windows").setup({
-				animation = { enable = false },
-				ignore = {
-					filetype = {
-						"NvimTree",
-						"lspsagaoutline",
-						"undotree",
-						"outline",
-						"dapui_watches",
-						"dapui_stacks",
-						"dapui_scopes",
-						"dapui_breakpoints",
-						"dap-repl",
-					},
-					buftype = { "Outline" },
-				},
+			require("focus").setup({ commands = false, ui = { signcolumn = false } })
+
+			local ignore_filetypes = {
+				"undotree",
+				"dapui_watches",
+				"dapui_stacks",
+				"dapui_scopes",
+				"dapui_breakpoints",
+				"dap-repl",
+				"DiffviewFiles",
+				"qf",
+			}
+			local ignore_buftypes = {
+				"quickfix",
+				"nofile",
+				"prompt",
+				"popup",
+			}
+			local augroup = vim.api.nvim_create_augroup("FocusDisable", { clear = true })
+			vim.api.nvim_create_autocmd("WinEnter", {
+				group = augroup,
+				callback = function(_)
+					if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
+						vim.w.focus_disable = true
+					else
+						vim.w.focus_disable = false
+					end
+				end,
+				desc = "Disable focus autoresize for BufType",
+			})
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup,
+				callback = function(_)
+					if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+						vim.b.focus_disable = true
+					else
+						vim.b.focus_disable = false
+					end
+				end,
+				desc = "Disable focus autoresize for FileType",
 			})
 		end,
+	},
+
+	{
+		"stevearc/dressing.nvim",
+		event = "VeryLazy",
+		dependencies = "MunifTanjim/nui.nvim",
+		opts = {
+			select = {
+				backend = { "nui", "builtin" },
+			},
+		},
 	},
 
 	{
@@ -67,8 +83,6 @@ return {
 		keys = keys.zenmode(),
 		config = true,
 	},
-
-	{ "eandrju/cellular-automaton.nvim", event = "VeryLazy" },
 
 	{ "kevinhwang91/nvim-bqf", ft = "qf" },
 
@@ -78,14 +92,23 @@ return {
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			{
-				"echasnovski/mini.notify",
-				version = false,
+				"rcarriga/nvim-notify",
 				opts = {
-					lsp_progress = {
-						enable = false,
-					},
+					minimum_width = 50,
+					render = "wrapped-compact",
+					stages = "fade",
+					top_down = true,
 				},
 			},
+			-- {
+			-- 	-- "echasnovski/mini.notify",
+			-- 	version = false,
+			-- 	opts = {
+			-- 		lsp_progress = {
+			-- 			enable = false,
+			-- 		},
+			-- 	},
+			-- },
 		},
 		config = function()
 			require("noice").setup({
@@ -102,10 +125,10 @@ return {
 				},
 				-- you can enable a preset for easier configuration
 				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
-					command_palette = true, -- position the cmdline and popupmenu togetherc
+					bottom_search = false, -- use a classic bottom cmdline for search
+					command_palette = false, -- position the cmdline and popupmenu togetherc
 					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = true, -- enables an input dialog for inc-rename.nvim
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
 					lsp_doc_border = true, -- add a border to hover docs and signature help
 				},
 			})

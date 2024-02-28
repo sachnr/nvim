@@ -1,5 +1,4 @@
 return {
-
 	{
 		"mhartington/formatter.nvim",
 		keys = {
@@ -29,24 +28,6 @@ return {
 					})
 					:run()
 			end
-
-			-- local embedded_json_format = function()
-			-- 	require("format_embedded")
-			-- 		:builder({
-			-- 			exe = "jq",
-			-- 			args = { "." },
-			-- 			ts_query_lang = "rust",
-			-- 			ts_query = [[
-			--                        (macro_invocation
-			--                          (identifier) @macro (#eq? @macro "json")
-			--                          (token_tree
-			--                            (token_tree) @json_query)
-			--                            (#offset! @json_query 0 1 0 -1))
-			--                      ]],
-			-- 			ts_cap_name = "json_query",
-			-- 		})
-			-- 		:run()
-			-- end
 
 			local prettier = function(parser)
 				if not parser then
@@ -101,12 +82,21 @@ return {
 				}
 			end
 
+			local wgslfmt = function()
+				return {
+					exe = "wgslfmt",
+					arg = util.escape_path(util.get_current_buffer_file_path()),
+					stdin = false,
+				}
+			end
+
 			local filetypes = {
 				c = clang,
 				cpp = clang,
 				cs = require("formatter.filetypes.cs").astyle,
 				css = require("formatter.filetypes.css").prettier,
 				go = require("formatter.filetypes.go").gofmt,
+				glsl = clang,
 				html = require("formatter.filetypes.html").prettier,
 				java = {
 					function()
@@ -140,6 +130,7 @@ return {
 				toml = require("formatter.filetypes.toml").taplo,
 				typescript = prettier,
 				typescriptreact = prettier,
+				wgsl = wgslfmt,
 				yaml = require("formatter.filetypes.yaml").prettier,
 				zig = require("formatter.filetypes.zig").zigfmt,
 			}

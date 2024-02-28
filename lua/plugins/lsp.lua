@@ -5,42 +5,20 @@ return {
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		dependencies = {
 			{
-				-- "pmizio/typescript-tools.nvim",
-				-- "folke/neodev.nvim",
-				-- "folke/neoconf.nvim",
 				"nvim-lua/plenary.nvim",
-				-- "simrat39/rust-tools.nvim",
 				"mrcjkb/rustaceanvim",
-				"simrat39/inlay-hints.nvim",
 				"folke/neodev.nvim",
 			},
 		},
+
 		config = function()
 			local keys = require("keys")
 			local lspconfig = require("lspconfig")
-			local inlay_hints = require("inlay-hints")
-			inlay_hints.setup({
-				renderer = "inlay-hints/render/eol",
-				eol = {
-					parameter = {
-						format = function(hints)
-							return string.format(" <- (%s)", hints)
-						end,
-					},
-
-					type = {
-						separator = ", ",
-						format = function(hints)
-							return string.format(" => %s", hints)
-						end,
-					},
-				},
-			})
 
 			local on_attach_common = function(client, buffer)
+				client.server_capabilities.semanticTokensProvider = nil
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
-				-- client.server_capabilities.semanticTokensProvider = nil
 				keys.lsp_attach(buffer)
 			end
 
@@ -49,34 +27,6 @@ return {
 				local hl = "DiagnosticSign" .. name
 				vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
 			end
-
-			-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-			-- signs = {
-			-- 	severity_limit = "Warning",
-			-- },
-			-- 	underline = {
-			-- 		severity_limit = "Warning",
-			-- 	},
-			-- })
-
-			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
-			vim.lsp.handlers["textDocument/signatureHelp"] =
-				vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
-
-			-- jump to first definition
-			-- vim.lsp.handlers["textDocument/definition"] = function(_, result)
-			-- 	if not result or vim.tbl_isempty(result) then
-			-- 		print("[LSP] Could not find definition")
-			-- 		return
-			-- 	end
-			--
-			-- 	local params = vim.lsp.util.make_position_params()
-			-- 	if vim.tbl_islist(result) then
-			-- 		vim.lsp.util.jump_to_location(result[1], "utf-8")
-			-- 	else
-			-- 		vim.lsp.util.jump_to_location(result, "utf-8")
-			-- 	end
-			-- end
 
 			vim.diagnostic.config({
 				virtual_text = {
@@ -89,7 +39,6 @@ return {
 				},
 				float = {
 					source = "always",
-					border = "single",
 				},
 				signs = true,
 				underline = {
@@ -113,6 +62,8 @@ return {
 
 			local servers = {
 				"html",
+				"glsl_analyzer",
+				"wgsl_analyzer",
 				"bashls",
 				"jsonls",
 				"cssls",
@@ -132,6 +83,25 @@ return {
 					capabilities = capabilities,
 				})
 			end
+
+			require("neodev").setup({
+				override = function(root_dir, library)
+					if root_dir:find("/etc/nixos", 1, true) == 1 then
+						library.enabled = true
+						library.plugins = true
+					end
+				end,
+			})
+
+			lspconfig.lua_ls.setup({
+				settings = {
+					Lua = {
+						completion = {
+							callSnippet = "Replace",
+						},
+					},
+				},
+			})
 
 			lspconfig.clangd.setup({
 				cmd = {
@@ -154,7 +124,6 @@ return {
 			lspconfig.gopls.setup({
 				on_attach = function(client, buffer)
 					on_attach_common(client, buffer)
-					inlay_hints.on_attach(client, buffer)
 				end,
 				capabilities = capabilities,
 				settings = {
@@ -172,46 +141,12 @@ return {
 				},
 			})
 
-			require("neodev").setup()
-
-			lspconfig.lua_ls.setup({
-				on_attach = on_attach_common,
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						completion = {
-							callSnippet = "Replace",
-						},
-						diagnostics = {
-							globals = { "vim" },
-						},
-						workspace = {
-							library = {
-								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-								[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-							},
-						},
-					},
-				},
-			})
-
 			vim.g.rustaceanvim = function()
-				local exepath = ""
-				local libpath = ""
-				local cfg = require("rustaceanvim.config")
 				return {
-					dap = {
-						adapter = cfg.get_codelldb_adapter(exepath, libpath),
-					},
-					tools = {},
 					server = {
 						on_attach = function(client, bufnr)
 							on_attach_common(client, bufnr)
-							inlay_hints.on_attach(client, bufnr)
-							local opts = { silent = true, noremap = true, buffer = bufnr }
-							vim.keymap.set("n", "ga", function()
-								vim.cmd.RustLsp("codeAction")
-							end, opts)
+							require("keys").lsp_attach(bufnr)
 						end,
 						capabilities = capabilities,
 						settings = {
@@ -219,17 +154,10 @@ return {
 								procMacro = {
 									enable = true,
 								},
-								experimental = {
-									procAttrMacros = true,
-								},
-								checkOnSave = {
-									command = "clippy",
-								},
+								experimental = { procAttrMacros = true },
+								checkOnSave = { command = "clippy" },
 								inlayHints = {
-									lifetimeElisionHints = {
-										enable = true,
-										useParameterNames = true,
-									},
+									lifetimeElisionHints = { enable = true, useParameterNames = true },
 								},
 							},
 						},
@@ -240,7 +168,6 @@ return {
 			lspconfig.tsserver.setup({
 				on_attach = function(client, bufnr)
 					on_attach_common(client, bufnr)
-					inlay_hints.on_attach(client, bufnr)
 				end,
 				capabilities = capabilities,
 				settings = {
@@ -262,7 +189,6 @@ return {
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 					keys.lsp_attach(buffer)
-					inlay_hints.on_attach(client, buffer)
 				end,
 				capabilities = capabilities,
 				filetypes = {
@@ -301,7 +227,7 @@ return {
 			lspconfig.zls.setup({
 				on_attach = function(client, bufnr)
 					on_attach_common(client, bufnr)
-					inlay_hints.on_attach(client, bufnr)
+					vim.lsp.inlay_hint.enable(bufnr, true)
 				end,
 				capabilities = capabilities,
 			})

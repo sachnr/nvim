@@ -10,6 +10,7 @@ return {
 
 	{
 		"j-morano/buffer_manager.nvim",
+		enabled = false,
 		keys = keys.buffer_manager,
 		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
@@ -39,22 +40,7 @@ return {
 				use_default_keymaps = false,
 				default_file_explorer = false,
 				skip_confirm_for_simple_edits = true,
-				float = {
-					-- Padding around the floating window
-					padding = 2,
-					max_width = 120,
-					max_height = 25,
-					border = "none",
-					win_options = {
-						winblend = 0,
-					},
-				},
-				columns = {
-					"icon",
-					-- "permissions",
-					-- "size",
-					-- "mtime",
-				},
+				columns = { "icon" },
 				keymaps = {
 					["<C-F5>"] = "actions.refresh",
 					["H"] = "actions.parent",

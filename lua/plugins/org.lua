@@ -2,7 +2,8 @@ return {
 	{
 		"nvim-neorg/neorg",
 		-- ft = "norg",
-		lazy = false,
+		enabled = true,
+		event = "VeryLazy",
 		run = ":Neorg sync-parsers",
 		config = function()
 			require("neorg").setup({
@@ -11,10 +12,16 @@ return {
 					["core.keybinds"] = {
 						config = {
 							hook = function(keybinds)
-								keybinds.remap_event("norg", "n", "<localleader>nc", "core.looking-glass.magnify-code-block")
+								keybinds.remap_event(
+									"norg",
+									"n",
+									"<localleader>nc",
+									"core.looking-glass.magnify-code-block"
+								)
 							end,
 						},
 					},
+					["core.tempus"] = {},
 					["core.concealer"] = {
 						config = {
 							icon_preset = "diamond",
@@ -46,7 +53,6 @@ return {
 
 	{
 		"lervag/vimtex",
-		ft = "norg",
-		enabled = true,
+		enabled = false,
 	},
 }

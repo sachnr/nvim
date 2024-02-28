@@ -60,8 +60,9 @@ local opts = {
 
 require("keys").defaults()
 require("lazy").setup("plugins", opts)
--- require("colorscheme")
 require("statusline")
+
+vim.cmd.colorscheme("gruvbox-material")
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}
@@ -84,6 +85,23 @@ vim.api.nvim_create_user_command("GetBufType", function()
 	local filetype = vim.bo.filetype
 	print("buftype: " .. buftype .. " | filetype: " .. filetype)
 end, { nargs = 0 })
+
+local toggle_inlay_hints = function()
+	local enabled = vim.lsp.inlay_hint.is_enabled(0)
+	if enabled then
+		vim.lsp.inlay_hint.enable(0, false)
+	else
+		vim.lsp.inlay_hint.enable(0, true)
+	end
+end
+
+vim.api.nvim_create_user_command("InlayHintToggle", function()
+	toggle_inlay_hints()
+end, { nargs = 0 })
+
+vim.keymap.set("n", "\\", function()
+	toggle_inlay_hints()
+end, { silent = true, noremap = true, desc = "Toggle Inlay Hints" })
 
 if bootstrap then
 	vim.cmd("bw | silent! MasonInstallAll")

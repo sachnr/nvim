@@ -44,6 +44,16 @@ M.defaults = function()
 	})
 end
 
+M.fzflua = function()
+	return {
+		{ "<Leader>tf", mode = "n", "<cmd> FzfLua files <CR>", desc = "find files" },
+		{ "<Leader>tg", mode = "n", "<cmd> FzfLua live_grep <CR>", desc = "live grep" },
+		{ "<Leader>to", mode = "n", "<cmd> FzfLua oldfiles <CR>", desc = "live grep" },
+		{ "<Leader>tu", mode = "n", "<cmd> silent! %foldopen! | UndotreeToggle <CR>", desc = "UndotreeToggle" },
+		{ "<Leader>t/", mode = "n", "<cmd> FzfLua blines <CR>", desc = "search in file" },
+	}
+end
+
 M.telescope = function()
 	return {
 		{ "<Leader>tf", mode = "n", "<cmd> Telescope find_files <CR>", desc = "find files" },
@@ -51,12 +61,6 @@ M.telescope = function()
 		{ "<Leader>to", mode = "n", "<cmd> Telescope oldfiles <CR>", desc = "live grep" },
 		{ "<Leader>tu", mode = "n", "<cmd> silent! %foldopen! | UndotreeToggle <CR>", desc = "UndotreeToggle" },
 		{ "<Leader>t/", mode = "n", "<cmd> Telescope current_buffer_fuzzy_find <CR>", desc = "search in file" },
-	}
-end
-
-M.toggleterm = function()
-	return {
-		{ "<F2>", mode = { "n", "t" }, "<cmd>ToggleTerm direction=vertical size=90<cr>", desc = "toggleterm" },
 	}
 end
 
@@ -104,13 +108,9 @@ M.lsp_attach = function(bufnr)
 	-- set("n", "<leader>lq", vim.diagnostic.setloclist, merge(opts, { desc = "diagnostic setlocklist" }))
 	local lsp_opts = merge(opts, { buffer = bufnr })
 	set("n", "ga", vim.lsp.buf.code_action, merge(lsp_opts, { desc = "code_action" }))
-	-- set("n", "ga", '<cmd>lua require("cosmic-ui").code_actions()<cr>', merge(lsp_opts, { desc = "code_action" }))
-	-- set("v", "ga", '<cmd>lua require("cosmic-ui").range_code_actions()<cr>', merge(lsp_opts, { desc = "code_action" }))
+	-- set("n", "ga", "<cmd> FzfLua lsp_code_actions <cr>", merge(lsp_opts, { desc = "code_action" }))
 	set("n", "gh", vim.lsp.buf.references, merge(lsp_opts, { desc = "goto references" }))
 	set("n", "gr", vim.lsp.buf.rename, merge(lsp_opts, { desc = "lsp rename" }))
-	-- set("n", "gr", function()
-	-- 	return ":IncRename " .. vim.fn.expand("<cword>")
-	-- end, merge(lsp_opts, { desc = "lsp rename", expr = true }))
 	set("n", "K", vim.lsp.buf.hover, merge(lsp_opts, { desc = "hover" }))
 	set("n", "gD", vim.lsp.buf.declaration, merge(lsp_opts, { desc = "goto declaration" }))
 	set("n", "gd", vim.lsp.buf.definition, merge(lsp_opts, { desc = "goto definition" }))
@@ -219,7 +219,7 @@ M.git = function()
 			{ desc = "lazygit" },
 		},
 		{ "<leader>gb", "<cmd> lua require('gitsigns').blame_line <cr>", { desc = "git blame" } },
-		{ "<leader>gd", "<cmd> DiffviewOpen <CR>", { desc = "git diff" } },
+		{ "<leader>gd", "<cmd> silent! %foldopen! | DiffviewOpen | wincmd = <CR>", { desc = "git diff" } },
 		{ "<leader>gh", "<cmd> DiffviewFileHistory<CR>", { desc = "git history" } },
 	}
 end

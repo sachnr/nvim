@@ -6,8 +6,14 @@ return {
 	"nvim-tree/nvim-web-devicons",
 
 	{
+		"echasnovski/mini.colors",
+		lazy = false,
+	},
+
+	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
+		enable = false,
 		keys = keys.peek(),
 		config = function()
 			require("peek").setup({
@@ -32,38 +38,30 @@ return {
 	},
 
 	{
-		"numToStr/Comment.nvim",
+		"echasnovski/mini.comment",
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
-			require("Comment").setup()
-			-- require("Comment.ft").set("lua", { "--%s", "--[[%s]]" })
+			require("mini.comment").setup()
 		end,
-	},
-
-	{
-		"LudoPinelli/comment-box.nvim",
-		keys = keys.comment_box(),
 	},
 
 	{
 		"akinsho/toggleterm.nvim",
-		keys = keys.toggleterm(),
-		event = "ColorScheme",
 		config = true,
 	},
 
-	{
-		"brenoprata10/nvim-highlight-colors",
-		enabled = false,
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = function()
-			require("nvim-highlight-colors").setup({
-				render = "background",
-				enable_named_colors = false,
-				enable_tailwind = true,
-			})
-		end,
-	},
+	-- {
+	-- 	"brenoprata10/nvim-highlight-colors",
+	-- 	enabled = true,
+	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
+	-- 	config = function()
+	-- 		require("nvim-highlight-colors").setup({
+	-- 			render = "first_column",
+	-- 			enable_named_colors = false,
+	-- 			enable_tailwind = true,
+	-- 		})
+	-- 	end,
+	-- },
 
 	{
 		"danymat/neogen",
@@ -107,24 +105,5 @@ return {
 		enabled = false,
 		event = "VeryLazy",
 		opts = {},
-	},
-
-	{
-		"folke/which-key.nvim",
-		-- keys = { "<leader>", '"', "'", "`", "@" },
-		enabled = true,
-		lazy = false,
-		priority = 1000,
-		config = function()
-			local wk = require("which-key")
-
-			local options = {
-				window = {
-					border = "single", -- none, single, double, shadow
-				},
-			}
-
-			wk.setup(options)
-		end,
 	},
 }

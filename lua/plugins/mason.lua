@@ -25,20 +25,10 @@ return {
 					-- Formatters
 					-- "black",
 					-- "stylua",
-					-- "clang-format",
-					-- "prettierd",
 					-- "shfmt",
 
 					-- debuggers
-					-- "firefox-debug-adapter",
-					-- "java-debug-adapter",
-					-- "java-test",
-					-- "js-debug-adapter",
-					-- "debugpy",
 					-- "cpptools",
-					-- "delve",
-					-- "vscode-go",
-					-- "codelldb",
 				},
 
 				-- - "prepend" (default, Mason's bin location is put first in PATH)

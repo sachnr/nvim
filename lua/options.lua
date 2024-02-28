@@ -1,77 +1,69 @@
-local opt = vim.opt
-local g = vim.g
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
-g.mapleader = " "
-g.maplocalleader = ","
-
-opt.inccommand = "nosplit"
-opt.mouse = "a" -- allows use of mouse
-opt.title = false -- let Vim set the title of the windowlet Vim set the title of the window
+vim.opt.inccommand = "nosplit"
+vim.opt.mouse = "a"
+vim.opt.title = false
 -- opt.guicursor = { "n-c-v:block-nCursor" }
 
-opt.clipboard = "unnamedplus" -- allow neovim to access system clipboard
-opt.termguicolors = true -- Enables 24-bit RGB color in the TUI
+vim.opt.clipboard = "unnamedplus"
+vim.opt.termguicolors = true
 
-opt.cursorline = true -- highlights the current line
+vim.opt.cursorline = true
 
-opt.showcmd = true -- Show (partial) command in the last line of the screen
--- opt.showmatch = true -- show matching brackets when text indicator is over them
-opt.showmode = false -- message on status line to show current mode
+vim.opt.showcmd = true
+-- opt.showmatch = true
+vim.opt.showmode = false
 
-opt.shortmess:append("sI") -- list of flags, reduce length of messages
-opt.laststatus = 3 --tells when last window has status lines
-opt.fillchars = { stl = " ", eob = " " } -- characters to use for displaying special items
-opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
-opt.writebackup = false -- make a backup before overwriting a file
-opt.fileencoding = "utf-8" -- encoding
-opt.swapfile = false -- whether to use a swapfile for a buffer
+vim.opt.laststatus = 3
+vim.opt.fillchars = { stl = " ", eob = " " }
+vim.opt.signcolumn = "yes"
+vim.opt.writebackup = false
+vim.opt.fileencoding = "utf-8"
+vim.opt.swapfile = false
 
 -- window
-opt.splitbelow = true -- new window from split is below the current one
-opt.splitright = true -- new window is put right of the current one
-opt.equalalways = false -- resize automatically
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.equalalways = false
 
 -- scroll
-opt.scrolloff = 4 -- minimal number of screen lines to keep above and below the cursor
-opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
+vim.opt.scrolloff = 4
+vim.opt.sidescrolloff = 8
 
 -- search
-opt.incsearch = true -- Makes search act like search in modern browsers
-opt.ignorecase = true -- Ignore case when searching...
-opt.smartcase = true -- ... unless there is a capital letter in the query
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- undo
-opt.undofile = true -- save undo information in a file
+vim.opt.undofile = true
 
 -- Tabs/indent
-opt.autoindent = true -- take indent for new line from previous line
-opt.tabstop = 4 -- insert 4 spaces for tab
-opt.softtabstop = 4 -- number of spaces that <Tab> uses while editing
-opt.shiftwidth = 4 -- no of spaces for each indent
-opt.expandtab = true --insert mode: uses spaces for <Tab>
+vim.opt.autoindent = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
-opt.joinspaces = false
--- text wrap
-opt.wrap = true -- long lines wrap and continue on the next line
-opt.breakindent = true -- Every wrapped line will continue visually indented
-opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
-opt.linebreak = true --wrap long lines at a character in 'breakat' rather than at the last character that fits on the screen
+vim.opt.joinspaces = false
+vim.opt.wrap = true
+vim.opt.breakindent = true
+vim.opt.showbreak = string.rep(" ", 3)
+vim.opt.linebreak = true
 -- fold
-opt.foldlevelstart = 99
-opt.foldmethod = "marker"
-opt.foldlevel = 0
-opt.modelines = 1
-opt.conceallevel = 2
+vim.opt.foldlevelstart = 99
+vim.opt.foldmethod = "marker"
+vim.opt.foldlevel = 0
+vim.opt.modelines = 1
+vim.opt.conceallevel = 2
 
-opt.belloff = "all"
+vim.opt.number = true
+vim.opt.numberwidth = 3
+vim.opt.relativenumber = true
 
--- line numbers
-opt.number = true -- print the line number in front of each line
-opt.numberwidth = 3 -- number of columns used for the line number
-opt.relativenumber = true --show relative line number in front of each line
+vim.opt.inccommand = "split"
 
-opt.inccommand = "split"
-
-vim.o.timeout = true
-opt.updatetime = 600 -- after this many milliseconds flush swap file, Make updates happen faster
-opt.timeoutlen = 400 -- keypress time out time in milliseconds
+vim.opt.timeout = true
+vim.opt.updatetime = 600
+vim.opt.timeoutlen = 400

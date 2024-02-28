@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
+		enabled = false,
 		keys = require("keys").telescope,
 		dependencies = {
 			-- "kkharji/sqlite.lua",
@@ -47,7 +48,7 @@ return {
 					},
 					results_title = "results",
 					file_ignore_patterns = {
-                        "libs",
+						"libs",
 						"node_modules",
 						".git/",
 					},
