@@ -15,6 +15,9 @@ return {
 			local keys = require("keys")
 			local lspconfig = require("lspconfig")
 
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
 			local on_attach_common = function(client, buffer)
 				client.server_capabilities.semanticTokensProvider = nil
 				client.server_capabilities.documentFormattingProvider = false
@@ -57,8 +60,6 @@ return {
 			lspSymbol("Hint", icons.hint)
 			lspSymbol("Warn", icons.warn)
 			lspSymbol("other", icons.other)
-
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			local servers = {
 				"html",
@@ -230,16 +231,6 @@ return {
 					vim.lsp.inlay_hint.enable(bufnr, true)
 				end,
 				capabilities = capabilities,
-			})
-
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(args)
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-					if client.progress then
-						client.progress = vim.ringbuf(10000)
-						client.progress.pending = {}
-					end
-				end,
 			})
 		end,
 	},

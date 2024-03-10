@@ -113,7 +113,7 @@ return {
 				jsonc = require("formatter.filetypes.json").jq,
 				lua = require("formatter.filetypes.lua").stylua,
 				markdown = require("formatter.filetypes.markdown").prettier,
-				nix = require("formatter.filetypes.nix").alejandra,
+				nix = require("formatter.filetypes.nix").nixfmt,
 				python = require("formatter.filetypes.python").black,
 				rust = function()
 					embedded_sql_format()
