@@ -6,11 +6,6 @@ return {
 	"nvim-tree/nvim-web-devicons",
 
 	{
-		"echasnovski/mini.colors",
-		lazy = false,
-	},
-
-	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		enable = false,
