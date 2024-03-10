@@ -74,7 +74,7 @@ return {
 				-- "tsserver",
 				"yamlls",
 				"nil_ls",
-				"eslint",
+				-- "eslint",
 			}
 
 			for _, lsp in ipairs(servers) do
@@ -165,24 +165,24 @@ return {
 				}
 			end
 
-			lspconfig.tsserver.setup({
-				on_attach = function(client, bufnr)
-					on_attach_common(client, bufnr)
-				end,
-				capabilities = capabilities,
-				settings = {
-					separate_diagnostic_server = true,
-					tsserver_file_preferences = {
-						includeInlayEnumMemberValueHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayParameterNameHints = "literals", -- 'none' | 'literals' | 'all';
-						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayVariableTypeHints = true,
-					},
-				},
-			})
+			-- lspconfig.tsserver.setup({
+			-- 	on_attach = function(client, bufnr)
+			-- 		on_attach_common(client, bufnr)
+			-- 	end,
+			-- 	capabilities = capabilities,
+			-- 	settings = {
+			-- 		separate_diagnostic_server = true,
+			-- 		tsserver_file_preferences = {
+			-- 			includeInlayEnumMemberValueHints = true,
+			-- 			includeInlayFunctionLikeReturnTypeHints = true,
+			-- 			includeInlayFunctionParameterTypeHints = true,
+			-- 			includeInlayParameterNameHints = "literals", -- 'none' | 'literals' | 'all';
+			-- 			includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+			-- 			includeInlayPropertyDeclarationTypeHints = true,
+			-- 			includeInlayVariableTypeHints = true,
+			-- 		},
+			-- 	},
+			-- })
 
 			lspconfig.tailwindcss.setup({
 				on_attach = function(client, buffer)

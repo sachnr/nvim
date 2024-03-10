@@ -62,7 +62,7 @@ require("keys").defaults()
 require("lazy").setup("plugins", opts)
 require("statusline")
 
-vim.cmd.colorscheme("gruvbox-material")
+vim.cmd.colorscheme("kanagawa")
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}
