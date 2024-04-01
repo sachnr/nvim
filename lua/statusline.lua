@@ -195,7 +195,7 @@ function statusline.active()
 	return table.concat({
 		concat_components({
 			-- components.mode(),
-			-- components.file_icon(),
+			components.file_icon(),
 			components.filepath(),
 			components.git(),
 		}),

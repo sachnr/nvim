@@ -70,7 +70,8 @@ return {
 				"cssls",
 				-- "ccls",
 				-- "vuels",
-				"pylsp",
+				-- "pylsp",
+				"theme_check",
 				-- "gopls",
 				-- "tsserver",
 				"yamlls",
@@ -95,6 +96,9 @@ return {
 			})
 
 			lspconfig.lua_ls.setup({
+				on_attach = function(client, buffer)
+					on_attach_common(client, buffer)
+				end,
 				settings = {
 					Lua = {
 						completion = {
@@ -185,6 +189,22 @@ return {
 			-- 	},
 			-- })
 
+			lspconfig.pyright.setup({
+				on_attach = function(client, bufnr)
+					on_attach_common(client, bufnr)
+				end,
+				capabilities = capabilities,
+				settings = {
+					python = {
+						analysis = {
+							autoSearchPaths = true,
+							diagnosticMode = "openFilesOnly",
+							useLibraryCodeForTypes = true,
+						},
+					},
+				},
+			})
+
 			lspconfig.tailwindcss.setup({
 				on_attach = function(client, buffer)
 					client.server_capabilities.documentFormattingProvider = false
@@ -231,6 +251,24 @@ return {
 					vim.lsp.inlay_hint.enable(bufnr, true)
 				end,
 				capabilities = capabilities,
+			})
+
+			local autocmd = vim.api.nvim_create_autocmd
+			autocmd("FileType", {
+				pattern = "liquid",
+				callback = function()
+					local root_dir = vim.fs.dirname(vim.fs.find({ ".theme-check.yml" }, { upward = true })[1])
+					local client = vim.lsp.start({
+						on_attach = function(_, bufnr)
+							keys.lsp_attach(bufnr)
+						end,
+						capabilities = capabilities,
+						name = "shopify_ls",
+						cmd = { "shopify", "theme", "language-server" },
+						root_dir = root_dir,
+					})
+					vim.lsp.buf_attach_client(0, client)
+				end,
 			})
 		end,
 	},

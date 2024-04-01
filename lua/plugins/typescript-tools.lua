@@ -11,7 +11,6 @@ return {
 				client.server_capabilities.documentRangeFormattingProvider = false
 				keys.lsp_attach(bufnr)
 			end,
-
 			settings = {
 				tsserver_file_preferences = {
 					includeInlayParameterNameHints = "all",

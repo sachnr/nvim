@@ -8,11 +8,21 @@ return {
 			-- "nvim-treesitter/playground",
 		},
 		config = function()
-			require("nvim-treesitter.parsers").get_parser_configs().asm = {
+			local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+			parser_config.asm = {
 				install_info = {
 					url = "https://github.com/rush-rs/tree-sitter-asm.git",
 					files = { "src/parser.c" },
 					branch = "main",
+				},
+			}
+			parser_config.liquid = {
+				install_info = {
+					url = "https://github.com/Shopify/tree-sitter-liquid.git",
+					files = { "src/parser.c" },
+					branch = "main",
+					generate_requires_npm = false,
+					requires_generate_from_grammar = true,
 				},
 			}
 			local configs = require("nvim-treesitter.configs")

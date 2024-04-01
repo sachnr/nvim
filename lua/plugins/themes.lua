@@ -107,4 +107,7 @@ return {
 	-- 		-- vim.cmd("colorscheme sonokai")
 	-- 	end,
 	-- },
+
+	{ "catppuccin/nvim", lazy = false, name = "catppuccin", priority = 1000, config = true },
+	-- { "EdenEast/nightfox.nvim", lazy = false, priority = 1000, config = true },
 }
