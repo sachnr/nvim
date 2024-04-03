@@ -70,28 +70,29 @@ return {
 
 			dap.configurations.c = dap.configurations.cpp
 		end,
-		dependencies = {
-			{
-				"rcarriga/nvim-dap-ui",
-				config = function()
-					require("dapui").setup({
-						layouts = {
-							{
-								elements = {
-									{ id = "scopes", size = 0.35 },
-									{ id = "breakpoints", size = 0.15 },
-									{ id = "stacks", size = 0.20 },
-									{ id = "watches", size = 0.30 },
-								},
-								position = "left",
-								size = 40,
-							},
-							{ elements = { { id = "repl", size = 1 } }, position = "right", size = 40 },
+	},
+
+	{
+		"rcarriga/nvim-dap-ui",
+		event = "VeryLazy",
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+		config = function()
+			require("dapui").setup({
+				layouts = {
+					{
+						elements = {
+							{ id = "scopes", size = 0.35 },
+							{ id = "breakpoints", size = 0.15 },
+							{ id = "stacks", size = 0.20 },
+							{ id = "watches", size = 0.30 },
 						},
-					})
-				end,
-			},
-		},
+						position = "left",
+						size = 40,
+					},
+					{ elements = { { id = "repl", size = 1 } }, position = "right", size = 40 },
+				},
+			})
+		end,
 	},
 
 	{
