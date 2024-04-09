@@ -170,16 +170,19 @@ components.harpoon = function()
 
 	local items = harpoon:list().items
 	local paths = {}
-	for _, item in ipairs(items) do
+	for i, item in ipairs(items) do
 		local fname = item.value
 		local fname_short = vim.fn.fnamemodify(fname, ":t")
-		local component = string.format("%%#StatusLineBackground#%s", fname_short)
+		local component = string.format("%%#StatusLineBackground#%s: %s", i, fname_short)
 		if fname == vim.fn.expand("%:p:.") then
-			component = string.format("%%#StatusLineActive#%s", fname_short)
+			component = table.concat({
+				string.format("%%#StatusLineDiagInfo#%s: ", i),
+				string.format("%%#StatusLineActive#%s", fname_short),
+			})
 		end
 		table.insert(paths, component)
 	end
-	local list = table.concat(paths, " ")
+	local list = table.concat(paths, "  ")
 	return string.format("󰐃 [%s]", list)
 end
 
@@ -197,14 +200,14 @@ function statusline.active()
 			-- components.mode(),
 			components.file_icon(),
 			components.filepath(),
+			components.lines(),
 			components.git(),
+			components.diagnostics(),
 		}),
 		"%#StatusLineBackground#%=",
 		concat_components({
 			components.harpoon(),
-			components.diagnostics(),
 			-- components.indent_info(),
-			components.lines(),
 			components.lsp_progress(),
 		}),
 		" ",
