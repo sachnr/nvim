@@ -250,6 +250,6 @@ au("colorscheme", "*", reload, "reload statusline")
 
 vim.o.showmode = false
 vim.g.qf_disable_statusline = 1
-vim.o.laststatus = 2
+vim.o.laststatus = 3
 
 return statusline
