@@ -62,7 +62,7 @@ require("keys").defaults()
 require("lazy").setup("plugins", opts)
 require("statusline")
 
-vim.cmd.colorscheme("catppuccin-mocha")
+vim.cmd.colorscheme("kanagawa-wave")
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}

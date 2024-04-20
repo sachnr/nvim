@@ -1,6 +1,7 @@
 return {
 	{
 		"nvim-focus/focus.nvim",
+		enabled = false,
 		version = false,
 		event = "VeryLazy",
 		config = function()

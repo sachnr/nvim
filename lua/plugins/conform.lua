@@ -16,6 +16,11 @@ return {
 						args = { "$FILENAME" },
 						stdin = "false",
 					},
+					leptosfmt = {
+						command = "leptosfmt",
+						args = { "--stdin", "--rustfmt", "$FILENAME" },
+						stdin = "true",
+					},
 				},
 				formatters_by_ft = {
 					c = { "clang-format" },
@@ -32,7 +37,7 @@ return {
 					markdown = { { "prettierd", "prettier" } },
 					nix = { "nixfmt" },
 					python = { "black" },
-					rust = { "rustfmt" },
+					rust = { "leptosfmt", "rustfmt" },
 					scss = { { "prettierd", "prettier" } },
 					sh = { "shfmt" },
 					sql = { "pg_format" },

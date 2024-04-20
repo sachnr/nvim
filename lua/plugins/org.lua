@@ -2,7 +2,7 @@ return {
 	{
 		"nvim-neorg/neorg",
 		-- ft = "norg",
-		enabled = true,
+		enabled = false,
 		event = "VeryLazy",
 		run = ":Neorg sync-parsers",
 		config = function()

@@ -68,15 +68,11 @@ return {
 				"bashls",
 				"jsonls",
 				"cssls",
-				-- "ccls",
-				-- "vuels",
 				-- "pylsp",
-				"theme_check",
 				-- "gopls",
 				-- "tsserver",
 				"yamlls",
 				"nil_ls",
-				-- "eslint",
 			}
 
 			for _, lsp in ipairs(servers) do
@@ -158,6 +154,13 @@ return {
 							["rust-analyzer"] = {
 								procMacro = {
 									enable = true,
+									ignored = {
+										leptos_macro = {
+											-- optional: --
+											-- "component",
+											"server",
+										},
+									},
 								},
 								experimental = { procAttrMacros = true },
 								checkOnSave = { command = "clippy" },

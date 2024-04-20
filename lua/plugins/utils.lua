@@ -6,20 +6,6 @@ return {
 	"nvim-tree/nvim-web-devicons",
 
 	{
-		"toppair/peek.nvim",
-		build = "deno task --quiet build:fast",
-		enable = false,
-		keys = keys.peek(),
-		config = function()
-			require("peek").setup({
-				syntax = true, -- enable syntax highlighting, affects performance
-				theme = "dark", -- 'dark' or 'light'
-				app = "brave", -- 'webview', 'browser', string or a table of strings
-			})
-		end,
-	},
-
-	{
 		"gbprod/yanky.nvim",
 		keys = keys.yanky(),
 		config = function()
