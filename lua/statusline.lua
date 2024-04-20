@@ -125,7 +125,8 @@ components.file_icon = function()
 	if not ft_icon then
 		return ""
 	end
-	vim.api.nvim_set_hl(0, "StatusLine" .. file_ext, { fg = ft_color, bg = highlights.bg })
+
+	vim.api.nvim_set_hl(0, string.format("StatusLine%s", file_ext), { bg = highlights.bg, fg = ft_color })
 	return string.format("%%#StatusLine%s#%s", file_ext, ft_icon)
 end
 
@@ -198,7 +199,7 @@ function statusline.active()
 	return table.concat({
 		concat_components({
 			-- components.mode(),
-			components.file_icon(),
+			-- components.file_icon(),
 			components.filepath(),
 			components.lines(),
 			components.git(),
@@ -250,6 +251,6 @@ au("colorscheme", "*", reload, "reload statusline")
 
 vim.o.showmode = false
 vim.g.qf_disable_statusline = 1
-vim.o.laststatus = 3
+vim.o.laststatus = 2
 
 return statusline

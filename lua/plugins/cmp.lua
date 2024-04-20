@@ -80,7 +80,6 @@ return {
 					{ name = "buffer", keyword_length = 4 },
 					{ name = "crates" },
 					{ name = "git" },
-					{ name = "neorg" },
 				},
 				sorting = {
 					priority_weight = 1,
