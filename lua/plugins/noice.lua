@@ -4,24 +4,24 @@ return {
 		event = "VeryLazy",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			-- {
-			-- 	"rcarriga/nvim-notify",
-			-- 	opts = {
-			-- 		minimum_width = 50,
-			-- 		render = "wrapped-compact",
-			-- 		stages = "fade",
-			-- 		top_down = true,
-			-- 	},
-			-- },
 			{
-				"echasnovski/mini.notify",
-				version = false,
+				"rcarriga/nvim-notify",
 				opts = {
-					lsp_progress = {
-						enable = false,
-					},
+					minimum_width = 50,
+					render = "wrapped-compact",
+					stages = "fade",
+					top_down = true,
 				},
 			},
+			-- {
+			-- 	"echasnovski/mini.notify",
+			-- 	version = false,
+			-- 	opts = {
+			-- 		lsp_progress = {
+			-- 			enable = false,
+			-- 		},
+			-- 	},
+			-- },
 		},
 		config = function()
 			require("noice").setup({

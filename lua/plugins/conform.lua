@@ -11,15 +11,20 @@ return {
 		config = function()
 			require("conform").setup({
 				formatters = {
+					leptosfmt = {
+						command = "leptosfmt",
+						args = { "--stdin", "--rustfmt", "$FILENAME" },
+						stdin = "true",
+					},
 					wgslfmt = {
 						command = "wgslfmt",
 						args = { "$FILENAME" },
 						stdin = "false",
 					},
-					leptosfmt = {
-						command = "leptosfmt",
-						args = { "--stdin", "--rustfmt", "$FILENAME" },
-						stdin = "true",
+					norgfmt = {
+						command = "norg-fmt",
+						args = { "$FILENAME" },
+						stdin = "false",
 					},
 				},
 				formatters_by_ft = {
@@ -36,6 +41,7 @@ return {
 					lua = { "stylua" },
 					markdown = { { "prettierd", "prettier" } },
 					nix = { "nixfmt" },
+					norg = { "norgfmt" },
 					python = { "black" },
 					rust = { "leptosfmt", "rustfmt" },
 					scss = { { "prettierd", "prettier" } },
