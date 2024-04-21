@@ -31,18 +31,18 @@ return {
 		config = true,
 	},
 
-	-- {
-	-- 	"brenoprata10/nvim-highlight-colors",
-	-- 	enabled = true,
-	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
-	-- 	config = function()
-	-- 		require("nvim-highlight-colors").setup({
-	-- 			render = "first_column",
-	-- 			enable_named_colors = false,
-	-- 			enable_tailwind = true,
-	-- 		})
-	-- 	end,
-	-- },
+	{
+		"brenoprata10/nvim-highlight-colors",
+		enabled = true,
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		config = function()
+			require("nvim-highlight-colors").setup({
+				render = "virtual",
+				enable_named_colors = false,
+				enable_tailwind = true,
+			})
+		end,
+	},
 
 	{
 		"danymat/neogen",

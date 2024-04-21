@@ -51,15 +51,15 @@ highlights:apply()
 
 local components = {}
 
-components.filepath = function()
+components.filepath = function(bufnr)
 	local width = vim.api.nvim_win_get_width(0)
 
-	if vim.bo.buftype == "terminal" then
+	if vim.bo[bufnr].buftype == "terminal" then
 		return "%#StatusLineNormal#%t"
 	elseif width > 110 then
 		return "%#StatusLineNormal#%t"
 	else
-		local buf_fname = vim.fn.expand("%:t")
+		local buf_fname = vim.fn.bufname(bufnr)
 		return string.format("%%#StatusLineBackground#%s", buf_fname)
 	end
 end
@@ -97,6 +97,11 @@ end
 components.git = function()
 	local head = vim.b.gitsigns_head
 	if not head then
+		return ""
+	end
+
+	local width = vim.api.nvim_win_get_width(0)
+	if width < 110 then
 		return ""
 	end
 
@@ -190,6 +195,8 @@ end
 local statusline = {}
 
 function statusline.active()
+	local bufnr = vim.api.nvim_get_current_buf()
+
 	local function concat_components(comps)
 		return vim.iter(comps):skip(1):fold(comps[1], function(acc, component)
 			return #component > 0 and string.format("%s  %s", acc, component) or acc
@@ -200,7 +207,7 @@ function statusline.active()
 		concat_components({
 			-- components.mode(),
 			-- components.file_icon(),
-			components.filepath(),
+			components.filepath(bufnr),
 			components.lines(),
 			components.git(),
 			components.diagnostics(),
@@ -216,8 +223,9 @@ function statusline.active()
 end
 
 function statusline.inactive()
+	local bufnr = vim.api.nvim_get_current_buf()
 	return table.concat({
-		components.filepath(),
+		components.filepath(bufnr),
 	})
 end
 

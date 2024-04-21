@@ -270,7 +270,7 @@ return {
 						cmd = { "shopify", "theme", "language-server" },
 						root_dir = root_dir,
 					})
-					vim.lsp.buf_attach_client(0, client)
+					vim.lsp.buf_attach_client(vim.api.nvim_get_current_buf(), client)
 				end,
 			})
 		end,

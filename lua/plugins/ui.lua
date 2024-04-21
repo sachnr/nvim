@@ -8,5 +8,15 @@ return {
 		config = true,
 	},
 
-	{ "kevinhwang91/nvim-bqf", ft = "qf" },
+	{
+		"kevinhwang91/nvim-bqf",
+		ft = "qf",
+		config = function()
+			require("bqf").setup({
+				preview = {
+					auto_preview = false,
+				},
+			})
+		end,
+	},
 }

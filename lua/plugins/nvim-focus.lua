@@ -1,14 +1,12 @@
 return {
 	{
 		"nvim-focus/focus.nvim",
-		enabled = false,
 		version = false,
 		event = "VeryLazy",
 		config = function()
 			require("focus").setup({ commands = false, ui = { signcolumn = false } })
 
 			local ignore_filetypes = {
-				"undotree",
 				"dapui_watches",
 				"dapui_stacks",
 				"dapui_scopes",
@@ -19,7 +17,6 @@ return {
 			}
 			local ignore_buftypes = {
 				"quickfix",
-				"nofile",
 				"prompt",
 				"popup",
 			}

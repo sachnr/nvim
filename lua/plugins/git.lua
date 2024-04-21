@@ -31,19 +31,7 @@ return {
 	},
 
 	{
-		"akinsho/git-conflict.nvim",
-		event = "VeryLazy",
-		keys = require("keys").git(),
-		opts = {
-			default_mappings = {
-				none = "<leader>g0",
-				ours = "<leader>g1",
-				theirs = "<leader>g2",
-				both = "<leader>g3",
-				prev = "[g",
-				next = "]g",
-			},
-			disable_diagnostics = true,
-		},
+		"tpope/vim-fugitive",
+		lazy = false,
 	},
 }

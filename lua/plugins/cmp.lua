@@ -9,6 +9,7 @@ return {
 			"onsails/lspkind-nvim",
 			"petertriho/cmp-git",
 			"L3MON4D3/LuaSnip",
+			"zbirenbaum/copilot-cmp",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -18,6 +19,8 @@ return {
 			luasnip.config.set_config({
 				history = true,
 			})
+
+            require("copilot_cmp").setup()
 
 			cmp.setup({
 				enabled = function()
@@ -74,8 +77,9 @@ return {
 					end, { "i", "s" }),
 				}),
 				sources = {
-					{ name = "path" },
+                    { name = "copilot", group_index = 2 },
 					{ name = "nvim_lsp" },
+					{ name = "path" },
 					{ name = "luasnip" },
 					{ name = "buffer", keyword_length = 4 },
 					{ name = "crates" },
