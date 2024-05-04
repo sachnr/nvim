@@ -16,15 +16,6 @@ return {
 					branch = "main",
 				},
 			}
-			-- parser_config.liquid = {
-			-- 	install_info = {
-			-- 		url = "https://github.com/Shopify/tree-sitter-liquid.git",
-			-- 		files = { "src/parser.c" },
-			-- 		branch = "main",
-			-- 		generate_requires_npm = false,
-			-- 		requires_generate_from_grammar = true,
-			-- 	},
-			-- }
 			local configs = require("nvim-treesitter.configs")
 			local list = require("nvim-treesitter.parsers").get_parser_configs()
 			configs.setup({
@@ -77,6 +68,7 @@ return {
 				ignore_install = {},
 				highlight = {
 					enable = true,
+					ignore = { "*.min.js" },
 				},
 				playground = {
 					enable = false,

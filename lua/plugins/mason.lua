@@ -7,6 +7,7 @@ return {
 			local options = {
 				ensure_installed = {
 					-- Language Servers
+					"tailwindcss-language-server",
 					-- "lua-language-server",
 					-- "python-lsp-server",
 					-- "clangd",

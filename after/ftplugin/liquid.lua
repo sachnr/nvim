@@ -1,0 +1,6 @@
+-- if not pcall(require, "Comment") then
+-- 	return
+-- end
+--
+-- local ft = require("Comment.ft")
+-- ft.set("liquid", { "{% comment %}%s{% endcomment %}", "{% comment %}%s{% endcomment %}" })

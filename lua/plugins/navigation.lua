@@ -9,27 +9,6 @@ return {
 	},
 
 	{
-		"j-morano/buffer_manager.nvim",
-		enabled = false,
-		keys = keys.buffer_manager,
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("buffer_manager").setup({
-				select_menu_item_commands = {
-					v = {
-						key = "<C-v>",
-						command = "vsplit",
-					},
-					h = {
-						key = "<C-s>",
-						command = "split",
-					},
-				},
-			})
-		end,
-	},
-
-	{
 		"stevearc/oil.nvim",
 		enabled = true,
 		keys = keys.oil(),

@@ -4,24 +4,24 @@ return {
 		event = "VeryLazy",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			{
-				"rcarriga/nvim-notify",
-				opts = {
-					minimum_width = 50,
-					render = "wrapped-compact",
-					stages = "fade",
-					top_down = true,
-				},
-			},
 			-- {
-			-- 	"echasnovski/mini.notify",
-			-- 	version = false,
+			-- 	"rcarriga/nvim-notify",
 			-- 	opts = {
-			-- 		lsp_progress = {
-			-- 			enable = false,
-			-- 		},
+			-- 		max_width = 50,
+			-- 		render = "wrapped-compact",
+			-- 		stages = "fade",
+			-- 		top_down = false,
 			-- 	},
 			-- },
+			{
+				"echasnovski/mini.notify",
+				version = false,
+				opts = {
+					lsp_progress = {
+						enable = false,
+					},
+				},
+			},
 		},
 		config = function()
 			require("noice").setup({
@@ -38,8 +38,8 @@ return {
 				},
 				-- you can enable a preset for easier configuration
 				presets = {
-					bottom_search = false, -- use a classic bottom cmdline for search
-					command_palette = false, -- position the cmdline and popupmenu togetherc
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu togetherc
 					long_message_to_split = true, -- long messages will be sent to a split
 					inc_rename = false, -- enables an input dialog for inc-rename.nvim
 					lsp_doc_border = true, -- add a border to hover docs and signature help

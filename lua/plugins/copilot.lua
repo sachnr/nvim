@@ -1,42 +1,52 @@
 return {
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	lazy = false,
-	-- 	config = function()
-	-- 		vim.keymap.set("i", "<C-y>", 'copilot#Accept("\\<CR>")', {
-	-- 			expr = true,
-	-- 			replace_keycodes = false,
-	-- 		})
-	-- 		vim.g.copilot_no_tab_map = true
-	-- 	end,
-	-- },
-
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				suggestion = { enabled = false },
-				panel = { enabled = false },
+		"github/copilot.vim",
+		lazy = false,
+		init = function()
+			vim.g.copilot_no_tab_map = true
+
+			vim.keymap.set("i", "<M-Tab>", 'copilot#Accept("")', {
+				expr = true,
+				replace_keycodes = false,
 			})
 		end,
 	},
 
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	cmd = "Copilot",
+	-- 	event = "InsertEnter",
+	-- 	config = function()
+	-- 		require("copilot").setup({
+	-- 			suggestion = { enabled = true },
+	-- 			panel = { enabled = true },
+	-- 		})
+	-- 	end,
+	-- },
+
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
 		lazy = false,
-		keys = { { "<Leader>tc", mode = "n", "<cmd> CopilotChat <CR>", desc = "Copilot Chat" } },
+		keys = {
+			{
+				"<leader>th",
+				function()
+					local actions = require("CopilotChat.actions")
+					require("CopilotChat.integrations.fzflua").pick(actions.prompt_actions())
+				end,
+				desc = "CopilotChat - Prompt actions",
+			},
+		},
 		dependencies = {
-			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			{ "github/copilot.vim" },
+			-- { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 		},
 		opts = {
 			mappings = {
 				complete = {
-					detail = "Use @<Tab> or /<Tab> for options.",
-					insert = "<Tab>",
+					detail = "",
+					insert = "",
 				},
 				close = {
 					normal = "q",

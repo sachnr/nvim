@@ -18,13 +18,13 @@ return {
 		end,
 	},
 
-	{
-		"echasnovski/mini.comment",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = function()
-			require("mini.comment").setup()
-		end,
-	},
+	-- {
+	-- 	"numToStr/Comment.nvim",
+	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
+	-- 	opts = {
+	-- 		-- add any options here
+	-- 	},
+	-- },
 
 	{
 		"akinsho/toggleterm.nvim",
