@@ -257,7 +257,7 @@ local reload = function()
 end
 au("colorscheme", "*", reload, "reload statusline")
 
-vim.o.showmode = false
+vim.o.showmode = true
 vim.g.qf_disable_statusline = 1
 vim.o.laststatus = 2
 

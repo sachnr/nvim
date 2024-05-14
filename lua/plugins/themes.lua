@@ -31,6 +31,21 @@ return {
 	-- 	end,
 	-- },
 
+	{
+		"Shatur/neovim-ayu",
+		lazy = false,
+		enabled = true,
+		priority = 1000,
+		config = function()
+			require("ayu").setup({
+				mirage = false,
+				terminal = true,
+			})
+			vim.cmd("colorscheme ayu")
+			vim.api.nvim_set_hl(0, "MatchParen", { fg = "#68d4ff", underline = false })
+		end,
+	},
+
 	-- {
 	-- 	"askfiy/visual_studio_code",
 	-- 	event = "VeryLazy",
@@ -38,37 +53,37 @@ return {
 	-- 	priority = 100,
 	-- },
 
-	{
-		"ellisonleao/gruvbox.nvim",
-		event = "VeryLazy",
-		enabled = true,
-		priority = 1000,
-		config = function()
-			require("gruvbox").setup({
-				undercurl = true,
-				underline = false,
-				bold = false,
-				---@diagnostic disable-next-line: missing-fields
-				italic = {
-					strings = false,
-					comments = true,
-					operators = false,
-					folds = true,
-				},
-				strikethrough = true,
-				invert_selection = false,
-				invert_signs = false,
-				invert_tabline = false,
-				invert_intend_guides = false,
-				inverse = true, -- invert background for search, diffs, statuslines and errors
-				contrast = "hard", -- can be "hard", "soft" or empty string
-				palette_overrides = {},
-				overrides = {},
-				dim_inactive = false,
-				transparent_mode = false,
-			})
-		end,
-	},
+	-- {
+	-- 	"ellisonleao/gruvbox.nvim",
+	-- 	event = "VeryLazy",
+	-- 	enabled = true,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require("gruvbox").setup({
+	-- 			undercurl = true,
+	-- 			underline = false,
+	-- 			bold = false,
+	-- 			---@diagnostic disable-next-line: missing-fields
+	-- 			italic = {
+	-- 				strings = false,
+	-- 				comments = true,
+	-- 				operators = false,
+	-- 				folds = true,
+	-- 			},
+	-- 			strikethrough = true,
+	-- 			invert_selection = false,
+	-- 			invert_signs = false,
+	-- 			invert_tabline = false,
+	-- 			invert_intend_guides = false,
+	-- 			inverse = true, -- invert background for search, diffs, statuslines and errors
+	-- 			contrast = "hard", -- can be "hard", "soft" or empty string
+	-- 			palette_overrides = {},
+	-- 			overrides = {},
+	-- 			dim_inactive = false,
+	-- 			transparent_mode = false,
+	-- 		})
+	-- 	end,
+	-- },
 
 	-- {
 	-- 	"neanias/everforest-nvim",

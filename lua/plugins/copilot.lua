@@ -12,21 +12,15 @@ return {
 		end,
 	},
 
-	-- {
-	-- 	"zbirenbaum/copilot.lua",
-	-- 	cmd = "Copilot",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require("copilot").setup({
-	-- 			suggestion = { enabled = true },
-	-- 			panel = { enabled = true },
-	-- 		})
-	-- 	end,
-	-- },
-
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		lazy = false,
+		cmd = {
+			"CopilotChat",
+			"CopilotChatBuffer",
+			"CopilotChatSave",
+			"CopilotChatLoad",
+			"CopilotChatReset",
+		},
 		keys = {
 			{
 				"<leader>th",
@@ -42,42 +36,67 @@ return {
 			-- { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 		},
-		opts = {
-			mappings = {
-				complete = {
-					detail = "",
-					insert = "",
+		config = function()
+			require("CopilotChat").setup({
+				mappings = {
+					complete = {
+						detail = "",
+						insert = "",
+					},
+					close = {
+						normal = "q",
+						insert = "",
+					},
+					reset = {
+						normal = "<C-l>",
+						insert = "",
+					},
+					submit_prompt = {
+						normal = "<C-y>",
+						insert = "<C-y>",
+					},
+					accept_diff = {
+						normal = "ga",
+						insert = "",
+					},
+					yank_diff = {
+						normal = "gy",
+					},
+					show_diff = {
+						normal = "gd",
+					},
+					show_system_prompt = {
+						normal = "gp",
+					},
+					show_user_selection = {
+						normal = "gs",
+					},
 				},
-				close = {
-					normal = "q",
-					insert = "",
-				},
-				reset = {
-					normal = "<C-l>",
-					insert = "",
-				},
-				submit_prompt = {
-					normal = "<C-y>",
-					insert = "<C-y>",
-				},
-				accept_diff = {
-					normal = "ga",
-					insert = "",
-				},
-				yank_diff = {
-					normal = "gy",
-				},
-				show_diff = {
-					normal = "gd",
-				},
-				show_system_prompt = {
-					normal = "gp",
-				},
-				show_user_selection = {
-					normal = "gs",
-				},
-			},
-			debug = true,
-		},
+			})
+
+			vim.api.nvim_create_user_command("CopilotChatBuffer", function(args)
+				require("CopilotChat").ask(args.args, { selection = require("CopilotChat.select").buffer })
+			end, { nargs = "*", range = true })
+
+			local commands = {
+				"CopilotChatClose",
+				"CopilotChatCommit",
+				"CopilotChatCommitStaged",
+				"CopilotChatDebugInfo",
+				"CopilotChatFix",
+				"CopilotChatExplain",
+				"CopilotChatDocs",
+				"CopilotChatOptimize",
+				"CopilotChatOpen",
+				"CopilotChatTests",
+				"CopilotChatToggle",
+				"CopilotChatFixDiagnostic",
+				"CopilotChatReview",
+			}
+
+			for _, command in ipairs(commands) do
+				vim.api.nvim_del_user_command(command)
+			end
+		end,
 	},
 }

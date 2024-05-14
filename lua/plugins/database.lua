@@ -1,7 +1,7 @@
 return {
 	{
 		"kristijanhusak/vim-dadbod-ui",
-		enabled = false,
+		enabled = true,
 		dependencies = { "kristijanhusak/vim-dadbod-completion" },
 		cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
 		init = function()
@@ -11,7 +11,7 @@ return {
 
 	{
 		"kristijanhusak/vim-dadbod-completion",
-		enabled = false,
+		enabled = true,
 		ft = { "sql", "sqlite", "mysql" },
 		dependencies = { "tpope/vim-dadbod" },
 	},
