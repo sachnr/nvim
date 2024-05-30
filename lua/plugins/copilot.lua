@@ -1,13 +1,37 @@
 return {
-	{
-		"github/copilot.vim",
-		lazy = false,
-		init = function()
-			vim.g.copilot_no_tab_map = true
+	-- {
+	-- 	"github/copilot.vim",
+	-- 	lazy = false,
+	-- 	init = function()
+	-- 		vim.g.copilot_no_tab_map = true
+	--
+	-- 		vim.keymap.set("i", "<M-Tab>", 'copilot#Accept("")', {
+	-- 			expr = true,
+	-- 			replace_keycodes = false,
+	-- 		})
+	-- 	end,
+	-- },
 
-			vim.keymap.set("i", "<M-Tab>", 'copilot#Accept("")', {
-				expr = true,
-				replace_keycodes = false,
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					debounce = 75,
+					keymap = {
+						accept = "<M-Tab>",
+						accept_word = "<M-Right>",
+						accept_line = false,
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+				panel = { enabled = false },
 			})
 		end,
 	},
@@ -32,8 +56,8 @@ return {
 			},
 		},
 		dependencies = {
-			{ "github/copilot.vim" },
-			-- { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			-- { "github/copilot.vim" },
+			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 		},
 		config = function()

@@ -17,14 +17,14 @@ M.defaults = function()
 	set("x", "<p>", 'p:let @+=@0<CR>:let @"=@0<CR>', opts)
 	-- remove highlight
 	set("n", "<ESC>", "<cmd> noh <CR>", merge(opts, { desc = "no highlight" }))
-    -- quickfixlist
-    vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
-    vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
+	-- quickfixlist
+	vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
+	vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 	-- save
 	set("n", "<space>s", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- d
-	set("i", "<C-c>", "<ESC>", merge(opts, { desc = "Esc" }))
+	set("i", "<C-c>", "<ESC>", opts)
 	-- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))

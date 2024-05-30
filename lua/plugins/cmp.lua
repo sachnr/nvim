@@ -1,13 +1,12 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		lazy = false,
+		event = "InsertEnter",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"onsails/lspkind-nvim",
-			"petertriho/cmp-git",
 			"L3MON4D3/LuaSnip",
 			-- "zbirenbaum/copilot-cmp",
 		},
@@ -15,38 +14,47 @@ return {
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
 			local luasnip = require("luasnip")
+			local defaults = require("cmp.config.default")()
+			local max_width_abbr = 10
+			local ellipsis_char = "…"
+
+			local get_ws = function(max, len)
+				return (" "):rep(max - len)
+			end
+
+			lspkind.init({})
 
 			luasnip.config.set_config({
 				history = true,
 			})
 
-            -- require("copilot_cmp").setup()
-
 			cmp.setup({
-				enabled = function()
-					-- disable completion in comments
-					local context = require("cmp.config.context")
-					local buftype = vim.bo.buftype
-					if vim.api.nvim_get_mode().mode == "c" then
-						return true
-					elseif buftype == "prompt" then
-						return false
-					else
-						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
-					end
-				end,
+				sources = {
+					{ name = "nvim_lsp" },
+					{ name = "path" },
+					{ name = "luasnip" },
+					{ name = "buffer", keyword_length = 4 },
+				},
 				preselect = cmp.PreselectMode.None,
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body) -- For `luasnip` users.
 					end,
 				},
+				completion = {
+					completeopt = "menu,menuone,noinsert",
+				},
 				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-u>"] = cmp.mapping.scroll_docs(-4),
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
 					["<C-e>"] = cmp.mapping.abort(),
-					["<C-space>"] = cmp.mapping.complete(),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<C-y>"] = cmp.mapping(
+						cmp.mapping.confirm({
+							behavior = cmp.ConfirmBehavior.Insert,
+							select = true,
+						}),
+						{ "i", "c" }
+					),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -76,38 +84,17 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
-				sources = {
-                    -- { name = "copilot", group_index = 2 },
-					{ name = "nvim_lsp" },
-					{ name = "path" },
-					{ name = "luasnip" },
-					{ name = "buffer", keyword_length = 4 },
-					{ name = "crates" },
-					{ name = "git" },
-				},
-				sorting = {
-					priority_weight = 1,
-					comparators = {
-						cmp.config.compare.offset,
-						cmp.config.compare.exact,
-						cmp.config.compare.score,
-						cmp.config.compare.recently_used,
-						cmp.config.compare.locality,
-						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
-						cmp.config.compare.length,
-						cmp.config.compare.order,
-					},
-				},
 				window = {
-					completion = {
-						col_offset = -3,
+					completion = cmp.config.window.bordered({
+						col_offset = -2,
 						side_padding = 0,
-						winhighlight = "Normal:Pmenu,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
-					},
-					documentation = {
-						winhighlight = "Normal:CmpDocumentation,FloatBorder:CmpDocumentationBorder",
-					},
+						border = "single",
+						winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+					}),
+					documentation = cmp.config.window.bordered({
+						border = "single",
+						winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+					}),
 				},
 				formatting = {
 					expandable_indicator = true,
@@ -123,11 +110,22 @@ return {
 						return kind
 					end,
 				},
-				experimental = {
-					ghost_text = false,
+				sorting = defaults.sorting,
+			})
+
+			cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
+				sources = {
+					{ name = "vim-dadbod-completion" },
+					{ name = "buffer" },
 				},
 			})
-			require("cmp_git").setup()
+
+			cmp.setup.filetype({ "toml" }, {
+				sources = {
+					{ name = "crates" },
+					{ name = "buffer" },
+				},
+			})
 		end,
 	},
 }

@@ -31,17 +31,30 @@ return {
 		config = true,
 	},
 
+	-- {
+	-- 	"brenoprata10/nvim-highlight-colors",
+	-- 	enabled = true,
+	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
+	-- 	config = function()
+	-- 		require("nvim-highlight-colors").setup({
+	-- 			render = "virtual",
+	-- 			enable_named_colors = false,
+	-- 			enable_tailwind = true,
+	-- 		})
+	-- 	end,
+	-- },
+
 	{
-		"brenoprata10/nvim-highlight-colors",
+		"NvChad/nvim-colorizer.lua",
 		enabled = true,
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		config = function()
-			require("nvim-highlight-colors").setup({
-				render = "virtual",
-				enable_named_colors = false,
-				enable_tailwind = true,
-			})
-		end,
+		opts = {
+			user_default_options = {
+				names = false,
+				mode = "virtualtext",
+				tailwind = "lsp",
+			},
+		},
 	},
 
 	{

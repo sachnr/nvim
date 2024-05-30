@@ -12,6 +12,8 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+
+---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
@@ -61,6 +63,7 @@ local opts = {
 require("keys").defaults()
 require("lazy").setup("plugins", opts)
 require("statusline")
+vim.cmd("colorscheme bamboo")
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}
@@ -84,21 +87,14 @@ vim.api.nvim_create_user_command("GetBufType", function()
 	print("buftype: " .. buftype .. " | filetype: " .. filetype)
 end, { nargs = 0 })
 
-local toggle_inlay_hints = function()
-	local enabled = vim.lsp.inlay_hint.is_enabled(0)
-	if enabled then
-		vim.lsp.inlay_hint.enable(0, false)
-	else
-		vim.lsp.inlay_hint.enable(0, true)
-	end
-end
-
 vim.api.nvim_create_user_command("InlayHintToggle", function()
-	toggle_inlay_hints()
+	local bufnr = vim.api.nvim_get_current_buf()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
 end, { nargs = 0 })
 
 vim.keymap.set("n", "\\", function()
-	toggle_inlay_hints()
+	local bufnr = vim.api.nvim_get_current_buf()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
 end, { silent = true, noremap = true, desc = "Toggle Inlay Hints" })
 
 if bootstrap then

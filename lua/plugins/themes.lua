@@ -1,5 +1,15 @@
 return {
 	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = {},
+	-- 	init = function()
+	-- 		vim.cmd("colorscheme tokyonight")
+	-- 	end,
+	-- },
+
+	-- {
 	-- 	"rebelot/kanagawa.nvim",
 	-- 	lazy = false,
 	-- 	config = function()
@@ -31,20 +41,31 @@ return {
 	-- 	end,
 	-- },
 
-	{
-		"Shatur/neovim-ayu",
-		lazy = false,
-		enabled = true,
-		priority = 1000,
-		config = function()
-			require("ayu").setup({
-				mirage = false,
-				terminal = true,
-			})
-			vim.cmd("colorscheme ayu")
-			vim.api.nvim_set_hl(0, "MatchParen", { fg = "#68d4ff", underline = false })
-		end,
-	},
+	-- {
+	-- 	"Shatur/neovim-ayu",
+	-- 	lazy = false,
+	-- 	enabled = true,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require("ayu").setup({
+	-- 			mirage = false,
+	-- 			terminal = true,
+	-- 			overrides = {
+	-- 				Normal = { bg = "None" },
+	-- 				ColorColumn = { bg = "None" },
+	-- 				SignColumn = { bg = "None" },
+	-- 				Folded = { bg = "None" },
+	-- 				FoldColumn = { bg = "None" },
+	-- 				CursorLine = { bg = "None" },
+	-- 				CursorColumn = { bg = "None" },
+	-- 				WhichKeyFloat = { bg = "None" },
+	-- 				VertSplit = { bg = "None" },
+	-- 			},
+	-- 		})
+	-- 		vim.cmd("colorscheme ayu")
+	-- 		vim.api.nvim_set_hl(0, "MatchParen", { fg = "#68d4ff", underline = false })
+	-- 	end,
+	-- },
 
 	-- {
 	-- 	"askfiy/visual_studio_code",
@@ -107,6 +128,7 @@ return {
 	-- 	config = function()
 	-- 		require("nightfox").setup({
 	-- 			options = {
+	--                    transparent = false,
 	-- 				styles = {
 	-- 					comments = "italic",
 	-- 					conditionals = "NONE",
@@ -121,7 +143,7 @@ return {
 	-- 				},
 	-- 			},
 	-- 		})
-	-- 		vim.cmd("colorscheme carbonfox")
+	-- 		vim.cmd("colorscheme dawnfox")
 	-- 	end,
 	-- },
 
@@ -136,7 +158,17 @@ return {
 	-- 	end,
 	-- },
 
-	-- { "catppuccin/nvim", lazy = false, name = "catppuccin", priority = 1000, config = true },
+	-- {
+	-- 	"catppuccin/nvim",
+	-- 	lazy = false,
+	-- 	name = "catppuccin",
+	-- 	priority = 1000,
+	-- 	config = true,
+	-- 	init = function()
+	-- 		vim.cmd("colorscheme catppuccin-mocha")
+	-- 	end,
+	-- },
+
 	-- { "EdenEast/nightfox.nvim", lazy = false, priority = 1000, config = true },
 
 	-- {

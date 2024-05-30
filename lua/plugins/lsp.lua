@@ -33,15 +33,17 @@ return {
 
 			vim.diagnostic.config({
 				virtual_text = {
-					source = "always",
+					source = true,
 					prefix = "■",
 					spacing = 2,
 					severity = {
 						min = vim.diagnostic.severity.ERROR,
 					},
 				},
+
 				float = {
-					source = "always",
+					source = true,
+					border = "single",
 				},
 				signs = true,
 				underline = {
@@ -69,8 +71,6 @@ return {
 				"jsonls",
 				"cssls",
 				-- "pylsp",
-				-- "gopls",
-				-- "tsserver",
 				"yamlls",
 				"nil_ls",
 			}
@@ -173,24 +173,52 @@ return {
 				}
 			end
 
-			-- lspconfig.tsserver.setup({
-			-- 	on_attach = function(client, bufnr)
-			-- 		on_attach_common(client, bufnr)
-			-- 	end,
-			-- 	capabilities = capabilities,
-			-- 	settings = {
-			-- 		separate_diagnostic_server = true,
-			-- 		tsserver_file_preferences = {
-			-- 			includeInlayEnumMemberValueHints = true,
-			-- 			includeInlayFunctionLikeReturnTypeHints = true,
-			-- 			includeInlayFunctionParameterTypeHints = true,
-			-- 			includeInlayParameterNameHints = "literals", -- 'none' | 'literals' | 'all';
-			-- 			includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-			-- 			includeInlayPropertyDeclarationTypeHints = true,
-			-- 			includeInlayVariableTypeHints = true,
-			-- 		},
-			-- 	},
-			-- })
+			local util = require("lspconfig.util")
+
+			local function get_typescript_server_path(root_dir)
+				local global_ts = "/home/sachnr/.config/yarn/global/node_modules/typescript/lib"
+				-- Alternative location if installed as root:
+				-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
+				local found_ts = ""
+				local function check_dir(path)
+					found_ts = util.path.join(path, "node_modules", "typescript", "lib")
+					if util.path.exists(found_ts) then
+						return path
+					end
+				end
+				if util.search_ancestors(root_dir, check_dir) then
+					return found_ts
+				else
+					return global_ts
+				end
+			end
+
+			lspconfig.volar.setup({
+				filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+				init_options = {
+					vue = {
+						hybridMode = false,
+					},
+					typescript = {
+						tsdk = get_typescript_server_path(vim.fn.getcwd()),
+					},
+				},
+			})
+
+			lspconfig.tsserver.setup({
+				on_attach = function(client, bufnr)
+					on_attach_common(client, bufnr)
+				end,
+				capabilities = capabilities,
+				settings = {
+					tsserver_file_preferences = {
+						includeInlayParameterNameHints = "all",
+						includeInlayVariableTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+					},
+				},
+				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+			})
 
 			lspconfig.pyright.setup({
 				on_attach = function(client, bufnr)
@@ -216,6 +244,7 @@ return {
 				end,
 				capabilities = capabilities,
 				filetypes = {
+					"liquid",
 					"css",
 					"django-html",
 					"gohtml",
@@ -251,7 +280,6 @@ return {
 			lspconfig.zls.setup({
 				on_attach = function(client, bufnr)
 					on_attach_common(client, bufnr)
-					vim.lsp.inlay_hint.enable(bufnr, true)
 				end,
 				capabilities = capabilities,
 			})
@@ -270,7 +298,9 @@ return {
 						cmd = { "shopify", "theme", "language-server" },
 						root_dir = root_dir,
 					})
-					vim.lsp.buf_attach_client(vim.api.nvim_get_current_buf(), client)
+					if client then
+						vim.lsp.buf_attach_client(vim.api.nvim_get_current_buf(), client)
+					end
 				end,
 			})
 		end,
