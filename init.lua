@@ -62,8 +62,8 @@ local opts = {
 
 require("keys").defaults()
 require("lazy").setup("plugins", opts)
-require("statusline")
 vim.cmd("colorscheme bamboo")
+require("statusline")
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}

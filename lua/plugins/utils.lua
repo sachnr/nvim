@@ -18,13 +18,13 @@ return {
 		end,
 	},
 
-	-- {
-	-- 	"numToStr/Comment.nvim",
-	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
-	-- 	opts = {
-	-- 		-- add any options here
-	-- 	},
-	-- },
+	{
+		"numToStr/Comment.nvim",
+		event = { "BufRead", "BufWinEnter", "BufNewFile" },
+		opts = {
+			-- add any options here
+		},
+	},
 
 	{
 		"akinsho/toggleterm.nvim",
