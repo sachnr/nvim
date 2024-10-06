@@ -75,14 +75,14 @@ end
 
 components.lsp_progress = function()
 	local current_buffer = vim.api.nvim_get_current_buf()
-	local is_not_attached = next(vim.lsp.get_active_clients({ bufnr = current_buffer })) == nil
+	local is_not_attached = next(vim.lsp.get_clients({ bufnr = current_buffer })) == nil
 	local is_not_normal_buffer = vim.bo.buftype ~= ""
 
 	if is_not_attached or is_not_normal_buffer then
 		return ""
 	else
 		local names = {}
-		for _, server in pairs(vim.lsp.get_active_clients({ bufnr = current_buffer })) do
+		for _, server in pairs(vim.lsp.get_clients({ bufnr = current_buffer })) do
 			table.insert(names, server.name)
 		end
 		local names = table.concat(names, " ")
@@ -145,7 +145,7 @@ end
 
 components.diagnostics = function()
 	local current_buffer = vim.api.nvim_get_current_buf()
-	local is_not_attached = next(vim.lsp.get_active_clients({ bufnr = current_buffer })) == nil
+	local is_not_attached = next(vim.lsp.get_clients({ bufnr = current_buffer })) == nil
 	local is_not_normal_buffer = vim.bo.buftype ~= ""
 
 	if is_not_attached or is_not_normal_buffer then

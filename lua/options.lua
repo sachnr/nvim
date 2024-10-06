@@ -53,7 +53,8 @@ vim.opt.showbreak = string.rep(" ", 3)
 vim.opt.linebreak = true
 -- fold
 vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = "marker"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 0
 vim.opt.modelines = 1
 vim.opt.conceallevel = 2

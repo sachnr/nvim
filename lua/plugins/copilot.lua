@@ -15,11 +15,12 @@ return {
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
+		enabled = false,
 		event = "InsertEnter",
 		config = function()
 			require("copilot").setup({
 				suggestion = {
-					enabled = true,
+					enabled = false,
 					auto_trigger = true,
 					debounce = 75,
 					keymap = {
@@ -38,6 +39,7 @@ return {
 
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
+		enabled = false,
 		cmd = {
 			"CopilotChat",
 			"CopilotChatBuffer",
@@ -62,6 +64,7 @@ return {
 		},
 		config = function()
 			require("CopilotChat").setup({
+				model = "gpt-4",
 				mappings = {
 					complete = {
 						detail = "",

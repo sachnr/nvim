@@ -97,12 +97,15 @@ return {
 	-- 			invert_tabline = false,
 	-- 			invert_intend_guides = false,
 	-- 			inverse = true, -- invert background for search, diffs, statuslines and errors
-	-- 			contrast = "hard", -- can be "hard", "soft" or empty string
+	-- 			contrast = "", -- can be "hard", "soft" or empty string
 	-- 			palette_overrides = {},
 	-- 			overrides = {},
 	-- 			dim_inactive = false,
 	-- 			transparent_mode = false,
 	-- 		})
+	-- 	end,
+	-- 	init = function()
+	-- 		vim.cmd("colorscheme gruvbox")
 	-- 	end,
 	-- },
 
@@ -181,4 +184,19 @@ return {
 	-- 		require("onedark").load()
 	-- 	end,
 	-- },
+
+	{
+		"ribru17/bamboo.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("bamboo").setup({
+				style = "multiplex",
+				transparent = false,
+				toggle_style_key = "<leader-F1>", -- Keybind to toggle theme style. Leave it nil to disable it, or set it to a string, e.g. "<leader>ts"
+				toggle_style_list = { "multiplex", "light" }, -- List of styles to toggle between
+			})
+			require("bamboo").load()
+		end,
+	},
 }

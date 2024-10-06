@@ -31,6 +31,8 @@ return {
 				vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
 			end
 
+			local icons = require("icons").diagnostics
+
 			vim.diagnostic.config({
 				virtual_text = {
 					source = true,
@@ -45,7 +47,15 @@ return {
 					source = true,
 					border = "single",
 				},
-				signs = true,
+				signs = {
+					text = {
+						[vim.diagnostic.severity.ERROR] = icons.error,
+						[vim.diagnostic.severity.WARN] = icons.warn,
+						[vim.diagnostic.severity.HINT] = icons.hint,
+						[vim.diagnostic.severity.INFO] = icons.info,
+					},
+				},
+				-- signs = true,
 				underline = {
 					severity = {
 						min = vim.diagnostic.severity.WARN,
@@ -54,14 +64,6 @@ return {
 				update_in_insert = false,
 				severity_sort = true,
 			})
-
-			local icons = require("icons").diagnostics
-
-			lspSymbol("Error", icons.error)
-			lspSymbol("Info", icons.info)
-			lspSymbol("Hint", icons.hint)
-			lspSymbol("Warn", icons.warn)
-			lspSymbol("other", icons.other)
 
 			local servers = {
 				"html",
