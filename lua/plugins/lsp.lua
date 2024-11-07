@@ -178,7 +178,7 @@ return {
 			local util = require("lspconfig.util")
 
 			local function get_typescript_server_path(root_dir)
-				local global_ts = "/home/sachnr/.config/yarn/global/node_modules/typescript/lib"
+				local global_ts = "/home/" .. os.getenv("USER") .. "/.config/yarn/global/node_modules/typescript/lib"
 				-- Alternative location if installed as root:
 				-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
 				local found_ts = ""
@@ -207,10 +207,21 @@ return {
 				},
 			})
 
-			lspconfig.tsserver.setup({
+			lspconfig.ts_ls.setup({
 				on_attach = function(client, bufnr)
 					on_attach_common(client, bufnr)
 				end,
+				init_options = {
+					plugins = {
+						{
+							name = "@vue/typescript-plugin",
+							location = "/home/"
+								.. os.getenv("USER")
+								.. "/.config/yarn/global/node_modules/@vue/typescript-plugin",
+							languages = { "javascript", "typescript", "vue" },
+						},
+					},
+				},
 				capabilities = capabilities,
 				settings = {
 					tsserver_file_preferences = {
@@ -219,7 +230,7 @@ return {
 						includeInlayFunctionLikeReturnTypeHints = true,
 					},
 				},
-				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 			})
 
 			lspconfig.pyright.setup({
