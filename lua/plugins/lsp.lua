@@ -109,19 +109,13 @@ return {
 			lspconfig.clangd.setup({
 				cmd = {
 					"clangd",
-					"--background-index",
-					"--clang-tidy",
-					"--all-scopes-completion",
+					"--compile-commands-dir=.",
 					"--cross-file-rename",
-					"--completion-style=detailed",
 					"--header-insertion-decorators",
 					"--header-insertion=iwyu",
-					"--pch-storage=memory",
-					"--pretty",
 				},
 				on_attach = on_attach_common,
 				capabilities = capabilities,
-				-- settings = {},
 			})
 
 			lspconfig.gopls.setup({
@@ -129,8 +123,14 @@ return {
 					on_attach_common(client, buffer)
 				end,
 				capabilities = capabilities,
+				filetypes = { "go", "gomod", "gowork", "gotmpl", "tmpl" },
 				settings = {
 					gopls = {
+						completeUnimported = true,
+						usePlaceholders = true,
+						analyses = {
+							unusedparams = true,
+						},
 						hints = {
 							assignVariableTypes = true,
 							compositeLiteralFields = true,

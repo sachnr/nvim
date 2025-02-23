@@ -86,7 +86,7 @@ return {
 	-- 			invert_tabline = false,
 	-- 			invert_intend_guides = false,
 	-- 			inverse = true, -- invert background for search, diffs, statuslines and errors
-	-- 			contrast = "", -- can be "hard", "soft" or empty string
+	-- 			contrast = "soft", -- can be "hard", "soft" or empty string
 	-- 			palette_overrides = {},
 	-- 			overrides = {},
 	-- 			dim_inactive = false,
@@ -101,7 +101,6 @@ return {
 	-- {
 	-- 	"neanias/everforest-nvim",
 	-- 	event = "VeryLazy",
-	-- 	enabled = false,
 	-- 	priority = 1000,
 	-- 	config = function()
 	-- 		require("everforest").setup({
@@ -186,6 +185,19 @@ return {
 	-- 			toggle_style_list = { "multiplex", "light" }, -- List of styles to toggle between
 	-- 		})
 	-- 		require("bamboo").load()
+	-- 	end,
+	-- },
+
+	-- {
+	-- 	"ramojus/mellifluous.nvim",
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		require("mellifluous").setup({
+	-- 			require("mellifluous").setup({
+	-- 				colorset = "kanagawa_dragon",
+	-- 			}),
+	-- 		}) -- optional, see configuration section.
+	-- 		vim.cmd("colorscheme mellifluous")
 	-- 	end,
 	-- },
 }

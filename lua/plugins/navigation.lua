@@ -2,13 +2,6 @@ local keys = require("keys")
 
 return {
 	{
-		"ThePrimeagen/harpoon",
-		lazy = false,
-		branch = "harpoon2",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-
-	{
 		"stevearc/oil.nvim",
 		enabled = true,
 		keys = keys.oil(),

@@ -19,30 +19,9 @@ return {
 	},
 
 	{
-		"numToStr/Comment.nvim",
-		event = { "BufRead", "BufWinEnter", "BufNewFile" },
-		opts = {
-			-- add any options here
-		},
-	},
-
-	{
 		"akinsho/toggleterm.nvim",
 		config = true,
 	},
-
-	-- {
-	-- 	"brenoprata10/nvim-highlight-colors",
-	-- 	enabled = true,
-	-- 	event = { "BufRead", "BufWinEnter", "BufNewFile" },
-	-- 	config = function()
-	-- 		require("nvim-highlight-colors").setup({
-	-- 			render = "virtual",
-	-- 			enable_named_colors = false,
-	-- 			enable_tailwind = true,
-	-- 		})
-	-- 	end,
-	-- },
 
 	{
 		"NvChad/nvim-colorizer.lua",
@@ -92,12 +71,5 @@ return {
 		cmd = "TroubleToggle",
 		config = true,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-	},
-
-	{
-		"m4xshen/hardtime.nvim",
-		enabled = false,
-		event = "VeryLazy",
-		opts = {},
 	},
 }

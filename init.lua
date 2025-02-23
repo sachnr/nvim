@@ -63,7 +63,7 @@ local opts = {
 require("keys").defaults()
 require("lazy").setup("plugins", opts)
 -- vim.cmd("colorscheme bamboo")
-require("statusline")
+-- require("statusline")
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}
@@ -100,4 +100,15 @@ end, { silent = true, noremap = true, desc = "Toggle Inlay Hints" })
 if bootstrap then
 	vim.cmd("bw | silent! MasonInstallAll")
 	vim.cmd("Lazy load nvim-treesitter")
+end
+
+if vim.g.neovide then
+	vim.o.guifont = "Iosevka Term:h13"
+	vim.opt.linespace = 0
+	vim.g.neovide_text_gamma = 0.0
+	vim.g.neovide_text_contrast = 0.5
+	vim.g.neovide_scroll_animation_length = 0.2
+    vim.g.neovide_cursor_trail_size = 0.2
+	vim.g.neovide_refresh_rate = 180
+	vim.g.neovide_refresh_rate_idle = 5
 end

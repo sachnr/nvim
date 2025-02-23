@@ -1,6 +1,7 @@
 return {
 	{
 		"ibhagwan/fzf-lua",
+        enabled = false,
 		keys = require("keys").fzflua(),
 		lazy = false,
 		dependencies = { "nvim-tree/nvim-web-devicons" },

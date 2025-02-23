@@ -1,28 +1,9 @@
 return {
 	{
 		"folke/noice.nvim",
-		enabled = false,
 		event = "VeryLazy",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			-- {
-			-- 	"rcarriga/nvim-notify",
-			-- 	opts = {
-			-- 		max_width = 50,
-			-- 		render = "wrapped-compact",
-			-- 		stages = "fade",
-			-- 		top_down = false,
-			-- 	},
-			-- },
-			{
-				"echasnovski/mini.notify",
-				version = false,
-				opts = {
-					lsp_progress = {
-						enable = false,
-					},
-				},
-			},
 		},
 		config = function()
 			require("noice").setup({

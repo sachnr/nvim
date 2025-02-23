@@ -7,5 +7,4 @@ return {
 		keys = keys.zenmode(),
 		config = true,
 	},
-
 }

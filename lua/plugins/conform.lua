@@ -14,17 +14,20 @@ return {
 					leptosfmt = {
 						command = "leptosfmt",
 						args = { "--stdin", "--rustfmt", "$FILENAME" },
-						stdin = "true",
+						stdin = true,
 					},
 					wgslfmt = {
 						command = "wgslfmt",
 						args = { "$FILENAME" },
-						stdin = "false",
+						stdin = false,
 					},
 					norgfmt = {
 						command = "norg-fmt",
 						args = { "$FILENAME" },
-						stdin = "false",
+						stdin = false,
+					},
+					["clang-format"] = {
+						prepend_args = { "--style", "{ BasedOnStyle: LLVM, IndentWidth: 4, SortIncludes: false }" },
 					},
 				},
 				formatters_by_ft = {
@@ -56,6 +59,18 @@ return {
 					zig = { "zigfmt" },
 				},
 			})
+
+			vim.api.nvim_create_user_command("FormatJsonSelection", function(args)
+				local range = nil
+				if args.count ~= -1 then
+					local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+					range = {
+						start = { args.line1, 0 },
+						["end"] = { args.line2, end_line:len() },
+					}
+				end
+				require("conform").format({ async = true, lsp_fallback = true, range = range })
+			end, { range = true })
 		end,
 	},
 }

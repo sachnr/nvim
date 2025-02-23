@@ -15,7 +15,7 @@ return {
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
-		enabled = false,
+		enabled = true,
 		event = "InsertEnter",
 		config = function()
 			require("copilot").setup({
@@ -39,7 +39,7 @@ return {
 
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		enabled = false,
+		enabled = true,
 		cmd = {
 			"CopilotChat",
 			"CopilotChatBuffer",
