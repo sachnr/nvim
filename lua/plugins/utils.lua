@@ -64,11 +64,11 @@ return {
 			{
 				"<Leader>E",
 				mode = "n",
-				"<cmd> TroubleToggle <CR>",
+				"<cmd> Trouble diagnostics <CR>",
 				desc = "trouble",
 			},
 		},
-		cmd = "TroubleToggle",
+		cmd = "Trouble diagnostics",
 		config = true,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},

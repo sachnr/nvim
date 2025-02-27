@@ -1,7 +1,7 @@
 return {
 	{
 		"echasnovski/mini.colors",
-		enabled = false,
+		enabled = true,
 		lazy = false,
 	},
 

@@ -27,7 +27,7 @@ return {
 						stdin = false,
 					},
 					["clang-format"] = {
-						prepend_args = { "--style", "{ BasedOnStyle: LLVM, IndentWidth: 4, SortIncludes: false }" },
+						prepend_args = { "--style", "{ IndentWidth: 4, SortIncludes: false, PointerAlignment: Left, BreakBeforeBraces: Custom, BraceWrapping: { AfterFunction: true, AfterControlStatement: false } , IndentCaseLabels: false, ReflowComments: false, ColumnLimit: 120, AccessModifierOffset: -4, AlignTrailingComments: true, AllowShortBlocksOnASingleLine: false, AllowShortIfStatementsOnASingleLine: false, AllowShortLoopsOnASingleLine: false }" },
 					},
 				},
 				formatters_by_ft = {

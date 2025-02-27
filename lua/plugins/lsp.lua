@@ -109,6 +109,7 @@ return {
 			lspconfig.clangd.setup({
 				cmd = {
 					"clangd",
+					"--clang-tidy",
 					"--compile-commands-dir=.",
 					"--cross-file-rename",
 					"--header-insertion-decorators",

@@ -62,8 +62,8 @@ local opts = {
 
 require("keys").defaults()
 require("lazy").setup("plugins", opts)
--- vim.cmd("colorscheme bamboo")
--- require("statusline")
+vim.cmd("colorscheme gruvbox-material")
+require("statusline").setup()
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}
@@ -108,7 +108,7 @@ if vim.g.neovide then
 	vim.g.neovide_text_gamma = 0.0
 	vim.g.neovide_text_contrast = 0.5
 	vim.g.neovide_scroll_animation_length = 0.2
-    vim.g.neovide_cursor_trail_size = 0.2
+	vim.g.neovide_cursor_trail_size = 0.2
 	vim.g.neovide_refresh_rate = 180
 	vim.g.neovide_refresh_rate_idle = 5
 end
