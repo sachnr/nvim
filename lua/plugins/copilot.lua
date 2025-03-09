@@ -64,7 +64,7 @@ return {
 		},
 		config = function()
 			require("CopilotChat").setup({
-				model = "gpt-4",
+				-- model = "gpt-4",
 				mappings = {
 					complete = {
 						detail = "",

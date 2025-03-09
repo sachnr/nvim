@@ -8,7 +8,11 @@ return {
 
 			null_ls.setup({
 				sources = {
-					null_ls.builtins.diagnostics.cppcheck,
+					null_ls.builtins.diagnostics.cppcheck.with({
+						extra_args = {
+							"--language=cpp",
+						},
+					}),
 				},
 			})
 		end,

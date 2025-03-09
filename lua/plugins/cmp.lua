@@ -1,4 +1,5 @@
 return {
+
 	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
@@ -7,33 +8,38 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"onsails/lspkind-nvim",
-			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
+			{
+				"L3MON4D3/LuaSnip",
+				version = "v2.*",
+				build = "make install_jsregexp",
+			},
 			-- "zbirenbaum/copilot-cmp",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 		config = function()
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
 			local luasnip = require("luasnip")
 			local defaults = require("cmp.config.default")()
-			local max_width_abbr = 10
-			local ellipsis_char = "…"
-
-			local get_ws = function(max, len)
-				return (" "):rep(max - len)
-			end
 
 			lspkind.init({})
 
 			luasnip.config.set_config({
 				history = true,
+				updateevents = "TextChanged, TextChangedI",
+				enable_autosnippets = true,
 			})
+
+			require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/snippets/" } })
 
 			cmp.setup({
 				sources = {
+					{ name = "luasnip", option = { show_autosnippets = true } },
 					{ name = "nvim_lsp" },
 					{ name = "path" },
-					{ name = "luasnip" },
 					{ name = "buffer", keyword_length = 4 },
+					{ name = "nvim_lsp_signature_help" },
 				},
 				preselect = cmp.PreselectMode.None,
 				snippet = {

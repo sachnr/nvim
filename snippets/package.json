@@ -1,0 +1,11 @@
+{
+  "name": "luasnip-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "cpp",
+        "path": "./langs//cpp.json"
+      }
+    ]
+  }
+}

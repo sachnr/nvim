@@ -1,0 +1,10 @@
+{
+  "#ifndef": {
+    "prefix": "#ifn",
+    "body": [
+      "#ifndef ${TM_FILENAME_BASE/(\\w+)/${1:/upcase}/g}_H",
+      "#define ${TM_FILENAME_BASE/(\\w+)/${1:/upcase}/g}_H",
+      "\n#endif"
+    ]
+  }
+}
