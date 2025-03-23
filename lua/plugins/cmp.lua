@@ -7,6 +7,8 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"neovim/nvim-lspconfig",
+			"hrsh7th/nvim-cmp",
 			"onsails/lspkind-nvim",
 			"saadparwaiz1/cmp_luasnip",
 			{
@@ -37,9 +39,9 @@ return {
 				sources = {
 					{ name = "luasnip", option = { show_autosnippets = true } },
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "path" },
 					{ name = "buffer", keyword_length = 4 },
-					{ name = "nvim_lsp_signature_help" },
 				},
 				preselect = cmp.PreselectMode.None,
 				snippet = {

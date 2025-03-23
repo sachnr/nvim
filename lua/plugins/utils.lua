@@ -72,4 +72,9 @@ return {
 		config = true,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
+
+	{
+		"echasnovski/mini.colors",
+		enabled = true,
+	},
 }

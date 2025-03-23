@@ -58,7 +58,7 @@
 ---
 --- Highlight used in default statusline:
 --- * `MiniStatuslineDevinfo` - for "dev info" group
----   (|MiniStatusline.section_git| and |MiniStatusline.section_diagnostics|).
+---   (|MiniStatusline.section_git| and |MiniStatusline.section_diagnostics|).statu
 --- * `MiniStatuslineFilename` - for |MiniStatusline.section_filename| section.
 --- * `MiniStatuslineFileinfo` - for |MiniStatusline.section_fileinfo| section.
 ---
@@ -266,7 +266,8 @@ end
 MiniStatusline.section_mode = function(args)
 	local mode_info = H.modes[vim.fn.mode()]
 
-	local mode = MiniStatusline.is_truncated(args.trunc_width) and mode_info.short or mode_info.long
+	-- local mode = MiniStatusline.is_truncated(args.trunc_width) and mode_info.short or mode_info.long
+	local mode = mode_info.short
 
 	return mode, mode_info.hl
 end
@@ -652,17 +653,18 @@ H.default_content_active = function()
   local search        = MiniStatusline.section_searchcount({ trunc_width = 75 })
   H.use_icons = nil
 
-  -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
-  -- correct padding with spaces between groups (accounts for 'missing'
-  -- sections, etc.)
+--- * `MiniStatuslineDevinfo` - for "dev info" group
+--- * `MiniStatuslineFilename` - for |MiniStatusline.section_filename| section.
+--- * `MiniStatuslineFileinfo` - for |MiniStatusline.section_fileinfo| section.
   return MiniStatusline.combine_groups({
-    { hl = 'MiniStatuslineDevinfo',  strings = { git, fileinfo } },
-    '%<', -- Mark general truncate point
-    { hl = 'MiniStatuslineFilename', strings = { filename } },
-    { hl = 'MiniStatuslineFilename', strings = { diff } },
+    { hl = mode_hl,  strings = { mode } },
+    { hl = 'MiniStatuslineFilename',  strings = { git, diff } },
     '%=', -- End left alignment
-    { hl = 'MiniStatuslineFilename', strings = { diagnostics, } },
-    { hl = 'MiniStatuslineFileinfo', strings = { search, lsp } },
+    { hl = 'MiniStatuslineFilename', strings = { filename, fileinfo } },
+    '%=', -- End left alignment
+    { hl = 'MiniStatuslineFilename', strings = { diagnostics } },
+    { hl = 'MiniStatuslineFilename', strings = { search } },
+    { hl = 'MiniStatuslineFilename', strings = { lsp } },
   })
 end
 

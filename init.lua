@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {
 	defaults = {
-		lazy = true, -- should plugins be lazy-loaded?
+		lazy = false, -- should plugins be lazy-loaded?
 	},
 	ui = {
 		border = "single",
@@ -62,7 +62,6 @@ local opts = {
 
 require("keys").defaults()
 require("lazy").setup("plugins", opts)
-vim.cmd("colorscheme gruvbox-material")
 require("statusline").setup()
 
 local CloseAllFloatingWindows = function()
@@ -103,10 +102,9 @@ if bootstrap then
 end
 
 if vim.g.neovide then
-	vim.o.guifont = "Iosevka Term:h13"
-	vim.opt.linespace = 0
+	vim.o.guifont = "Iosevka Term:h14"
 	vim.g.neovide_text_gamma = 0.0
-	vim.g.neovide_text_contrast = 0.5
+	vim.g.neovide_text_contrast = 0
 	vim.g.neovide_scroll_animation_length = 0.0
 	vim.g.neovide_cursor_trail_size = 0.0
 	vim.g.neovide_refresh_rate = 180

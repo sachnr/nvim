@@ -3,7 +3,6 @@ local keys = require("keys")
 return {
 	{
 		"stevearc/oil.nvim",
-		enabled = true,
 		keys = keys.oil(),
 		dependencies = { "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
 		config = function()

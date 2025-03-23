@@ -99,6 +99,8 @@ return {
 				end,
 				settings = {
 					Lua = {
+						runtime = { version = "LuaJIT" },
+						telemetry = { enable = false },
 						completion = {
 							callSnippet = "Replace",
 						},
