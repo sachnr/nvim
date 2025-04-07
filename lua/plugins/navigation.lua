@@ -3,8 +3,15 @@ local keys = require("keys")
 return {
 	{
 		"stevearc/oil.nvim",
-		keys = keys.oil(),
 		dependencies = { "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
+		keys = {
+			{
+				"<M-j><M-k>",
+				mode = "n",
+				"<cmd> Oil <CR>",
+				desc = "Open Oil",
+			},
+		},
 		config = function()
 			local oil = require("oil")
 			oil.setup({

@@ -1,7 +1,6 @@
----@diagnostic disable: missing-fields
 return {
 	{
-		"folke/zen-mode.nvim",
+		"folke/snacks.nvim",
 		keys = {
 			{
 				"<M-z>",
@@ -13,6 +12,10 @@ return {
 				desc = "zenmode",
 			},
 		},
-		config = true,
+		opts = {
+			image = {},
+			bigfile = {},
+			zen = {},
+		},
 	},
 }

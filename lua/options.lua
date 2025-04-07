@@ -57,7 +57,7 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 0
 vim.opt.modelines = 1
-vim.opt.conceallevel = 2
+-- vim.opt.conceallevel = 2
 
 vim.opt.number = true
 vim.opt.numberwidth = 3

@@ -1,6 +1,9 @@
 return {
 	{
 		"lewis6991/gitsigns.nvim",
+		keys = {
+			{ "<leader>gb", "<cmd> lua require('gitsigns').blame_line <cr>", { desc = "git blame" } },
+		},
 		event = { "BufRead", "BufWinEnter", "BufNewFile" },
 		config = function()
 			require("gitsigns").setup({
@@ -17,33 +20,15 @@ return {
 		end,
 	},
 
-	-- {
-	-- 	"sindrets/diffview.nvim",
-	-- 	cmd = {
-	-- 		"DiffviewOpen",
-	-- 		"DiffviewClose",
-	-- 		"DiffviewFileHistory",
-	-- 	},
-	-- 	dependencies = "nvim-lua/plenary.nvim",
-	-- 	opts = {
-	-- 		file_panel = {
-	-- 			listing_style = "list",
-	-- 			tree_options = {
-	-- 				flatten_dirs = true,
-	-- 				folder_statuses = "only_folded",
-	-- 			},
-	-- 			win_config = {
-	-- 				position = "bottom",
-	--                    height = 10,
-	-- 				win_opts = {},
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
-
 	{
 		"tpope/vim-fugitive",
-		enabled = true,
-		lazy = false,
+		config = function()
+			vim.gitgutter_diff_base = "HEAD"
+			vim.keymap.set("n", "<leader>G", vim.cmd.Git)
+			vim.keymap.set("n", "g2", "<cmd>diffget //2<CR>")
+			vim.keymap.set("n", "g3", "<cmd>diffget //3<CR>")
+			vim.keymap.set("n", "<leader>gd", "<cmd> Gdiff! <CR>")
+			vim.keymap.set("n", "<leader>gm", "<cmd> Git mergetool <CR>")
+		end,
 	},
 }
