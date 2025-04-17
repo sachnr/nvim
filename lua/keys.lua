@@ -25,7 +25,7 @@ M.defaults = function()
 	-- set("n", "<C-s>", "<cmd> w <CR>", merge(opts, { desc = "save buffer" }))
 	-- d
 	set("i", "<C-c>", "<ESC>", opts)
-	-- copy all
+    -- copy all
 	set("n", "<leader>C", "<cmd> %y+ <CR>", merge(opts, { desc = "copy whole file" }))
 	set("n", "<leader>cd", "<cmd> :cd %:p:h <CR>", merge(opts, { desc = "Change dir" }))
 	-- move visual chunks

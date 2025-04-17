@@ -24,10 +24,9 @@ return {
 		"tpope/vim-fugitive",
 		config = function()
 			vim.gitgutter_diff_base = "HEAD"
-			vim.keymap.set("n", "<leader>G", vim.cmd.Git)
-			vim.keymap.set("n", "g2", "<cmd>diffget //2<CR>")
-			vim.keymap.set("n", "g3", "<cmd>diffget //3<CR>")
-			vim.keymap.set("n", "<leader>gd", "<cmd> Gdiff! <CR>")
+			vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+			vim.keymap.set("n", "<leader>g2", "<cmd>diffget //2<CR>")
+			vim.keymap.set("n", "<leader>g3", "<cmd>diffget //3<CR>")
 			vim.keymap.set("n", "<leader>gm", "<cmd> Git mergetool <CR>")
 		end,
 	},

@@ -658,13 +658,13 @@ H.default_content_active = function()
 --- * `MiniStatuslineFileinfo` - for |MiniStatusline.section_fileinfo| section.
   return MiniStatusline.combine_groups({
     { hl = mode_hl,  strings = { mode } },
-    { hl = 'MiniStatuslineFilename',  strings = { git, diff } },
+    { hl = 'MiniStatuslineFileinfo',  strings = { git, diff } },
     '%=', -- End left alignment
-    { hl = 'MiniStatuslineFilename', strings = { filename, fileinfo } },
+    { hl = 'MiniStatuslineFileinfo', strings = { filename, fileinfo } },
     '%=', -- End left alignment
-    { hl = 'MiniStatuslineFilename', strings = { diagnostics } },
-    { hl = 'MiniStatuslineFilename', strings = { search } },
-    { hl = 'MiniStatuslineFilename', strings = { lsp } },
+    { hl = 'MiniStatuslineFileinfo', strings = { diagnostics } },
+    { hl = 'MiniStatuslineFileinfo', strings = { search } },
+    { hl = 'MiniStatuslineFileinfo', strings = { lsp } },
   })
 end
 

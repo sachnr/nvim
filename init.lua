@@ -65,6 +65,7 @@ require("keys").defaults()
 require("lazy").setup("plugins", opts)
 require("statusline").setup()
 vim.cmd.colorscheme("mellow")
+vim.g.mellow_transparent = true
 
 local CloseAllFloatingWindows = function()
 	local closed_windows = {}

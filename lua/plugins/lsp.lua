@@ -224,7 +224,7 @@ return {
 			end
 
 			lspconfig.volar.setup({
-				filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+				filetypes = { "vue" },
 				init_options = {
 					vue = {
 						hybridMode = false,
@@ -241,13 +241,13 @@ return {
 				end,
 				init_options = {
 					plugins = {
-						{
-							name = "@vue/typescript-plugin",
-							location = "/home/"
-								.. os.getenv("USER")
-								.. "/.config/yarn/global/node_modules/@vue/typescript-plugin",
-							languages = { "javascript", "typescript", "vue" },
-						},
+						-- {
+						-- 	name = "@vue/typescript-plugin",
+						-- 	location = "/home/"
+						-- 		.. os.getenv("USER")
+						-- 		.. "/.config/yarn/global/node_modules/@vue/typescript-plugin",
+						-- 	languages = { "javascript", "typescript", "vue" },
+						-- },
 					},
 				},
 				capabilities = capabilities,
@@ -284,38 +284,6 @@ return {
 					lsp_attach(buffer)
 				end,
 				capabilities = capabilities,
-				filetypes = {
-					"liquid",
-					"css",
-					"django-html",
-					"gohtml",
-					"gohtmltmpl",
-					"html",
-					"htmldjango",
-					"javascript",
-					"javascriptreact",
-					"postcss",
-					"rust",
-					"sass",
-					"scss",
-					"svelte",
-					"typescript",
-					"typescriptreact",
-					"vue",
-				},
-				root_dir = function(fname)
-					local root_pattern = require("lspconfig").util.root_pattern(
-						"tailwind.config.cjs",
-						"tailwind.config.js",
-						"postcss.config.js"
-					)
-					return root_pattern(fname)
-				end,
-				init_options = {
-					userLanguages = {
-						rust = "html",
-					},
-				},
 			})
 
 			lspconfig.zls.setup({
